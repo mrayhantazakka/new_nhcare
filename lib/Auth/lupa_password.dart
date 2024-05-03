@@ -35,7 +35,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     String answer = _answerController.text;
 
     final response = await http.post(
-      Uri.parse('http://localhost:8000/api/auth/reset-password'),
+      Uri.parse('http://localhost:8000/api/resetpassword'),
       body: {
         'email': email,
         'answer': answer,

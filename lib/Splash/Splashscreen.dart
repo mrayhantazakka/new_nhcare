@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:nhcoree/Auth/Login.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({Key? key}) : super(key: key);
 
   @override
-  _SplashState createState() => _SplashState();
+  _SplashscreenState createState() => _SplashscreenState();
 }
 
-class _SplashState extends State<Splashscreen>
+class _SplashscreenState extends State<Splashscreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
@@ -73,6 +72,12 @@ class _SplashState extends State<Splashscreen>
     return Scaffold(
       body: Stack(
         children: [
+          Image.asset(
+            'assets/img/bg.png', // Set background image here
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
           AnimatedContainer(
             duration: Duration(seconds: 1),
             color: _isAnimationComplete ? Colors.white : Color(0xFFA4C751),
@@ -98,10 +103,6 @@ class _SplashState extends State<Splashscreen>
                   },
                 ),
                 if (!_isAnimationComplete) SizedBox(height: 16),
-                if (!_isAnimationComplete)
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  ),
               ],
             ),
           ),
@@ -116,99 +117,143 @@ class LoadingPage extends StatefulWidget {
   _LoadingPageState createState() => _LoadingPageState();
 }
 
-class _LoadingPageState extends State {
+class _LoadingPageState extends State<LoadingPage> {
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
     // Add any initialization logic here
+    _simulateLoading();
+  }
+
+  _simulateLoading() async {
+    await Future.delayed(Duration(seconds: 3)); // simulate loading for 3 seconds
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(color: Color(0xFFA4C751)),
-          ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/img/logo_putih.png',
-                  height: 203,
-                  width: 168,
+    return _isLoading
+        ? Scaffold(
+            body: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                gradient: LinearGradient(
+                  colors: [Color(0xFFA4C751), Color(0xFF7AA23B)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
-                SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Selamat Datang di Aplikasi NH Care',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation(Colors.white),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Memuat Aplikasi NHCARE',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
-                      SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        : Scaffold(
+            body: Container(
+              decoration: BoxDecoration(
+                color: Color(0xFFA4C751),
+                image: DecorationImage(
+                  image: AssetImage('assets/img/bg.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/img/logo.jpg',
+                      height: 203,
+                      width: 168,
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
                         children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/login');
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Color(0xFFA4C751),
-                              minimumSize: Size(180, 60),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                              ),
+                          Text(
+                            'Selamat Datang di Aplikasi NH Care',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(width: 20),
-                          OutlinedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/register');
-                            },
-                            style: OutlinedButton.styleFrom(
-                              side: BorderSide(color: Color(0xFFA4C751)),
-                              minimumSize: Size(180, 60),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                          SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/login');
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xFFA4C751),
+                                  minimumSize: Size(180, 60),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
-                            ),
-                            child: Text(
-                              'Register',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0xFFA4C751),
+                              SizedBox(width: 20),
+                              OutlinedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/register');
+                                },
+                                style: OutlinedButton.styleFrom(
+                                  side: BorderSide(color: Color(0xFFA4C751)),
+                                  minimumSize: Size(180, 60),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0xFFA4C751),
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          )
-        ],
-      ),
-    );
+          );
   }
 }

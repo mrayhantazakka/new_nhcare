@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:nhcoree/Screen/anak.dart';
+import 'programm.dart'; // Import halaman program.dart di sini
 
-class beranda extends StatefulWidget {
-  const beranda({Key? key}) : super(key: key);
+class Beranda extends StatefulWidget {
+  const Beranda({Key? key}) : super(key: key);
 
   @override
-  _berandaState createState() => _berandaState();
+  _BerandaState createState() => _BerandaState();
 }
 
-class _berandaState extends State<beranda> {
+class _BerandaState extends State<Beranda> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        // child: Container(
-        //   decoration: BoxDecoration(
-        //     image: DecorationImage(
-        //       image: AssetImage('assets/img/bg.png'),
-        //       fit: BoxFit.cover,
-        //     ),
-        //   ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -95,7 +90,12 @@ class _berandaState extends State<beranda> {
                     children: [
                       InkWell(
                         onTap: () {
-                          print('Card Anak Asuh diklik');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    AnakAsuh()), // Ganti () dengan nama class halaman Anak Asuh
+                          );
                         },
                         child: Container(
                           transform: Matrix4.translationValues(0.0, -5.0, 0.0),
@@ -126,7 +126,13 @@ class _berandaState extends State<beranda> {
                     children: [
                       InkWell(
                         onTap: () {
-                          print('Card Alokasi Dana diklik');
+                          // Navigasi ke halaman Program
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Programm()), // Ganti () dengan nama class halaman program
+                          );
                         },
                         child: Container(
                           transform: Matrix4.translationValues(0.0, -5.0, 0.0),
@@ -135,14 +141,13 @@ class _berandaState extends State<beranda> {
                             child: Column(
                               children: [
                                 Image.asset(
-                                  'assets/img/ic_alokasi.png',
+                                  'assets/img/ic_program.png',
                                   fit: BoxFit.cover,
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 8.0, left: 8.0, bottom: 8.0),
+                                  padding: const EdgeInsets.only(bottom: 8.0),
                                   child: Text(
-                                    'Alokasi Dana',
+                                    'Program',
                                     style: TextStyle(fontSize: 13),
                                   ),
                                 ),
@@ -167,13 +172,14 @@ class _berandaState extends State<beranda> {
                             child: Column(
                               children: [
                                 Image.asset(
-                                  'assets/img/ic_program.png',
+                                  'assets/img/ic_alokasi.png',
                                   fit: BoxFit.cover,
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  padding: const EdgeInsets.only(
+                                      right: 8.0, left: 8.0, bottom: 8.0),
                                   child: Text(
-                                    'Program',
+                                    'Alokasi Dana',
                                     style: TextStyle(fontSize: 13),
                                   ),
                                 ),

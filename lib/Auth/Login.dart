@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-// import 'package:nhcoree/Screen/UserData.dart';
 import 'package:http/http.dart' as http;
 import 'package:nhcoree/Home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -17,16 +16,34 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _passwordController = TextEditingController();
 
   GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // Cek jika token sudah tersimpan, maka langsung arahkan ke halaman Home
+    checkLoginStatus();
+  }
+
+  // Fungsi untuk melakukan pengecekan status login saat aplikasi dimulai
+  Future<void> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => homePage()),
+      );
+    }
+  }
+
+  // Metode untuk melakukan login
   Future<void> _login() async {
-    //mendapat nilai email dan pw dari controller
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    //url endpoint untuk login api
-    String url = "http://localhost:8000/api/auth/login";
+    String url = "http://localhost:8000/api/login";
 
     try {
-      //kirim permintaan http post ke url dgn data email dan pw
       final response = await http.post(
         Uri.parse(url),
         body: {
@@ -35,18 +52,16 @@ class _LoginPageState extends State<LoginPage> {
         },
       );
 
-      //konversi respon dari server jadi objek dart
       final responseData = json.decode(response.body);
 
-      //cek kondisi apakah permintaan http berhasil
       if (response.statusCode == 200) {
         if (responseData['status'] == true) {
-          // Simpan token ke penyimpanan lokal
           String token = responseData['token'];
+
+          // Simpan token ke SharedPreferences
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('token', token);
 
-          //tampilkan notif dialog
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
@@ -262,30 +277,6 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text('Login',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
-                            // if (_keyForm.currentState!.validate()) {
-                            //   // Validasi berhasil, terus cek login
-                            //   UserData userData = ModalRoute.of(context)!
-                            //           .settings
-                            //           .arguments
-                            //       as UserData; //ambil objek UserData dari registrasi lalu cek validasinya
-                            //   if (_usernameController.text == userData.username &&
-                            //       _passwordController.text == userData.password) {
-                            //     Navigator.pushNamed(context, '/home',
-                            //         arguments:
-                            //             userData); //jika benar akan mengarah ke home dgn objek UserData tadi
-                            //   } else {
-                            //     ScaffoldMessenger.of(context).showSnackBar(
-                            //       SnackBar(
-                            //           content:
-                            //               Text('Username atau password salah')),
-                            //     );
-                            //   }
-                            // } else {
-                            //   ScaffoldMessenger.of(context).showSnackBar(
-                            //     SnackBar(content: Text('Mohon lengkapi data')),
-                            //   );
-                            // }
-                            // },
                             if (_keyForm.currentState!.validate()) {
                               _login();
                             }

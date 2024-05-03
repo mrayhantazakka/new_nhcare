@@ -61,7 +61,7 @@ class _homePageState extends State<homePage> {
   Widget build(BuildContext context) {
     final _listPage = <Widget>[
       acara(),
-      beranda(),
+      Beranda(),
       notifikasi(),
       profile(),
     ];
