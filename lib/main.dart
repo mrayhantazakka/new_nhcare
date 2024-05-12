@@ -24,8 +24,7 @@ class LoginApp extends StatelessWidget {
         '/home': (context) => homePage(),
         '/loadingPage': (context) => LoadingPage(),
         '/forgotPassword': (context) => ForgotPasswordPage(),
-        '/progamPage': (context)=> Programm (),
-        
+        '/progamPage': (context) => Programm(),
       }, /*  */
     );
   }

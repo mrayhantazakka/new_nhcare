@@ -1,65 +1,93 @@
-import 'package:nhcoree/Models/user.dart';
-import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as path;
 import 'package:nhcoree/Models/user.dart';
 
 class DatabaseHelper {
-  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
   static Database? _database;
 
-  DatabaseHelper._privateConstructor();
+  DatabaseHelper._internal();
 
-  Future<Database> get database async {
-    if (_database != null) return _database!;
-    _database = await _initDatabase();
+  factory DatabaseHelper() {
+    return _instance;
+  }
+
+  static Future<Database> get database async {
+    _database ??= await initDatabase();
     return _database!;
   }
 
-  Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'your_database_name.db');
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _createDatabase,
-    );
-  }
+  static Future<Database> initDatabase() async {
+    try {
+      String pathDB = await getDatabasesPath();
+      String fullPath = path.join(pathDB, 'nhcoree.db');
 
-  Future<void> _createDatabase(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE users(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        fullname TEXT,
-        username TEXT,
-        password TEXT,
-        confirmpassword TEXT,
-        email TEXT,
-        phone TEXT,
-        question TEXT,
-        answer TEXT
-      )
-    ''');
-  }
-
-  Future<void> insertUser(User user) async {
-    Database db = await instance.database;
-    await db.insert('users', user.toJson());
-  }
-
-  Future<User?> getUserByEmail(String email) async {
-    Database db = await instance.database;
-    List<Map<String, dynamic>> maps = await db.query(
-      'users',
-      where: 'email = ?',
-      whereArgs: [email],
-    );
-    if (maps.isNotEmpty) {
-      return User.fromJson(maps.first);
+      return await openDatabase(
+        fullPath,
+        version: 1,
+        onCreate: (db, version) async {
+          // Define table schema if the database is newly created
+          await db.execute('''
+          CREATE TABLE user (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            fullname TEXT NOT NULL,
+            username TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            phone TEXT,
+            question TEXT,
+            answer TEXT,
+            token TEXT
+          )
+        ''');
+        },
+        onUpgrade: (db, oldVersion, newVersion) async {
+          if (oldVersion < 2) {
+            await db.execute('ALTER TABLE user ADD COLUMN token TEXT');
+          }
+        },
+      );
+    } catch (e) {
+      print("Error initializing the database: $e");
+      rethrow;
     }
-    return null;
   }
+static Future<void> saveUser(User user, String token) async {
+  final db = await database;
+  await db.insert(
+    'user',
+    {
+      'fullname': user.fullname,
+      'username': user.username,
+      'email': user.email,
+      'password': user.password, 
+      'phone': user.phone,
+      'question': user.question,
+      'answer': user.answer,
+      'token': token,
+    },
+    conflictAlgorithm: ConflictAlgorithm.replace,
+  );
+}
 
-  Future<bool> login(String email, String password) async {
-    User? user = await getUserByEmail(email);
-    return user != null && user.password == password;
+
+  static Future<User?> getUserFromLocal(String token) async {
+    try {
+      final db = await database;
+      final List<Map<String, dynamic>> maps = await db.query(
+        'user',
+        where: 'token = ?',
+        whereArgs: [token],
+      );
+
+      if (maps.isNotEmpty) {
+        return User.fromJson(maps.first);
+      } else {
+        return null;
+      }
+    } catch (error) {
+      print("Error fetching user from the local database: $error");
+      return null;
+    }
   }
 }

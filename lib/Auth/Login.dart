@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nhcoree/Database/DatabaseHelper.dart';
+import 'package:nhcoree/Database/IpConfig.dart';
 import 'package:nhcoree/Home.dart';
+import 'package:nhcoree/Models/login_response.dart';
+import 'package:nhcoree/Models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -41,7 +45,8 @@ class _LoginPageState extends State<LoginPage> {
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    String url = "http://localhost:8000/api/login";
+    String url = "${IpConfig.baseUrl}/api/login";
+
 
     try {
       final response = await http.post(
@@ -53,7 +58,11 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       final responseData = json.decode(response.body);
-
+      LoginResponse loginResponse = LoginResponse.fromMap(responseData);
+      print("message : ${loginResponse.message}");
+      print("status : ${loginResponse.status}");
+      // LoginResponse loginResponse = LoginResponse.fromMap(responseData);
+      // print("Pesannya : ${loginResponse.message}");
       if (response.statusCode == 200) {
         if (responseData['status'] == true) {
           String token = responseData['token'];
@@ -61,6 +70,16 @@ class _LoginPageState extends State<LoginPage> {
           // Simpan token ke SharedPreferences
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('token', token);
+          
+           User? loggedInUser = await getUserFromToken(responseData['token']);
+
+        if (loggedInUser != null) {
+          await DatabaseHelper.saveUser(loggedInUser, responseData['token']);
+          print(
+              "Data pengguna tersimpan di SQLite: Email: ${loggedInUser.email}, Username: ${loggedInUser.username}");
+          ("Anda berhasil login.", loggedInUser, responseData['token']);
+        }
+        
 
           showDialog(
             context: context,
@@ -127,6 +146,28 @@ class _LoginPageState extends State<LoginPage> {
       hiden = !hiden;
     });
   }
+    Future<User?> getUserFromToken(String token) async 
+     {
+     String url = "${IpConfig.baseUrl}/api/get_user";
+
+      final response = await http.get(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Authorization': 'Bearer $token',
+        },
+      );
+      print("Response getUserFromToken: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        // Pastikan responseData berupa objek JSON yang sesuai dengan struktur User
+        return User.fromJson(responseData);
+      } else {
+        print("Failed to get user data: ${response.statusCode}");
+        return null;
+      }
+     }
+
 
   @override
   Widget build(BuildContext context) {

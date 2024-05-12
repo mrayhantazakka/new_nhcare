@@ -5,14 +5,15 @@ part 'user.g.dart';
 @JsonSerializable()
 class User {
   late int id;
-  late String fullname;
-  late String username;
-  late String password;
-  late String confirmpassword;
-  late String email;
-  late String phone;
-  late String question;
-  late String answer;
+  late String? fullname;
+  late String? username;
+  late String? password;
+  late String? confirmpassword;
+  late String? email;
+  late String? phone;
+  late String? question;
+  late String? answer;
+  late String? token;
 
   User({
     this.id = 0, // Make id optional with a default value
@@ -24,6 +25,7 @@ class User {
     required this.phone,
     required this.question,
     required this.answer,
+    required this.token,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

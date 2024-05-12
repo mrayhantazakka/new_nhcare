@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:nhcoree/Auth/Login.dart';
+import 'package:nhcoree/Database/IpConfig.dart';
 // import 'package:nhcoree/Screen/UserData.dart';
 
 class daftar extends StatefulWidget {
@@ -36,7 +37,6 @@ class _daftarState extends State<daftar> {
   // DateTime? _selectedDate;
 
   GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
-
 
 //method pilih gender
   // List<String> listGender = ['Laki-laki', 'Perempuan'];
@@ -81,7 +81,7 @@ class _daftarState extends State<daftar> {
     String answer = _answerController.text; // Jawaban dari pertanyaan
 
     //url endpoint untuk register api
-    String url = "http://localhost:8000/api/auth/register";
+    String url = "${IpConfig.baseUrl}/api/daftar";
 
     try {
       //mengirim permintaan http post ke url dengan data yang ada pada body

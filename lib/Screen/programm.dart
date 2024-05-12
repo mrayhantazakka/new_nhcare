@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nhcoree/Database/IpConfig.dart';
 import 'package:nhcoree/Models/ProgramData.dart';
 
 class Programm extends StatefulWidget {
@@ -23,15 +24,17 @@ class _ProgrammState extends State<Programm> {
 
   Future<void> _fetchProgramsFromServer() async {
     // Ganti URL ini dengan URL endpoint API kamu.
-    final url = Uri.parse('http://localhost:8000/api/programs');
+    final url = Uri.parse('${IpConfig.baseUrl}/api/programs');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
         // Jika respons sukses, parse data JSON ke dalam List<ProgramData>.
         final List<dynamic> responseData = jsonDecode(response.body);
         setState(() {
-          _programs = responseData.map((json) => ProgramData.fromJson(json)).toList();
-          _filteredPrograms = _programs; // Mengisi _filteredPrograms dengan data awal
+          _programs =
+              responseData.map((json) => ProgramData.fromJson(json)).toList();
+          _filteredPrograms =
+              _programs; // Mengisi _filteredPrograms dengan data awal
         });
       } else {
         // Jika respons gagal, tampilkan pesan kesalahan.
@@ -53,7 +56,8 @@ class _ProgrammState extends State<Programm> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.network(
-                program.img_program, // Menggunakan Image.network untuk URL gambar
+                program
+                    .img_program, // Menggunakan Image.network untuk URL gambar
                 width: 200, // Atur lebar gambar sesuai kebutuhan
                 height: 200, // Atur tinggi gambar sesuai kebutuhan
               ),
@@ -77,7 +81,8 @@ class _ProgrammState extends State<Programm> {
   void _onSearchChanged(String value) {
     setState(() {
       _filteredPrograms = _programs
-          .where((program) => program.judul.toLowerCase().contains(value.toLowerCase()))
+          .where((program) =>
+              program.judul.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -159,7 +164,8 @@ class _ProgrammState extends State<Programm> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.network(
-                          program.img_program, // Menggunakan Image.network untuk URL gambar
+                          program
+                              .img_program, // Menggunakan Image.network untuk URL gambar
                           width: 100,
                           height: 100,
                         ),

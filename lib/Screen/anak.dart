@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nhcoree/Database/IpConfig.dart';
 import 'package:nhcoree/Models/AnakData.dart';
 
 class AnakAsuh extends StatefulWidget {
@@ -23,15 +24,17 @@ class _AnakAsuhState extends State<AnakAsuh> {
 
   Future<void> _fetchAnakAsuhsFromServer() async {
     // Ganti URL ini dengan URL endpoint API kamu.
-    final url = Uri.parse('http://localhost:8000/api/anakasuh');
+    final url = Uri.parse('${IpConfig.baseUrl}/api/anakasuh');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
         // Jika respons sukses, parse data JSON ke dalam List<AnakAsuh>.
         final List<dynamic> responseData = jsonDecode(response.body);
         setState(() {
-          _anakAsuhs = responseData.map((json) => AnakData.fromJson(json)).toList();
-          _filteredAnakAsuhs = _anakAsuhs; // Mengisi _filteredAnakAsuhs dengan data awal
+          _anakAsuhs =
+              responseData.map((json) => AnakData.fromJson(json)).toList();
+          _filteredAnakAsuhs =
+              _anakAsuhs; // Mengisi _filteredAnakAsuhs dengan data awal
         });
       } else {
         // Jika respons gagal, tampilkan pesan kesalahan.
@@ -46,14 +49,16 @@ class _AnakAsuhState extends State<AnakAsuh> {
   void _onProgramTap(AnakData anakAsuh) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DetailAnakAsuh(anakAsuh: anakAsuh)),
+      MaterialPageRoute(
+          builder: (context) => DetailAnakAsuh(anakAsuh: anakAsuh)),
     );
   }
 
   void _onSearchChanged(String value) {
     setState(() {
       _filteredAnakAsuhs = _anakAsuhs
-          .where((anakAsuh) => anakAsuh.nama.toLowerCase().contains(value.toLowerCase()))
+          .where((anakAsuh) =>
+              anakAsuh.nama.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -135,7 +140,8 @@ class _AnakAsuhState extends State<AnakAsuh> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.network(
-                          anakAsuh.img_anak, // Menggunakan Image.network untuk URL gambar
+                          anakAsuh
+                              .img_anak, // Menggunakan Image.network untuk URL gambar
                           width: 100,
                           height: 100,
                         ),

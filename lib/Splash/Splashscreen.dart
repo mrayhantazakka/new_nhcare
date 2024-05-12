@@ -128,7 +128,8 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   _simulateLoading() async {
-    await Future.delayed(Duration(seconds: 3)); // simulate loading for 3 seconds
+    await Future.delayed(
+        Duration(seconds: 3)); // simulate loading for 3 seconds
     setState(() {
       _isLoading = false;
     });

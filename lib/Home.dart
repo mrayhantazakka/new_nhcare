@@ -4,45 +4,8 @@ import 'package:nhcoree/Screen/beranda.dart';
 import 'package:nhcoree/Screen/notifikasi.dart';
 import 'package:nhcoree/Screen/profile.dart';
 
-// class homePage extends StatelessWidget {
-//   const homePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final UserData userData =
-//         ModalRoute.of(context)!.settings.arguments as UserData;
-
-//     return Scaffold(
-//       body: Padding(
-//         padding: const EdgeInsets.all(20.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               'Selamat datang, ${userData.fullname}!',
-//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//             ),
-//             SizedBox(height: 10),
-//             Text('Username: ${userData.username}'),
-//             SizedBox(height: 5),
-//             Text('Email: ${userData.email}'),
-//             SizedBox(height: 5),
-//             Text('Phone: ${userData.phone}'),
-//             SizedBox(height: 5),
-//             Text('Alamat: ${userData.alamat}'),
-//             SizedBox(height: 5),
-//             Text('Agama: ${userData.agama}'),
-//             SizedBox(height: 5),
-//             Text('Gender: ${userData.gender}'),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class homePage extends StatefulWidget {
-  const homePage({super.key});
+  const homePage({Key? key});
 
   @override
   State<homePage> createState() => _homePageState();
@@ -60,10 +23,10 @@ class _homePageState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
     final _listPage = <Widget>[
-      acara(),
+      Acara(),
       Beranda(),
       notifikasi(),
-      profile(),
+      Profile(),
     ];
 
     final _bottomNavBarItems = <BottomNavigationBarItem>[

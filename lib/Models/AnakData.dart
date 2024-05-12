@@ -11,7 +11,6 @@ class AnakData {
   final String kelas;
   final String deskripsi;
   final String img_anak;
-  
 
   AnakData({
     required this.nama,
@@ -20,6 +19,7 @@ class AnakData {
     required this.deskripsi,
     required this.img_anak,
   });
-  factory AnakData.fromJson(Map<String, dynamic> json) => _$AnakDataFromJson(json);
-Map<String, dynamic> toJson() => _$AnakDataToJson(this);
+  factory AnakData.fromJson(Map<String, dynamic> json) =>
+      _$AnakDataFromJson(json);
+  Map<String, dynamic> toJson() => _$AnakDataToJson(this);
 }

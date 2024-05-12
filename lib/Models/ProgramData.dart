@@ -17,6 +17,7 @@ class ProgramData {
     required this.img_program,
     required this.id_user,
   });
-  factory ProgramData.fromJson(Map<String, dynamic> json) => _$ProgramDataFromJson(json);
-Map<String, dynamic> toJson() => _$ProgramDataToJson(this);
+  factory ProgramData.fromJson(Map<String, dynamic> json) =>
+      _$ProgramDataFromJson(json);
+  Map<String, dynamic> toJson() => _$ProgramDataToJson(this);
 }
