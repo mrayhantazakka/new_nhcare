@@ -135,7 +135,7 @@ class _DataDiriState extends State<DataDiri> {
                   TextFormField(
                     initialValue: _name,
                     decoration: InputDecoration(labelText: 'Nama'),
-                    validator:(value) {
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your name';
                       }

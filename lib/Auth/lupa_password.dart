@@ -184,7 +184,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           SizedBox(height: 20),
                           TextFormField(
                             controller: _passwordController,
-                            obscureText: !_isPasswordVisible, // Visibilitas password
+                            obscureText:
+                                !_isPasswordVisible, // Visibilitas password
                             style: TextStyle(fontSize: 14.0),
                             decoration: InputDecoration(
                               hintText: 'Password Baru Anda',

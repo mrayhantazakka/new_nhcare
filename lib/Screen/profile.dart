@@ -32,7 +32,8 @@ class Profile extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 50, // Adjust the size of the avatar as needed
-                      backgroundImage: AssetImage('assets/images/profile.jpg'), // Set the image from local assets
+                      backgroundImage: AssetImage(
+                          'assets/images/profile.jpg'), // Set the image from local assets
                     ),
                     SizedBox(height: 20.0),
                     Text(

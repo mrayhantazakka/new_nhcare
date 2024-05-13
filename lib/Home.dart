@@ -23,7 +23,7 @@ class _homePageState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
     final _listPage = <Widget>[
-      Acara(),
+      AcaraScreen(),
       Beranda(),
       notifikasi(),
       Profile(),

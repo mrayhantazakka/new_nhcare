@@ -52,24 +52,24 @@ class DatabaseHelper {
       rethrow;
     }
   }
-static Future<void> saveUser(User user, String token) async {
-  final db = await database;
-  await db.insert(
-    'user',
-    {
-      'fullname': user.fullname,
-      'username': user.username,
-      'email': user.email,
-      'password': user.password, 
-      'phone': user.phone,
-      'question': user.question,
-      'answer': user.answer,
-      'token': token,
-    },
-    conflictAlgorithm: ConflictAlgorithm.replace,
-  );
-}
 
+  static Future<void> saveUser(User user, String token) async {
+    final db = await database;
+    await db.insert(
+      'user',
+      {
+        'fullname': user.fullname,
+        'username': user.username,
+        'email': user.email,
+        'password': user.password,
+        'phone': user.phone,
+        'question': user.question,
+        'answer': user.answer,
+        'token': token,
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
 
   static Future<User?> getUserFromLocal(String token) async {
     try {
