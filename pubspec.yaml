@@ -41,8 +41,14 @@ dependencies:
   shared_preferences: ^2.2.2
   sqflite: ^2.3.2
   file_picker: ^4.6.1
+<<<<<<< HEAD
   sqflite_common_ffi: ^2.3.2
   table_calendar: ^3.1.0
+=======
+  youtube_player_flutter: ^8.1.2
+  cached_network_image: ^3.3.1
+  url_launcher: ^6.2.6
+>>>>>>> f2d2d47422db88eb4329ccfe50c3b7a869ab56f8
 
 dev_dependencies:
   flutter_lints: ^2.0.0

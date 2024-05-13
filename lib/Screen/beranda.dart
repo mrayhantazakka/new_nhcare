@@ -1,6 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nhcoree/Screen/anak.dart';
-import 'programm.dart'; // Import halaman program.dart di sini
+import 'package:nhcoree/youtube/VideoListPage.dart';
+import 'package:nhcoree/youtube/VideoPlayerPage.dart';
+import 'package:nhcoree/youtube/YoutubeApiService.dart';
+import 'programm.dart';
 
 class Beranda extends StatefulWidget {
   const Beranda({Key? key}) : super(key: key);
@@ -14,247 +18,360 @@ class _BerandaState extends State<Beranda> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Image.asset('assets/img/logo_nhcare.png', height: 50),
-              Padding(padding: EdgeInsets.only(top: 20)),
-              Container(
-                width: 445,
-                height: 95,
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.symmetric(vertical: 20),
-                decoration: BoxDecoration(
-                  color: Color(0xFFA4C751),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          Color.fromARGB(255, 209, 209, 209).withOpacity(0.5),
-                      spreadRadius: 0,
-                      blurRadius: 8,
-                      offset: Offset(0, 10),
-                    ),
-                  ],
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/img/new_bg.png'),
+              fit: BoxFit.fill,
+            ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top: 50),
                 ),
-                child: Text(
-                  "TOTAL DANA DONASI :",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ),
-              Padding(padding: EdgeInsets.only(top: 15)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          print('Card Donasi diklik');
-                        },
-                        child: Container(
-                          transform: Matrix4.translationValues(0.1, -5.0, 0.0),
-                          child: Card(
-                            elevation: 9,
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/img/ic_donasi.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8.0),
-                                  child: Text(
-                                    'Donasi',
-                                    style: TextStyle(fontSize: 13),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 22),
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    AnakAsuh()), // Ganti () dengan nama class halaman Anak Asuh
-                          );
-                        },
-                        child: Container(
-                          transform: Matrix4.translationValues(0.0, -5.0, 0.0),
-                          child: Card(
-                            elevation: 9,
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/img/ic_anak.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8.0),
-                                  child: Text(
-                                    'Anak Asuh',
-                                    style: TextStyle(fontSize: 13),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 22),
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          // Navigasi ke halaman Program
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    Programm()), // Ganti () dengan nama class halaman program
-                          );
-                        },
-                        child: Container(
-                          transform: Matrix4.translationValues(0.0, -5.0, 0.0),
-                          child: Card(
-                            elevation: 9,
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/img/ic_program.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8.0),
-                                  child: Text(
-                                    'Program',
-                                    style: TextStyle(fontSize: 13),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 22),
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          print('Card Program diklik');
-                        },
-                        child: Container(
-                          transform: Matrix4.translationValues(0.0, -5.0, 0.0),
-                          child: Card(
-                            elevation: 9,
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/img/ic_alokasi.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 8.0, left: 8.0, bottom: 8.0),
-                                  child: Text(
-                                    'Alokasi Dana',
-                                    style: TextStyle(fontSize: 13),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 40),
-                child: Row(
-                  children: [
-                    Text(
-                      "Artikel",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                height: 200,
-                child: ListView.builder(
-                  itemCount: 10,
-                  padding: EdgeInsets.symmetric(horizontal: 40),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => Container(
-                    height: 350,
-                    width: 200,
-                    margin: EdgeInsets.only(right: 35),
-                    child: Center(
-                      child: Text("card $index"),
-                    ),
+                Image.asset('assets/img/logo_nhcare.png', height: 50),
+                const Padding(padding: EdgeInsets.only(top: 10)),
+                Container(
+                  width: 360,
+                  height: 95,
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  decoration: BoxDecoration(
                     color: Color(0xFFA4C751),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color:
+                            Color.fromARGB(255, 209, 209, 209).withOpacity(0.5),
+                        spreadRadius: 0,
+                        blurRadius: 8,
+                        offset: Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: const Text(
+                    "TOTAL DANA DONASI :",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 40),
-                child: Row(
+                Padding(padding: EdgeInsets.only(top: 15)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Video",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            print('Card Donasi diklik');
+                          },
+                          child: Container(
+                            transform:
+                                Matrix4.translationValues(0.1, -5.0, 0.0),
+                            child: Card(
+                              elevation: 9,
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/img/ic_donasi.png',
+                                    width: 70,
+                                    height: 70,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  const Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Text(
+                                      'Donasi',
+                                      style: TextStyle(fontSize: 13),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      AnakAsuh()), 
+                            );
+                          },
+                          child: Container(
+                            transform:
+                                Matrix4.translationValues(0.0, -5.0, 0.0),
+                            child: Card(
+                              elevation: 9,
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/img/ic_anak.png',
+                                    width: 70,
+                                    height: 70,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  const Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Text(
+                                      'Anak Asuh',
+                                      style: TextStyle(fontSize: 13),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Programm()),
+                            );
+                          },
+                          child: Container(
+                            transform:
+                                Matrix4.translationValues(0.0, -5.0, 0.0),
+                            child: Card(
+                              elevation: 9,
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/img/ic_program.png',
+                                    width: 70,
+                                    height: 70,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  const Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Text(
+                                      'Program',
+                                      style: TextStyle(fontSize: 13),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            print('Card Program diklik');
+                          },
+                          child: Container(
+                            transform:
+                                Matrix4.translationValues(0.0, -5.0, 0.0),
+                            child: Card(
+                              elevation: 9,
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/img/ic_alokasi.png',
+                                    width: 70,
+                                    height: 70,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  const Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 8.0, left: 8.0, bottom: 8.0),
+                                    child: Text(
+                                      'Alokasi Dana',
+                                      style: TextStyle(fontSize: 13),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ListView.builder(
-                itemCount: 5,
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) => Container(
-                  height: 250,
-                  margin: EdgeInsets.only(left: 40, right: 40, bottom: 20),
-                  child: Center(
-                    child: Text("video $index"),
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Artikel",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                  color: Color(0xFFA4C751),
                 ),
-              )
-            ],
+                SizedBox(height: 20),
+                Container(
+                  height: 200,
+                  child: ListView.builder(
+                    itemCount: 10,
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => Container(
+                      height: 350,
+                      width: 200,
+                      margin: EdgeInsets.only(right: 35),
+                      child: Center(
+                        child: Text("card $index"),
+                      ),
+                      color: Color(0xFFA4C751),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Video",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      Padding(padding: EdgeInsets.only(right: 40)),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VideoListPage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Lihat Selengkapnya',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 159, 159, 159),
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                FutureBuilder<List<YoutubeVideo>>(
+                  future: YoutubeApiService.fetchVideos(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return Column(
+                        children: [
+                          for (var video in snapshot.data!.take(2)) ...[
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        VideoPlayerPage(video: video),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 250,
+                                width: 355,
+                                margin: const EdgeInsets.only(bottom: 20),
+                                decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 238, 238, 238),
+                                  borderRadius: BorderRadius.circular(5),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color.fromARGB(255, 209, 209, 209)
+                                          .withOpacity(0.5),
+                                      spreadRadius: 0,
+                                      blurRadius: 8,
+                                      offset: Offset(0, 10),
+                                    ),
+                                  ],
+                                ),
+                                child: Stack(
+                                  children: [
+                                    // Thumbnail video
+                                    CachedNetworkImage(
+                                      imageUrl: video.thumbnailUrl,
+                                      height: 200,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    ),
+                                    // Icon video
+                                    Positioned.fill(
+                                      child: Icon(
+                                        Icons.play_circle_fill,
+                                        // color: Color(0xffA4C751),
+                                        color: Colors.red,
+                                        size: 50,
+                                      ),
+                                    ),
+                                    // Judul video
+                                    Positioned(
+                                      left: 0,
+                                      right: 0,
+                                      bottom: 0,
+                                      child: Container(
+                                        padding: EdgeInsets.all(8),
+                                        child: Text(
+                                          video.title,
+                                          style: TextStyle(
+                                              color: const Color.fromARGB(
+                                                  255, 0, 0, 0)),
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
