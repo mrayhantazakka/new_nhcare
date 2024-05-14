@@ -1,4 +1,4 @@
 class IpConfig {
-  static const String baseUrl = 'http://10.10.187.37:8000';
+  static const String baseUrl = 'http://192.168.1.19:8000';
 }
 

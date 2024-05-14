@@ -7,6 +7,7 @@ import 'package:nhcoree/Home.dart';
 import 'package:nhcoree/Models/login_response.dart';
 import 'package:nhcoree/Models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
@@ -169,8 +170,18 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Color(0xFFA4C751), // Warna hijau untuk status bar
+    ));
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFA4C751), // Warna hijau untuk AppBar
+        elevation: 0, // Hilangkan bayangan di bawah AppBar
+        toolbarHeight: 0, // Tinggi AppBar diatur menjadi 0 untuk menyembunyikannya
+      ),
       body: SingleChildScrollView(
         child: Container(
           height: screenHeight,
@@ -186,16 +197,17 @@ class _LoginPageState extends State<LoginPage> {
               key: _keyForm,
               child: Column(
                 children: [
+                  SizedBox(height: MediaQuery.of(context).padding.top),
                   Padding(
                     padding: EdgeInsets.only(top: 50),
                   ),
                   Image.asset('assets/img/logo.jpg', height: 78, width: 65),
                   SizedBox(height: 50),
                   Container(
-                    width: 380,
-                    height: 350,
+                    width: screenWidth * 0.9, // Responsive width
+                    height: 380,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(40), // Border lebih lebar
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
@@ -267,7 +279,6 @@ class _LoginPageState extends State<LoginPage> {
                                     : Icons.visibility_off),
                                 onPressed: visible,
                               ),
-
                               prefixIcon: Icon(Icons.lock),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
@@ -305,31 +316,29 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(0xFFA4C751),
-                            minimumSize: Size(180, 60),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: Text('Login',
-                              style: TextStyle(color: Colors.white)),
-                          onPressed: () {
-                            if (_keyForm.currentState!.validate()) {
-                              _login();
-                            }
-                          }),
-                      SizedBox(width: 20),
-                      OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Color(0xFFA4C751)),
-                          minimumSize: Size(180, 60),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFFA4C751),
+                          minimumSize: Size(screenWidth * 0.4, 60), // Responsive size
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text('Kembali',
-                            style: TextStyle(color: Color(0xFFA4C751))),
+                        child: Text('MASUK', style: TextStyle(color: Colors.white)),
+                        onPressed: () {
+                          if (_keyForm.currentState!.validate()) {
+                            _login();
+                          }
+                        }),
+                      SizedBox(width: 20),
+                      OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: Color(0xFFA4C751)),
+                          minimumSize: Size(screenWidth * 0.4, 60), // Responsive size
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text('KEMBALI', style: TextStyle(color: Color(0xFFA4C751))),
                         onPressed: () {
                           Navigator.pushNamed(context, '/loadingPage');
                         },

@@ -63,7 +63,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Password Berhasil Diubah"),
+        title: Text("Password Berhasil dirubah"),
         content: Text("Silahkan Login Menggunakan Password Baru Anda."),
         actions: <Widget>[
           TextButton(
@@ -79,163 +79,146 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: screenHeight,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/img/bg.png'),
-                fit: BoxFit.cover,
-              ),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          width: screenWidth,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/img/bg.png'),
+              fit: BoxFit.cover,
             ),
           ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 20),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/img/logo.jpg', height: 78, width: 65),
+                SizedBox(height: 50),
+                Container(
+                  width: screenWidth * 0.9,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
                       ),
                     ],
                   ),
-                  Image.asset('assets/img/logo.jpg', height: 78, width: 65),
-                  SizedBox(height: 50),
-                  Container(
-                    width: 380,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 7,
-                          offset: Offset(0, 3),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(height: 20),
+                        Center(
+                          child: Text(
+                            "RESET PASSWORD",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF8F9BA1),
+                            ),
+                          ),
                         ),
+                        Divider(color: Colors.grey, thickness: 2),
+                        SizedBox(height: 20),
+                        TextFormField(
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          style: TextStyle(fontSize: 14.0),
+                          decoration: InputDecoration(
+                            hintText: 'Email',
+                            prefixIcon: Icon(Icons.email),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10)),
+                                                       filled: true,
+                            fillColor: Color(0xFFEAEAEA),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        TextFormField(
+                          controller: _answerController,
+                          style: TextStyle(fontSize: 14.0),
+                          decoration: InputDecoration(
+                            hintText: 'Jawaban Keamanan',
+                            prefixIcon: Icon(Icons.security),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10)),
+                                                       filled: true,
+                            fillColor: Color(0xFFEAEAEA),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        TextFormField(
+                          controller: _passwordController,
+                          obscureText: !_isPasswordVisible, // Visibilitas password
+                          style: TextStyle(fontSize: 14.0),
+                          decoration: InputDecoration(
+                            hintText: 'Password Baru Anda',
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10)),
+                            filled: true,
+                            fillColor: Color(0xFFEAEAEA),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isPasswordVisible = !_isPasswordVisible;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            _validateData(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xFFA4C751),
+                            minimumSize: Size(double.infinity, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: Text('Reset Password',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                        SizedBox(height: 20),
                       ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Padding(padding: EdgeInsets.all(10)),
-                          Center(
-                            child: Text(
-                              "RESET PASSWORD",
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF8F9BA1),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            child: Container(
-                              height: 3,
-                              color: Colors.grey,
-                              width: 105,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 10, right: 10, bottom: 20),
-                          ),
-                          TextFormField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            style: TextStyle(fontSize: 14.0),
-                            decoration: InputDecoration(
-                              hintText: 'Email',
-                              prefixIcon: Icon(Icons.account_circle),
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(10)),
-                              filled: true,
-                              fillColor: Color(0xFFEAEAEA),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          TextFormField(
-                            controller: _answerController,
-                            style: TextStyle(fontSize: 14.0),
-                            decoration: InputDecoration(
-                              hintText: 'Jawaban Keamanan',
-                              prefixIcon: Icon(Icons.lock),
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(10)),
-                              filled: true,
-                              fillColor: Color(0xFFEAEAEA),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          TextFormField(
-                            controller: _passwordController,
-                            obscureText:
-                                !_isPasswordVisible, // Visibilitas password
-                            style: TextStyle(fontSize: 14.0),
-                            decoration: InputDecoration(
-                              hintText: 'Password Baru Anda',
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(10)),
-                              filled: true,
-                              fillColor: Color(0xFFEAEAEA),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _isPasswordVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.grey,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _isPasswordVisible = !_isPasswordVisible;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: () {
-                              _validateData(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Color(0xFFA4C751),
-                              minimumSize: Size(double.infinity, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            child: Text('Reset Password',
-                                style: TextStyle(color: Colors.white)),
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(height: 20),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -248,3 +231,4 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     super.dispose();
   }
 }
+

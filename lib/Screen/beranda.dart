@@ -272,7 +272,7 @@ class _BerandaState extends State<Beranda> {
                           'Lihat Selengkapnya',
                           style: TextStyle(
                             color: Color.fromARGB(255, 159, 159, 159),
-                            fontSize: 18,
+                            fontSize: 14,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
@@ -281,7 +281,7 @@ class _BerandaState extends State<Beranda> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 0,
                 ),
                 FutureBuilder<List<YoutubeVideo>>(
                   future: YoutubeApiService.fetchVideos(),

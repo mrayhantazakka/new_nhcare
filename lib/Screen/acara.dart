@@ -34,7 +34,8 @@ Future<List<Acara>> fetchEventsForDate(DateTime date) async {
         .where((acara) =>
             acara.tanggalAcara.year == date.year &&
             acara.tanggalAcara.month == date.month &&
-            acara.tanggalAcara.day == date.day) // Filter acara berdasarkan tahun, bulan, dan tanggal yang sesuai
+            acara.tanggalAcara.day ==
+                date.day) // Filter acara berdasarkan tahun, bulan, dan tanggal yang sesuai
         .toList();
     return events;
   } else {
@@ -59,7 +60,8 @@ class _AcaraScreenState extends State<AcaraScreen> {
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
-    _fetchEvents(_selectedDay!); // Panggil fetchEvents saat inisialisasi dengan tanggal sekarang
+    _fetchEvents(
+        _selectedDay!); // Panggil fetchEvents saat inisialisasi dengan tanggal sekarang
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -87,44 +89,95 @@ class _AcaraScreenState extends State<AcaraScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // Menghapus tombol back
-        title: Text('Acara'),
+        title: Text(
+          'ACARA',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFFA4C751)
+            ), 
+          textAlign: TextAlign.center,
+        ),
+        centerTitle: true, // Menengahkan judul
       ),
-      body: Column(
-        children: [
-          TableCalendar(
-            calendarStyle: CalendarStyle(
-              selectedDecoration: BoxDecoration(
-                color: Colors.black,
-              ),
-              todayTextStyle: TextStyle(color: Colors.green),
-              selectedTextStyle: TextStyle(color: Colors.white),
-            ),
-            calendarFormat: _calendarFormat,
-            focusedDay: _focusedDay,
-            firstDay: DateTime.utc(2020, 1, 1),
-            lastDay: DateTime.utc(2050, 12, 31),
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay, day);
-            },
-            onDaySelected: _onDaySelected,
-            onFormatChanged: (format) {
-              setState(() {
-                _calendarFormat = format;
-              });
-            },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/img/new_bg.png'),
+            fit: BoxFit.cover,
           ),
-          SizedBox(height: 10),
-          if (_events != null && _events!.isNotEmpty) // Tampilkan daftar acara jika tidak kosong
-            _buildEventList()
-          else // Tampilkan pesan jika tidak ada acara pada tanggal yang dipilih
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Tidak ada acara pada tanggal ini',
-                style: TextStyle(fontSize: 18),
+        ),
+        child: Column(
+          children: [
+            TableCalendar(
+              calendarStyle: CalendarStyle(
+                todayDecoration: BoxDecoration(
+                  color: Colors.black,
+                  shape: BoxShape.circle,
+                ),
+                selectedDecoration: BoxDecoration(
+                  color: Color(0xFFA4C751),
+                  shape: BoxShape.circle,
+                ),
+                outsideDecoration: BoxDecoration(
+                  color: Color(0xFFE0E0E0), // Warna abu-abu muda untuk hari di luar bulan
+                  shape: BoxShape.circle,
+                ),
+                markerDecoration: BoxDecoration(
+                  color: Colors.blue.shade400, // Warna default untuk marker
+                  shape: BoxShape.circle,
+                ),
+                defaultDecoration: BoxDecoration(
+                  border: Border.all(color: Color(0xFFD6D6D6)), // Garis tepi untuk semua hari
+                  shape: BoxShape.circle,
+                ),
+                defaultTextStyle: TextStyle(color: Colors.black),
+                weekendTextStyle: TextStyle(color: Colors.red), // Warna merah untuk hari Jumat
               ),
+              eventLoader: (day) {
+                var events = _events?.where((event) => isSameDay(event.tanggalAcara, day)).toList() ?? [];
+                if (events.isNotEmpty) {
+                  // Menggunakan warna acak untuk setiap hari dengan acara
+                  return [
+                    Container(
+                      margin: EdgeInsets.all(1.5),
+                      decoration: BoxDecoration(
+                        color: events.length > 1 ? Colors.purple : Colors.blue, // Contoh: warna ungu jika lebih dari satu acara, biru jika satu
+                        shape: BoxShape.circle,
+                      ),
+                    )
+                  ];
+                }
+                return [];
+              },
+              calendarFormat: _calendarFormat,
+              focusedDay: _focusedDay,
+              firstDay: DateTime.utc(2020, 1, 1),
+              lastDay: DateTime.utc(2050, 12, 31),
+              selectedDayPredicate: (day) {
+                return isSameDay(_selectedDay, day);
+              },
+              onDaySelected: _onDaySelected,
+              onFormatChanged: (format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              },
             ),
-        ],
+            SizedBox(height: 10),
+            if (_events != null &&
+                _events!.isNotEmpty) // Tampilkan daftar acara jika tidak kosong
+              _buildEventList()
+            else // Tampilkan pesan jika tidak ada acara pada tanggal yang dipilih
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Tidak ada acara pada tanggal ini',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -139,6 +192,7 @@ class _AcaraScreenState extends State<AcaraScreen> {
             margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
+               color: Color(0xFFA4C751),
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(8),
             ),
@@ -163,10 +217,10 @@ class _AcaraScreenState extends State<AcaraScreen> {
       ),
     );
   }
-}
 
-void main() {
-  runApp(MaterialApp(
-    home: AcaraScreen(),
-  ));
+  void main() {
+    runApp(MaterialApp(
+      home: AcaraScreen(),
+    ));
+  }
 }
