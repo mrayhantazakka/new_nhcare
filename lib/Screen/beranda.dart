@@ -107,8 +107,7 @@ class _BerandaState extends State<Beranda> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      AnakAsuh()), 
+                                  builder: (context) => AnakAsuh()),
                             );
                           },
                           child: Container(
@@ -146,8 +145,7 @@ class _BerandaState extends State<Beranda> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      Programm()),
+                                  builder: (context) => Programm()),
                             );
                           },
                           child: Container(
@@ -241,7 +239,7 @@ class _BerandaState extends State<Beranda> {
                       child: Center(
                         child: Text("card $index"),
                       ),
-                      color: Color(0xFFA4C751),
+                      color: const Color.fromARGB(255, 225, 225, 225),
                     ),
                   ),
                 ),
@@ -293,6 +291,8 @@ class _BerandaState extends State<Beranda> {
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else {
+                      snapshot.data!.sort(
+                          (a, b) => b.publishedAt.compareTo(a.publishedAt));
                       return Column(
                         children: [
                           for (var video in snapshot.data!.take(2)) ...[

@@ -250,6 +250,7 @@ class _LoginPageState extends State<LoginPage> {
                             validator: (val) {
                               return val!.isEmpty ? "Email harus diisi" : null;
                             },
+                            keyboardType: TextInputType.emailAddress,
                             controller: _emailController,
                             decoration: InputDecoration(
                               hintText: 'Email',

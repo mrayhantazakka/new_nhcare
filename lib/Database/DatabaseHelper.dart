@@ -71,6 +71,23 @@ class DatabaseHelper {
     );
   }
 
+  static Future<void> updateUserLocal(String token, String answer,
+      String username, String fullname, String phone) async {
+    final db = await database;
+    await db.update(
+      'user',
+      {
+        'answer': answer,
+        'username': username,
+        'fullname': fullname,
+        'phone': phone,
+      
+      },
+      where: 'token = ?',
+      whereArgs: [token],
+    );
+  }
+
   static Future<User?> getUserFromLocal(String token) async {
     try {
       final db = await database;

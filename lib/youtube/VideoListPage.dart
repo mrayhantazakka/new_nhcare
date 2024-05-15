@@ -7,51 +7,75 @@ class VideoListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<YoutubeVideo>>(
-        future: YoutubeApiService.fetchVideos(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            // snapshot.data!
-            //     .sort((a, b) => b.publishedAt!.compareTo(a.publishedAt!));
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                var video = snapshot.data![index];
-                return ListTile(
-                  leading: CachedNetworkImage(
-                    imageUrl: video.thumbnailUrl,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                  ),
-                  title: Text(video.title),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(video.description),
-                      SizedBox(height: 4),
-                      Text(
-                        'Published at: ${video.publishedAt}',
-                        style: TextStyle(color: Colors.grey),
+      appBar: AppBar(
+        title: Text(
+          'Video',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        backgroundColor: Color(0xFFA4C751),
+      ),
+      body: Stack(
+        children: [
+          FutureBuilder<List<YoutubeVideo>>(
+            future: YoutubeApiService.fetchVideos(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                snapshot.data!
+                    .sort((a, b) => b.publishedAt.compareTo(a.publishedAt));
+
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    var video = snapshot.data![index];
+                    return ListTile(
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: CachedNetworkImageProvider(
+                                    video.thumbnailUrl),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            video.title,
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Published on: ${video.publishedAt}',
+                            style: TextStyle(fontSize: 14, color: Colors.grey),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VideoPlayerPage(video: video),
-                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VideoPlayerPage(video: video),
+                          ),
+                        );
+                      },
                     );
                   },
                 );
-              },
-            );
-          }
-        },
+              }
+            },
+          ),
+        ],
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nhcoree/Home.dart';
 import 'package:nhcoree/Auth/Login.dart';
+import 'package:nhcoree/Profile/profile.dart';
 import 'package:nhcoree/Splash/LoadingPage.dart';
 import 'package:nhcoree/Splash/Splashscreen.dart';
 import 'package:nhcoree/Auth/Registerasi.dart';
@@ -27,6 +28,7 @@ class LoginApp extends StatelessWidget {
         '/loadingPage': (context) => LoadingPage(),
         '/forgotPassword': (context) => ForgotPasswordPage(),
         '/progamPage': (context) => Programm(),
+        '/profile' : (context) => profile(),
       }, /*  */
     );
   }
