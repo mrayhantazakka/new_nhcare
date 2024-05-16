@@ -25,7 +25,7 @@ class _homePageState extends State<homePage> {
     final _listPage = <Widget>[
       AcaraScreen(),
       Beranda(),
-      notifikasi(),
+      Notifikasi(),
       Profile(),
     ];
 

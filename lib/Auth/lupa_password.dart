@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:nhcoree/Database/IpConfig.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -34,28 +35,62 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       body: {
         'email': email,
         'answer': answer,
-        'password': newPassword, // Kirim password baru ke server
+        'password': newPassword,
       },
     );
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(data['message']),
-        ),
-      );
       if (data['message'] == 'Password berhasil diubah') {
-        // Jika berhasil, kembali ke halaman login
+        final snackBar = SnackBar(
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          content: AwesomeSnackbarContent(
+            title: 'Berhasil!',
+            message:
+                'Password Anda telah diubah. Silakan login dengan password baru.',
+            contentType: ContentType.success,
+          ),
+        );
+
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(snackBar);
+
         Navigator.pop(context);
-        _showSuccessDialog(context);
+      } else {
+        final snackBar = SnackBar(
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          content: AwesomeSnackbarContent(
+            title: 'Gagal!',
+            message: data['message'],
+            contentType: ContentType.failure,
+          ),
+        );
+
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(snackBar);
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Gagal mereset password'),
+      final snackBar = SnackBar(
+        elevation: 0,
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        content: AwesomeSnackbarContent(
+          title: 'Kesalahan!',
+          message: 'Gagal mereset password. Silakan coba lagi.',
+          contentType: ContentType.failure,
         ),
+
       );
+
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(snackBar);
     }
   }
 
@@ -149,7 +184,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
-                                                       filled: true,
+                            filled: true,
                             fillColor: Color(0xFFEAEAEA),
                           ),
                         ),
@@ -163,14 +198,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
-                                                       filled: true,
+                            filled: true,
                             fillColor: Color(0xFFEAEAEA),
                           ),
                         ),
                         SizedBox(height: 20),
                         TextFormField(
                           controller: _passwordController,
-                          obscureText: !_isPasswordVisible, // Visibilitas password
+                          obscureText:
+                              !_isPasswordVisible, // Visibilitas password
                           style: TextStyle(fontSize: 14.0),
                           decoration: InputDecoration(
                             hintText: 'Password Baru Anda',
@@ -231,4 +267,3 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     super.dispose();
   }
 }
-

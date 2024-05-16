@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'WelcomePage.dart'; // Import WelcomePage untuk navigasi setelah loading
+import 'WelcomePage.dart'; 
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LoadingPage extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   _simulateLoading() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 5));
     setState(() {
       _isLoading = false;
     });
@@ -47,8 +48,9 @@ class _LoadingPageState extends State<LoadingPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(Colors.white),
+              LoadingAnimationWidget.threeArchedCircle(
+                color: Colors.white,
+                size: 50,
               ),
               SizedBox(height: 20),
               Text(
