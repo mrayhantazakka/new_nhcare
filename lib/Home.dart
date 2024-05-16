@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nhcoree/Screen/acara.dart';
 import 'package:nhcoree/Screen/beranda.dart';
 import 'package:nhcoree/Screen/notifikasi.dart';
-import 'package:nhcoree/Screen/profile.dart';
+import 'package:nhcoree/Profile/profile.dart';
 
 class homePage extends StatefulWidget {
   const homePage({Key? key});
@@ -26,7 +26,7 @@ class _homePageState extends State<homePage> {
       AcaraScreen(),
       Beranda(),
       Notifikasi(),
-      Profile(),
+      profile(),
     ];
 
     final _bottomNavBarItems = <BottomNavigationBarItem>[
