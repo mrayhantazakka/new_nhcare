@@ -1,22 +1,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-<<<<<<< HEAD
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
-=======
+
 <queries>
     <intent>
     <action android:name="android.intent.action.VIEW"/>
     <data android:scheme="whatsapp"/>
     </intent>
+    
 </queries>
->>>>>>> d36682c64bd1f719a3f9ae93457b529d47e43f8f
     <application
         android:label="NH Care"
         android:name="${applicationName}"
-        android:icon="@drawable/logo_putih">
+        android:icon="@drawable/logo_warna">
         <activity
             android:name=".MainActivity"
             android:exported="true"

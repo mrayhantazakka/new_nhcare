@@ -4,33 +4,14 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:nhcoree/Database/IpConfig.dart';
+import 'package:nhcoree/Models/AcaraData.dart'; // Pastikan ini mengarah ke lokasi yang benar
 
-class Acara {
-  final DateTime tanggalAcara;
-  final String judul;
-  final String deskripsi;
-
-  Acara({
-    required this.tanggalAcara,
-    required this.judul,
-    required this.deskripsi,
-  });
-
-  factory Acara.fromJson(Map<String, dynamic> json) {
-    return Acara(
-      tanggalAcara: DateTime.parse(json['tanggal_acara']),
-      judul: json['judul'],
-      deskripsi: json['deskripsi'],
-    );
-  }
-}
-
-Future<List<Acara>> fetchEventsForDate(DateTime date) async {
+Future<List<AcaraData>> fetchEventsForDate(DateTime date) async {
   final response = await http.get(Uri.parse('${IpConfig.baseUrl}/api/acaras'));
   if (response.statusCode == 200) {
     final List<dynamic> jsonData = json.decode(response.body);
-    final List<Acara> events = jsonData
-        .map((json) => Acara.fromJson(json))
+    final List<AcaraData> events = jsonData
+        .map((json) => AcaraData.fromJson(json))
         .where((acara) =>
             acara.tanggalAcara.year == date.year &&
             acara.tanggalAcara.month == date.month &&
@@ -54,7 +35,7 @@ class _AcaraScreenState extends State<AcaraScreen> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  List<Acara>? _events;
+  List<AcaraData>? _events;
 
   @override
   void initState() {

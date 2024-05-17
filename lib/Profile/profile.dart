@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:nhcoree/Database/DatabaseHelper.dart';
 import 'package:nhcoree/Models/user.dart';
@@ -7,6 +9,7 @@ import 'package:nhcoree/Profile/riwayat_donasi.dart';
 import 'package:nhcoree/Profile/ubah_kata_sandi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nhcoree/Auth/Login.dart';
+import 'package:path_provider/path_provider.dart';
 
 class profile extends StatefulWidget {
   const profile({super.key});
@@ -18,11 +21,33 @@ class profile extends StatefulWidget {
 class _profileState extends State<profile> {
   late String _username = '';
   late String _email = '';
+  File? _profileImage;
 
   @override
   void initState() {
     super.initState();
+    loadProfileImage();
     _loadUserData();
+  }
+
+  Future<void> loadProfileImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? imagePath = prefs.getString('profileImagePath');
+    print("Image path from prefs: $imagePath"); // Debug print
+    if (imagePath != null) {
+      File profileImage = File(imagePath);
+      print("File exists: ${await profileImage.exists()}"); // Debug print
+      if (await profileImage.exists()) {
+        setState(() {
+          _profileImage = profileImage;
+        });
+      }
+    } else {
+      // Jika tidak ada gambar yang disimpan, tampilkan huruf pertama dari username sebagai gambar default
+      setState(() {
+        _profileImage = null; // Tidak menggunakan gambar, biarkan null
+      });
+    }
   }
 
   void _loadUserData() async {
@@ -106,7 +131,7 @@ class _profileState extends State<profile> {
             child: Column(
               children: [
                 Padding(padding: EdgeInsets.only(top: 50)),
-                const Text('PROFIL',
+                const Text('PROFILE',
                     style: TextStyle(
                         fontSize: 24,
                         color: Color(0xFFA4C751),
@@ -133,14 +158,17 @@ class _profileState extends State<profile> {
                       CircleAvatar(
                         radius: 75,
                         backgroundColor: Color(0xFFA4C751),
-                        child: Text(
-                          _username
-                              .split(" ")
-                              .where((name) => name.isNotEmpty)
-                              .map((name) => name.substring(0, 2).toUpperCase())
-                              .join(""),
-                          style: TextStyle(fontSize: 36, color: Colors.white),
-                        ),
+                        backgroundImage: _profileImage != null ? FileImage(_profileImage!) : null,
+                        child: _profileImage == null
+                            ? Text(
+                                _username
+                                    .split(" ")
+                                    .where((name) => name.isNotEmpty)
+                                    .map((name) => name.substring(0, 1).toUpperCase())
+                                    .join(""),
+                                style: TextStyle(fontSize: 36, color: Colors.white),
+                              )
+                            : null,
                       ),
                       SizedBox(height: 20),
                       Text(

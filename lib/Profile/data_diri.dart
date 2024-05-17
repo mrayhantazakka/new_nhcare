@@ -3,6 +3,8 @@ import 'package:nhcoree/Database/DatabaseHelper.dart';
 import 'package:nhcoree/Database/IpConfig.dart';
 import 'package:nhcoree/Models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class dataDiri extends StatefulWidget {
@@ -17,6 +19,7 @@ class _dataDiriState extends State<dataDiri> {
   late TextEditingController _usernameController;
   late TextEditingController _fullnameController;
   late TextEditingController _phoneController;
+  File? _image;
 
   @override
   void initState() {
@@ -31,6 +34,10 @@ class _dataDiriState extends State<dataDiri> {
   void _getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token') ?? '';
+    String? imagePath = prefs.getString('profileImagePath');
+    if (imagePath != null) {
+      _image = File(imagePath);
+    }
     User? user = await DatabaseHelper.getUserFromLocal(token);
     if (user != null) {
       setState(() {
@@ -117,6 +124,25 @@ class _dataDiriState extends State<dataDiri> {
     );
   }
 
+  Future getImage(ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('profileImagePath', pickedFile.path);
+    }
+  }
+
+  Future<void> removeImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('profileImagePath');
+    setState(() {
+      _image = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -161,20 +187,51 @@ class _dataDiriState extends State<dataDiri> {
                   child: Column(
                     children: [
                       Padding(padding: EdgeInsets.only(top: 20.0)),
-                      CircleAvatar(
-                        radius: 75,
-                        backgroundColor: Color(0xFFA4C751),
-                        child: Text(
-                          _user != null &&
-                                  _user!.username != null &&
-                                  _user!.username!.isNotEmpty
-                              ? _user!.username!
-                                  .split(" ")
-                                  .map((name) =>
-                                      name.substring(0, 2).toUpperCase())
-                                  .join("")
-                              : '',
-                          style: TextStyle(fontSize: 36, color: Colors.white),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SafeArea(
+                                child: Wrap(
+                                  children: <Widget>[
+                                    ListTile(
+                                      leading: Icon(Icons.camera),
+                                      title: Text('Kamera'),
+                                      onTap: () {
+                                        getImage(ImageSource.camera);
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading: Icon(Icons.image),
+                                      title: Text('Galeri'),
+                                      onTap: () {
+                                        getImage(ImageSource.gallery);
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading: Icon(Icons.delete),
+                                      title: Text('Hapus Foto'),
+                                      onTap: () {
+                                        removeImage();
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: 75,
+                          backgroundColor: Color(0xFFA4C751),
+                          backgroundImage: _image != null ? FileImage(_image!) : null,
+                          child: _image == null
+                              ? Icon(Icons.camera_alt, color: Colors.white, size: 40)
+                              : null,
                         ),
                       ),
 
