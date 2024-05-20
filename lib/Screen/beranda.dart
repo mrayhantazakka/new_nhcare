@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:nhcoree/Donasi/Donasi.dart';
 import 'package:nhcoree/Screen/anak.dart';
 import 'package:nhcoree/youtube/VideoListPage.dart';
 import 'package:nhcoree/youtube/VideoPlayerPage.dart';
@@ -70,7 +71,10 @@ class _BerandaState extends State<Beranda> {
                       children: [
                         InkWell(
                           onTap: () {
-                            print('Card Donasi diklik');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Donasi()),
+                            );
                           },
                           child: Container(
                             transform:
