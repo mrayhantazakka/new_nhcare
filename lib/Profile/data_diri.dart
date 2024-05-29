@@ -384,7 +384,7 @@ class _dataDiriState extends State<dataDiri> {
                         ),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Color(0xFFA4C751),
+                              backgroundColor: Color(0xFFA4C751),
                               minimumSize: Size(345, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),

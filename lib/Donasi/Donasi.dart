@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:midtrans_sdk/midtrans_sdk.dart';
+import 'package:nhcoree/Database/IpConfig.dart';
 
 class Donasi extends StatefulWidget {
   const Donasi({super.key});
@@ -14,6 +16,17 @@ class _DonasiState extends State<Donasi> {
   TextEditingController nominalController =
       TextEditingController(text: 'Rp. 0');
   String selectedTujuan = ''; // Default tujuan donasi
+
+  @override
+  void initState() {
+    super.initState();
+    MidtransSDK.init(
+      config: MidtransConfig(
+        clientKey: 'SB-Mid-client-Cus_lO_5JXzHSIcU', 
+        merchantBaseUrl: "${IpConfig.baseUrl}/api/create-transaction",
+      ),
+    );
+  }
 
   @override
   void dispose() {
@@ -307,13 +320,25 @@ class _DonasiState extends State<Donasi> {
                     horizontal: 20.0, vertical: 10.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFA4C751),
+                    backgroundColor: Color(0xFFA4C751),
                     minimumSize: Size(370, 60),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (selectedNominal != null && selectedTujuan != '') {
+                      MidtransSDK().startPaymentUiFlow(token: 'TOKEN');
+                    } else {
+                      // Show error message or alert dialog if the user hasn't filled in all the required fields
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Text('Silahkan Isi Coloum yang Kosong!'),
+                        ),
+                      );
+                    }
+                  },
                   child: const Text('Bayar',
                       style: TextStyle(color: Colors.white)),
                 ),

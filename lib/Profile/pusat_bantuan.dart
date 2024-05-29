@@ -43,7 +43,7 @@ class pusatBantuan extends StatelessWidget {
                 children: [
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFFFFFFF),
+                        backgroundColor: Color(0xFFFFFFFF),
                         minimumSize: Size(170, 60),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),

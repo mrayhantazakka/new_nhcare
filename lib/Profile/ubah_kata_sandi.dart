@@ -228,7 +228,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                           if (showAnswerButton)
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: Color(0xFFA4C751),
+                                backgroundColor: Color(0xFFA4C751),
                                 minimumSize: Size(345, 60),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -284,7 +284,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                           Padding(padding: EdgeInsets.only(top: 10)),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Color(0xFFA4C751),
+                              backgroundColor: Color(0xFFA4C751),
                               minimumSize: Size(345, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -304,7 +304,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                     if (showEmailButton)
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFFA4C751),
+                          backgroundColor: Color(0xFFA4C751),
                           minimumSize: Size(345, 50),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),

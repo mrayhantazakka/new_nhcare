@@ -88,7 +88,7 @@ class _ProgrammState extends State<Programm> {
                 Navigator.of(context).pop();
               },
               style: TextButton.styleFrom(
-                primary: Colors.red, // Mengubah warna teks tombol menjadi merah
+                backgroundColor: Colors.red, // Mengubah warna teks tombol menjadi merah
               ),
             ),
           ],

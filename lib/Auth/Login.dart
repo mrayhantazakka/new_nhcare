@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
             backgroundColor: Colors.transparent,
             content: AwesomeSnackbarContent(
               title: 'Sukses!',
-              message: 'Selamat datang, ${email}',
+              message: 'Selamat Datang, ${email}',
               contentType: ContentType.success,
             ),
           );
@@ -331,7 +331,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFFA4C751),
+                          backgroundColor: Color(0xFFA4C751),
                           minimumSize: Size(screenWidth * 0.4, 60), // Responsive size
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
