@@ -36,7 +36,7 @@ class _NotifikasiState extends State<Notifikasi> {
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
-          title: Text('Detail Notifikasi'),
+          title: const Text('Detail Notifikasi'),
           content: Text(payload),
         ),
       );
@@ -50,7 +50,7 @@ class _NotifikasiState extends State<Notifikasi> {
       time = tz.TZDateTime.from(time.add(Duration(days: (7 - time.weekday + DateTime.friday) % 7)), tz.local);
     }
 
-    final AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+    final AndroidNotificationDetails androidDetails = const AndroidNotificationDetails(
       'weekly_notification_channel_id',
       'Weekly Notification',
       'Weekly Notification Channel for Donations',
@@ -75,7 +75,7 @@ class _NotifikasiState extends State<Notifikasi> {
     var time = tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5));
     time = tz.TZDateTime(tz.local, time.year, time.month, time.day, 7, 0);
 
-    final AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+    final AndroidNotificationDetails androidDetails = const AndroidNotificationDetails(
       'daily_notification_channel_id',
       'Daily Motivation',
       'Daily Motivation Notification Channel',
@@ -98,7 +98,7 @@ class _NotifikasiState extends State<Notifikasi> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'NOTIFIKASI',
           style: TextStyle(
             color: Color(0xFFA4C751),
@@ -110,13 +110,13 @@ class _NotifikasiState extends State<Notifikasi> {
         automaticallyImplyLeading: false,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications),
             onPressed: _scheduleDailySevenAMNotification,
           ),
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/img/new_bg.png'),
             fit: BoxFit.cover,

@@ -90,10 +90,10 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
       setState(() {
         _showMessageDialog(context, 'Password Berhasil Diubah');
       });
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => profile()),
+        MaterialPageRoute(builder: (context) => const profile()),
       );
     } else {
       setState(() {
@@ -107,11 +107,11 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Pesan'),
+          title: const Text('Pesan'),
           content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -134,7 +134,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
               TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFA4C751)),
         ),
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -147,7 +147,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
           ),
           child: Center(
             child: Column(children: [
-              Padding(padding: EdgeInsets.only(top: 50)),
+              const Padding(padding: EdgeInsets.only(top: 50)),
               Container(
                 width: 360,
                 height: 300,
@@ -159,7 +159,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 7,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -177,14 +177,14 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           hintText: 'Masukkan Email Anda',
-                          hintStyle: TextStyle(fontSize: 14.0),
-                          prefixIcon: Icon(Icons.assignment_ind),
+                          hintStyle: const TextStyle(fontSize: 14.0),
+                          prefixIcon: const Icon(Icons.assignment_ind),
                           border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(10)),
                           filled: true,
-                          fillColor: Color(0xFFEAEAEA),
-                          contentPadding: EdgeInsets.symmetric(
+                          fillColor: const Color(0xFFEAEAEA),
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 20),
                         ),
                       ),
@@ -197,45 +197,45 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                             readOnly: true,
                             decoration: InputDecoration(
                               hintText: 'Question',
-                              prefixIcon: Icon(Icons.question_answer),
+                              prefixIcon: const Icon(Icons.question_answer),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               filled: true,
-                              fillColor: Color(0xFFEAEAEA),
-                              contentPadding: EdgeInsets.symmetric(
+                              fillColor: const Color(0xFFEAEAEA),
+                              contentPadding: const EdgeInsets.symmetric(
                                   vertical: 15, horizontal: 20),
                             ),
                           ),
-                          Padding(padding: EdgeInsets.only(top: 10)),
+                          const Padding(padding: EdgeInsets.only(top: 10)),
                           TextFormField(
                             controller: answerController,
                             decoration: InputDecoration(
                               hintText: 'Masukkan Jawaban Anda',
-                              hintStyle: TextStyle(fontSize: 14.0),
-                              prefixIcon: Icon(Icons.edit),
+                              hintStyle: const TextStyle(fontSize: 14.0),
+                              prefixIcon: const Icon(Icons.edit),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(10)),
                               filled: true,
-                              fillColor: Color(0xFFEAEAEA),
-                              contentPadding: EdgeInsets.symmetric(
+                              fillColor: const Color(0xFFEAEAEA),
+                              contentPadding: const EdgeInsets.symmetric(
                                   vertical: 15, horizontal: 20),
                             ),
                           ),
-                          Padding(padding: EdgeInsets.only(top: 10)),
+                          const Padding(padding: EdgeInsets.only(top: 10)),
                           if (showAnswerButton)
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFFA4C751),
-                                minimumSize: Size(345, 60),
+                                backgroundColor: const Color(0xFFA4C751),
+                                minimumSize: const Size(345, 60),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
                               onPressed: verifyAnswer,
-                              child: Text('Verifikasi Jawaban',
+                              child: const Text('Verifikasi Jawaban',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -259,39 +259,39 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                                     : Icons.visibility_off),
                                 onPressed: visible,
                               ),
-                              prefixIcon: Icon(Icons.lock_open),
+                              prefixIcon: const Icon(Icons.lock_open),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(10)),
                               filled: true,
-                              fillColor: Color(0xFFEAEAEA),
+                              fillColor: const Color(0xFFEAEAEA),
                             ),
                           ),
-                          Padding(padding: EdgeInsets.only(top: 15)),
+                          const Padding(padding: EdgeInsets.only(top: 15)),
                           TextFormField(
                             controller: confirmPasswordController,
                             decoration: InputDecoration(
                               hintText: 'Konfirmasi Password',
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: const Icon(Icons.lock),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(10)),
                               filled: true,
-                              fillColor: Color(0xFFEAEAEA),
+                              fillColor: const Color(0xFFEAEAEA),
                             ),
                             obscureText: true,
                           ),
-                          Padding(padding: EdgeInsets.only(top: 10)),
+                          const Padding(padding: EdgeInsets.only(top: 10)),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFA4C751),
-                              minimumSize: Size(345, 60),
+                              backgroundColor: const Color(0xFFA4C751),
+                              minimumSize: const Size(345, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
                             onPressed: resetPassword,
-                            child: Text('Ubah Password',
+                            child: const Text('Ubah Password',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -299,19 +299,19 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                           ),
                         ],
                       ),
-                    Padding(padding: EdgeInsets.only(top: 15)),
+                    const Padding(padding: EdgeInsets.only(top: 15)),
                     if (message.isNotEmpty) Text(message),
                     if (showEmailButton)
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFA4C751),
-                          minimumSize: Size(345, 50),
+                          backgroundColor: const Color(0xFFA4C751),
+                          minimumSize: const Size(345, 50),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                         onPressed: verifyEmail,
-                        child: Text('Verifikasi Email',
+                        child: const Text('Verifikasi Email',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

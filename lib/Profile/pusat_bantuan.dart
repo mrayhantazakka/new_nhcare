@@ -19,10 +19,10 @@ class pusatBantuan extends StatelessWidget {
           ),
           child: Center(
             child: Column(children: [
-              Padding(padding: EdgeInsets.only(top: 180)),
+              const Padding(padding: EdgeInsets.only(top: 180)),
               Image.asset('assets/img/bantuan.png',
                   height: 251.61, width: 290.63),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               const Padding(
@@ -37,14 +37,14 @@ class pusatBantuan extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFFFFFF),
-                        minimumSize: Size(170, 60),
+                        backgroundColor: const Color(0xFFFFFFFF),
+                        minimumSize: const Size(170, 60),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -57,18 +57,18 @@ class pusatBantuan extends StatelessWidget {
                       onPressed: () async {
                         launchUrl(whatsApp);
                       }),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Color(0xFFFFFFFFF)),
-                      minimumSize: Size(170, 60),
+                      side: const BorderSide(color: Color(0xfffffffff)),
+                      minimumSize: const Size(170, 60),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: Text('Kembali',
+                    child: const Text('Kembali',
                         style: TextStyle(
-                            color: Color(0xFFFFFFFFF),
+                            color: Color(0xfffffffff),
                             fontSize: 16,
                             fontWeight: FontWeight.bold)),
                     onPressed: () {

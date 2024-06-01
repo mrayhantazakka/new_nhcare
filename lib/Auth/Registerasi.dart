@@ -17,14 +17,14 @@ class daftar extends StatefulWidget {
 }
 
 class _daftarState extends State<daftar> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _fullnameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _kofirmPwController = TextEditingController();
-  TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _fullnameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _kofirmPwController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   String? _selectedQuestion;
-  List<String> _questions = [
+  final List<String> _questions = [
     'Surah Favorit',
     'Nama Sahabat Nabi',
     'Mukjizat Nabi',
@@ -32,9 +32,9 @@ class _daftarState extends State<daftar> {
     'Tempat Favorit',
     'Apa Saja Untuk Diingat!'
   ];
-  TextEditingController _answerController = TextEditingController();
+  final TextEditingController _answerController = TextEditingController();
 
-  GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
+  final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
 
   bool hiden = true;
   void visible() {
@@ -99,7 +99,7 @@ class _daftarState extends State<daftar> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          MaterialPageRoute(builder: (context) => const LoginPage()),
         );
       } else {
         final snackBar = SnackBar(
@@ -145,14 +145,14 @@ class _daftarState extends State<daftar> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light.copyWith(
         statusBarColor:
-            Color(0xFFA4C751), // Ganti dengan warna yang Anda inginkan
+            const Color(0xFFA4C751), // Ganti dengan warna yang Anda inginkan
       ),
       child: Stack(
         children: [
           Scaffold(
             body: SingleChildScrollView(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/img/bg.png'),
                     fit: BoxFit.cover,
@@ -163,11 +163,11 @@ class _daftarState extends State<daftar> {
                   key: _keyForm,
                   child: Column(
                     children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(top: 50),
                       ),
                       Image.asset('assets/img/logo.jpg', height: 78, width: 65),
-                      SizedBox(height: 50),
+                      const SizedBox(height: 50),
                       Container(
                         width: screenWidth *
                             0.9, // Menggunakan screenWidth yang telah didefinisikan
@@ -179,7 +179,7 @@ class _daftarState extends State<daftar> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 7,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -188,8 +188,8 @@ class _daftarState extends State<daftar> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Padding(padding: EdgeInsets.all(10)),
-                              Center(
+                              const Padding(padding: EdgeInsets.all(10)),
+                              const Center(
                                 child: Text(
                                   "DAFTAR",
                                   style: TextStyle(
@@ -207,7 +207,7 @@ class _daftarState extends State<daftar> {
                                   width: 105,
                                 ),
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(
                                     top: 10, left: 10, right: 10, bottom: 20),
                               ),
@@ -220,15 +220,15 @@ class _daftarState extends State<daftar> {
                                 },
                                 decoration: InputDecoration(
                                   hintText: 'fullname',
-                                  prefixIcon: Icon(Icons.person),
+                                  prefixIcon: const Icon(Icons.person),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(10)),
                                   filled: true,
-                                  fillColor: Color(0xFFEAEAEA),
+                                  fillColor: const Color(0xFFEAEAEA),
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               TextFormField(
                                 validator: (val) {
                                   return val!.isEmpty
@@ -238,15 +238,15 @@ class _daftarState extends State<daftar> {
                                 controller: _usernameController,
                                 decoration: InputDecoration(
                                   hintText: 'username',
-                                  prefixIcon: Icon(Icons.assignment_ind),
+                                  prefixIcon: const Icon(Icons.assignment_ind),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(10)),
                                   filled: true,
-                                  fillColor: Color(0xFFEAEAEA),
+                                  fillColor: const Color(0xFFEAEAEA),
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               TextFormField(
                                 validator: (val) {
                                   if (val!.isEmpty) {
@@ -262,15 +262,15 @@ class _daftarState extends State<daftar> {
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
                                   hintText: 'email',
-                                  prefixIcon: Icon(Icons.email),
+                                  prefixIcon: const Icon(Icons.email),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(10)),
                                   filled: true,
-                                  fillColor: Color(0xFFEAEAEA),
+                                  fillColor: const Color(0xFFEAEAEA),
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               TextFormField(
                                 validator: (val) {
                                   if (val!.isEmpty) {
@@ -283,19 +283,19 @@ class _daftarState extends State<daftar> {
                                 controller: _phoneController,
                                 decoration: InputDecoration(
                                   hintText: 'phone',
-                                  prefixIcon: Icon(Icons.phone),
+                                  prefixIcon: const Icon(Icons.phone),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(10)),
                                   filled: true,
-                                  fillColor: Color(0xFFEAEAEA),
+                                  fillColor: const Color(0xFFEAEAEA),
                                 ),
                                 keyboardType: TextInputType.number,
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               TextFormField(
                                 validator: (val) {
                                   if (val!.isEmpty) {
@@ -316,15 +316,15 @@ class _daftarState extends State<daftar> {
                                         : Icons.visibility_off),
                                     onPressed: visible,
                                   ),
-                                  prefixIcon: Icon(Icons.lock_open),
+                                  prefixIcon: const Icon(Icons.lock_open),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(10)),
                                   filled: true,
-                                  fillColor: Color(0xFFEAEAEA),
+                                  fillColor: const Color(0xFFEAEAEA),
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               TextFormField(
                                 validator: (val) {
                                   if (val!.isEmpty) {
@@ -339,15 +339,15 @@ class _daftarState extends State<daftar> {
                                 keyboardType: TextInputType.visiblePassword,
                                 decoration: InputDecoration(
                                   hintText: 'konfirmasi password',
-                                  prefixIcon: Icon(Icons.lock),
+                                  prefixIcon: const Icon(Icons.lock),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(10)),
                                   filled: true,
-                                  fillColor: Color(0xFFEAEAEA),
+                                  fillColor: const Color(0xFFEAEAEA),
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               DropdownButtonFormField<String>(
                                 value: _selectedQuestion,
                                 onChanged: (newValue) {
@@ -357,56 +357,56 @@ class _daftarState extends State<daftar> {
                                 },
                                 items: _questions.map((question) {
                                   return DropdownMenuItem(
-                                    child: Text(question),
                                     value: question,
+                                    child: Text(question),
                                   );
                                 }).toList(),
                                 decoration: InputDecoration(
                                   hintText: 'Pilih Pertanyaan',
-                                  prefixIcon: Icon(Icons.question_answer),
+                                  prefixIcon: const Icon(Icons.question_answer),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   filled: true,
-                                  fillColor: Color(0xFFEAEAEA),
+                                  fillColor: const Color(0xFFEAEAEA),
                                 ),
                               ),
-                              SizedBox(height: 10),
-                              Text(
+                              const SizedBox(height: 10),
+                              const Text(
                                 ' Pertanyaan ini digunakan sebagai antisipasi jika Anda lupa password. Harap selalu ingat Jawaban Anda! ',
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 12,
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               TextFormField(
                                 controller: _answerController,
                                 decoration: InputDecoration(
                                   hintText: 'Jawaban',
-                                  prefixIcon: Icon(Icons.edit),
+                                  prefixIcon: const Icon(Icons.edit),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   filled: true,
-                                  fillColor: Color(0xFFEAEAEA),
+                                  fillColor: const Color(0xFFEAEAEA),
                                 ),
                               ),
-                              SizedBox(height: 20),
-                              Padding(padding: EdgeInsets.only(bottom: 20))
+                              const SizedBox(height: 20),
+                              const Padding(padding: EdgeInsets.only(bottom: 20))
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFA4C751),
+                              backgroundColor: const Color(0xFFA4C751),
                               minimumSize:
                                   Size(MediaQuery.of(context).size.width * 0.4, 60),
                               shape: RoundedRectangleBorder(
@@ -415,7 +415,7 @@ class _daftarState extends State<daftar> {
                               elevation: 5, // Menambahkan shadow
 
                             ),
-                            child: Text('DAFTAR',
+                            child: const Text('DAFTAR',
                                 style: TextStyle(color: Colors.white)),
                             onPressed: () {
                               if (_keyForm.currentState!.validate()) {
@@ -438,17 +438,17 @@ class _daftarState extends State<daftar> {
                               }
                             },
                           ),
-                          SizedBox(width: 30),
+                          const SizedBox(width: 30),
                           OutlinedButton(
                             style: OutlinedButton.styleFrom(
-                              side: BorderSide(color: Color(0xFFA4C751)),
+                              side: const BorderSide(color: Color(0xFFA4C751)),
                               minimumSize:
                                   Size(MediaQuery.of(context).size.width * 0.4, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            child: Text('KEMBALI',
+                            child: const Text('KEMBALI',
                                 style: TextStyle(color: Color(0xFFA4C751))),
                             onPressed: () {
                               Navigator.pushNamed(context, '/loadingPage');
@@ -456,18 +456,18 @@ class _daftarState extends State<daftar> {
                           ),
                         ],
                       ),
-                      Padding(padding: EdgeInsets.only(top: 20.0)),
+                      const Padding(padding: EdgeInsets.only(top: 20.0)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Sudah punya akun? '),
+                          const Text('Sudah punya akun? '),
                           MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(context, '/login');
                               },
-                              child: Text(
+                              child: const Text(
                                 'Login sekarang',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -478,7 +478,7 @@ class _daftarState extends State<daftar> {
                           ),
                         ],
                       ),
-                      Padding(padding: EdgeInsets.only(bottom: 20.0)),
+                      const Padding(padding: EdgeInsets.only(bottom: 20.0)),
                     ],
                   ),
                 ),
@@ -489,7 +489,7 @@ class _daftarState extends State<daftar> {
           if (_isLoading)
             Container(
               color: Colors.black.withOpacity(0.5),
-              child: Center(
+              child: const Center(
                 child: CircularProgressIndicator(), // Menggunakan CircularProgressIndicator standar
               ),
             ),

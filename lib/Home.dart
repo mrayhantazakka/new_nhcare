@@ -22,36 +22,36 @@ class _homePageState extends State<homePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _listPage = <Widget>[
-      AcaraScreen(),
-      Beranda(),
-      Notifikasi(),
-      profile(),
+    final listPage = <Widget>[
+      const AcaraScreen(),
+      const Beranda(),
+      const Notifikasi(),
+      const profile(),
     ];
 
-    final _bottomNavBarItems = <BottomNavigationBarItem>[
-      BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Acara'),
+    final bottomNavBarItems = <BottomNavigationBarItem>[
+      const BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Acara'),
       const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Beranda'),
       const BottomNavigationBarItem(
           icon: Icon(Icons.notifications), label: 'Notifikasi'),
       const BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
     ];
 
-    final _bottomNavBar = BottomNavigationBar(
+    final bottomNavBar = BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      items: _bottomNavBarItems,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      items: bottomNavBarItems,
       currentIndex: _selectedTabIndex,
-      unselectedItemColor: Color(0xFFA6A5A5),
-      selectedItemColor: Color(0xFFA4C751),
+      unselectedItemColor: const Color(0xFFA6A5A5),
+      selectedItemColor: const Color(0xFFA4C751),
       onTap: _onNavBarTapped,
     );
 
     return Scaffold(
       body: Center(
-        child: _listPage[_selectedTabIndex],
+        child: listPage[_selectedTabIndex],
       ),
-      bottomNavigationBar: _bottomNavBar,
+      bottomNavigationBar: bottomNavBar,
     );
   }
 }

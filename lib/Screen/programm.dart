@@ -5,6 +5,8 @@ import 'package:nhcoree/Database/IpConfig.dart';
 import 'package:nhcoree/Models/ProgramData.dart';
 
 class Programm extends StatefulWidget {
+  const Programm({super.key});
+
   @override
   _ProgrammState createState() => _ProgrammState();
 }
@@ -54,7 +56,7 @@ class _ProgrammState extends State<Programm> {
           title: Text(
             program.judul,
             textAlign: TextAlign.center, // Menengahkan judul
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold, // Membuat teks judul menjadi tebal
               fontSize: 20, // Meningkatkan ukuran font judul
             ),
@@ -70,11 +72,11 @@ class _ProgrammState extends State<Programm> {
                   height: 200, // Atur tinggi gambar sesuai kebutuhan
                   fit: BoxFit.cover, // Menyesuaikan gambar agar terlihat lebih baik
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Text(
                   program.deskripsi,
                   textAlign: TextAlign.justify, // Menjajarkan teks deskripsi agar rapi
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16, // Menyesuaikan ukuran font deskripsi
                   ),
                 ),
@@ -83,13 +85,13 @@ class _ProgrammState extends State<Programm> {
           ),
           actions: [
             TextButton(
-              child: Text('Tutup'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.red, // Mengubah warna teks tombol menjadi merah
               ),
+              child: Text('Tutup'),
             ),
           ],
         );
@@ -110,10 +112,10 @@ class _ProgrammState extends State<Programm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Program'),
+        title: const Text('Program'),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/img/new_bg.png'),
             fit: BoxFit.cover,
@@ -132,7 +134,7 @@ class _ProgrammState extends State<Programm> {
                       color: Colors.grey.withOpacity(0.2),
                       spreadRadius: 1,
                       blurRadius: 3,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
@@ -140,12 +142,12 @@ class _ProgrammState extends State<Programm> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Row(
                     children: [
-                      Icon(Icons.search),
-                      SizedBox(width: 8),
+                      const Icon(Icons.search),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: TextField(
                           controller: _searchController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Cari Program',
                             border: InputBorder.none,
                           ),
@@ -159,7 +161,7 @@ class _ProgrammState extends State<Programm> {
             ),
             Expanded(
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 16.0,
                   mainAxisSpacing: 16.0,
@@ -172,7 +174,7 @@ class _ProgrammState extends State<Programm> {
                       _onProgramTap(program);
                     },
                     child: Container(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
                         color: Colors.white,
@@ -181,7 +183,7 @@ class _ProgrammState extends State<Programm> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 1,
                             blurRadius: 3,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
@@ -194,16 +196,16 @@ class _ProgrammState extends State<Programm> {
                             width: 100,
                             height: 100,
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Text(
                             program.judul,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0,
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
                         ],
                       ),

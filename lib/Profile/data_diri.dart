@@ -109,11 +109,11 @@ class _dataDiriState extends State<dataDiri> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Pesan'),
+          title: const Text('Pesan'),
           content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -155,12 +155,12 @@ class _dataDiriState extends State<dataDiri> {
                 fontWeight: FontWeight.bold, color: Color(0xFFA4C751)),
           ),
           centerTitle: true,
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         ),
         body: SingleChildScrollView(
           child: Container(
             height: screenHeight,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/img/new_bg.png'),
                 fit: BoxFit.fill,
@@ -168,7 +168,7 @@ class _dataDiriState extends State<dataDiri> {
             ),
             child: Center(
               child: Column(children: [
-                Padding(padding: EdgeInsets.only(top: 50)),
+                const Padding(padding: EdgeInsets.only(top: 50)),
                 Container(
                   width: 360,
                   height: 700,
@@ -180,13 +180,13 @@ class _dataDiriState extends State<dataDiri> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 2,
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
                   child: Column(
                     children: [
-                      Padding(padding: EdgeInsets.only(top: 20.0)),
+                      const Padding(padding: EdgeInsets.only(top: 20.0)),
                       GestureDetector(
                         onTap: () {
                           showModalBottomSheet(
@@ -196,24 +196,24 @@ class _dataDiriState extends State<dataDiri> {
                                 child: Wrap(
                                   children: <Widget>[
                                     ListTile(
-                                      leading: Icon(Icons.camera),
-                                      title: Text('Kamera'),
+                                      leading: const Icon(Icons.camera),
+                                      title: const Text('Kamera'),
                                       onTap: () {
                                         getImage(ImageSource.camera);
                                         Navigator.of(context).pop();
                                       },
                                     ),
                                     ListTile(
-                                      leading: Icon(Icons.image),
-                                      title: Text('Galeri'),
+                                      leading: const Icon(Icons.image),
+                                      title: const Text('Galeri'),
                                       onTap: () {
                                         getImage(ImageSource.gallery);
                                         Navigator.of(context).pop();
                                       },
                                     ),
                                     ListTile(
-                                      leading: Icon(Icons.delete),
-                                      title: Text('Hapus Foto'),
+                                      leading: const Icon(Icons.delete),
+                                      title: const Text('Hapus Foto'),
                                       onTap: () {
                                         removeImage();
                                         Navigator.of(context).pop();
@@ -227,15 +227,15 @@ class _dataDiriState extends State<dataDiri> {
                         },
                         child: CircleAvatar(
                           radius: 75,
-                          backgroundColor: Color(0xFFA4C751),
+                          backgroundColor: const Color(0xFFA4C751),
                           backgroundImage: _image != null ? FileImage(_image!) : null,
                           child: _image == null
-                              ? Icon(Icons.camera_alt, color: Colors.white, size: 40)
+                              ? const Icon(Icons.camera_alt, color: Colors.white, size: 40)
                               : null,
                         ),
                       ),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Padding(
@@ -251,14 +251,14 @@ class _dataDiriState extends State<dataDiri> {
                           decoration: InputDecoration(
                             hintText: 'Email',
                             hintStyle:
-                                TextStyle(fontSize: 14.0, color: Colors.grey),
-                            prefixIcon: Icon(Icons.email),
+                                const TextStyle(fontSize: 14.0, color: Colors.grey),
+                            prefixIcon: const Icon(Icons.email),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
                             filled: true, // Set filled to true
-                            fillColor: Color(0xFFEAEAEA),
-                            contentPadding: EdgeInsets.symmetric(
+                            fillColor: const Color(0xFFEAEAEA),
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 20),
                           ),
                         ),
@@ -273,14 +273,14 @@ class _dataDiriState extends State<dataDiri> {
                           controller: _usernameController,
                           decoration: InputDecoration(
                             hintText: 'Username',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                            prefixIcon: Icon(Icons.assignment_ind),
+                            hintStyle: const TextStyle(fontSize: 14.0),
+                            prefixIcon: const Icon(Icons.assignment_ind),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
                             filled: true,
-                            fillColor: Color(0xFFEAEAEA),
-                            contentPadding: EdgeInsets.symmetric(
+                            fillColor: const Color(0xFFEAEAEA),
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 20),
                           ),
                         ),
@@ -295,14 +295,14 @@ class _dataDiriState extends State<dataDiri> {
                           controller: _fullnameController,
                           decoration: InputDecoration(
                             hintText: 'Fullname',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                            prefixIcon: Icon(Icons.person),
+                            hintStyle: const TextStyle(fontSize: 14.0),
+                            prefixIcon: const Icon(Icons.person),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
                             filled: true,
-                            fillColor: Color(0xFFEAEAEA),
-                            contentPadding: EdgeInsets.symmetric(
+                            fillColor: const Color(0xFFEAEAEA),
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 20),
                           ),
                         ),
@@ -320,14 +320,14 @@ class _dataDiriState extends State<dataDiri> {
                           decoration: InputDecoration(
                             hintText: 'Pertanyaan',
                             hintStyle:
-                                TextStyle(fontSize: 14.0, color: Colors.grey),
-                            prefixIcon: Icon(Icons.question_answer),
+                                const TextStyle(fontSize: 14.0, color: Colors.grey),
+                            prefixIcon: const Icon(Icons.question_answer),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
                             filled: true,
-                            fillColor: Color(0xFFEAEAEA),
-                            contentPadding: EdgeInsets.symmetric(
+                            fillColor: const Color(0xFFEAEAEA),
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 20),
                           ),
                         ),
@@ -342,14 +342,14 @@ class _dataDiriState extends State<dataDiri> {
                           controller: _answerController,
                           decoration: InputDecoration(
                             hintText: 'Jawaban Keamanan',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                            prefixIcon: Icon(Icons.edit),
+                            hintStyle: const TextStyle(fontSize: 14.0),
+                            prefixIcon: const Icon(Icons.edit),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
                             filled: true,
-                            fillColor: Color(0xFFEAEAEA),
-                            contentPadding: EdgeInsets.symmetric(
+                            fillColor: const Color(0xFFEAEAEA),
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 20),
                           ),
                         ),
@@ -364,14 +364,14 @@ class _dataDiriState extends State<dataDiri> {
                           controller: _phoneController,
                           decoration: InputDecoration(
                             hintText: 'Phone',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                            prefixIcon: Icon(Icons.phone),
+                            hintStyle: const TextStyle(fontSize: 14.0),
+                            prefixIcon: const Icon(Icons.phone),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
                             filled: true,
-                            fillColor: Color(0xFFEAEAEA),
-                            contentPadding: EdgeInsets.symmetric(
+                            fillColor: const Color(0xFFEAEAEA),
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 20),
                           ),
                         ),
@@ -384,15 +384,15 @@ class _dataDiriState extends State<dataDiri> {
                         ),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFA4C751),
-                              minimumSize: Size(345, 60),
+                              backgroundColor: const Color(0xFFA4C751),
+                              minimumSize: const Size(345, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
+                            onPressed: _updateUserData,
                             child: const Text('Edit',
-                                style: TextStyle(color: Colors.white)),
-                            onPressed: _updateUserData),
+                                style: TextStyle(color: Colors.white))),
                       )
                       // OutlinedButton(
                       //   style: OutlinedButton.styleFrom(

@@ -49,13 +49,13 @@ class _DonasiState extends State<Donasi> {
           ),
           child: Center(
             child: Column(children: [
-              Padding(padding: EdgeInsets.only(top: 50)),
+              const Padding(padding: EdgeInsets.only(top: 50)),
               const Text('DONASI',
                   style: TextStyle(
                       fontSize: 24,
                       color: Color(0xFFA4C751),
                       fontWeight: FontWeight.bold)),
-              Padding(padding: EdgeInsets.only(top: 20)),
+              const Padding(padding: EdgeInsets.only(top: 20)),
               const Padding(
                 padding: EdgeInsets.only(left: 20.0),
                 child: Align(
@@ -76,14 +76,14 @@ class _DonasiState extends State<Donasi> {
                 child: TextFormField(
                   decoration: InputDecoration(
                     hintText: 'Masukkan Nama Lengkap',
-                    hintStyle: TextStyle(color: Color(0xff8F9BA1)),
+                    hintStyle: const TextStyle(color: Color(0xff8F9BA1)),
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(10)),
                     filled: true, // Set filled to true
-                    fillColor: Color(0xFFEAEAEA),
+                    fillColor: const Color(0xFFEAEAEA),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   ),
                 ),
               ),
@@ -93,18 +93,18 @@ class _DonasiState extends State<Donasi> {
                 child: TextFormField(
                   decoration: InputDecoration(
                     hintText: 'Masukkan No WhatsApp',
-                    hintStyle: TextStyle(color: Color(0xff8F9BA1)),
+                    hintStyle: const TextStyle(color: Color(0xff8F9BA1)),
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(10)),
                     filled: true, // Set filled to true
-                    fillColor: Color(0xFFEAEAEA),
+                    fillColor: const Color(0xFFEAEAEA),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.only(top: 15)),
+              const Padding(padding: EdgeInsets.only(top: 15)),
               const Padding(
                 padding: EdgeInsets.only(left: 20.0),
                 child: Align(
@@ -125,18 +125,18 @@ class _DonasiState extends State<Donasi> {
                 child: TextFormField(
                   decoration: InputDecoration(
                     hintText: 'Masukkan Email',
-                    hintStyle: TextStyle(color: Color(0xff8F9BA1)),
+                    hintStyle: const TextStyle(color: Color(0xff8F9BA1)),
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(10)),
                     filled: true, // Set filled to true
-                    fillColor: Color(0xFFEAEAEA),
+                    fillColor: const Color(0xFFEAEAEA),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.only(top: 15)),
+              const Padding(padding: EdgeInsets.only(top: 15)),
               const Padding(
                 padding: EdgeInsets.only(left: 20.0),
                 child: Align(
@@ -160,19 +160,19 @@ class _DonasiState extends State<Donasi> {
                     maxLines: 5,
                     decoration: InputDecoration(
                       hintText: 'Cantumkan Doa Terbaik Untuk Diri dan Keluarga',
-                      hintStyle: TextStyle(color: Color(0xff8F9BA1)),
+                      hintStyle: const TextStyle(color: Color(0xff8F9BA1)),
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(10)),
                       filled: true, // Set filled to true
-                      fillColor: Color(0xFFEAEAEA),
+                      fillColor: const Color(0xFFEAEAEA),
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                          const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                     ),
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.only(top: 15)),
+              const Padding(padding: EdgeInsets.only(top: 15)),
               const Padding(
                 padding: EdgeInsets.only(left: 20.0),
                 child: Align(
@@ -218,9 +218,9 @@ class _DonasiState extends State<Donasi> {
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(10)),
                     filled: true,
-                    fillColor: Color(0xFFEAEAEA),
+                    fillColor: const Color(0xFFEAEAEA),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   ),
                 ),
               ),
@@ -230,14 +230,14 @@ class _DonasiState extends State<Donasi> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    color: Color(0xFFEAEAEA),
+                    color: const Color(0xFFEAEAEA),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: selectedNominal,
-                      hint: Text('Pilih nominal donasi'),
+                      hint: const Text('Pilih nominal donasi'),
                       icon: const Icon(Icons.arrow_drop_down),
                       iconSize: 24,
                       elevation: 16,
@@ -276,14 +276,14 @@ class _DonasiState extends State<Donasi> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    color: Color(0xFFEAEAEA),
+                    color: const Color(0xFFEAEAEA),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: selectedTujuan,
-                      hint: Text('Pilih tujuan donasi'),
+                      hint: const Text('Pilih tujuan donasi'),
                       icon: const Icon(Icons.arrow_drop_down),
                       iconSize: 24,
                       elevation: 16,
@@ -320,8 +320,8 @@ class _DonasiState extends State<Donasi> {
                     horizontal: 20.0, vertical: 10.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFA4C751),
-                    minimumSize: Size(370, 60),
+                    backgroundColor: const Color(0xFFA4C751),
+                    minimumSize: const Size(370, 60),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

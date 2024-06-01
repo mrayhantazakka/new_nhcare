@@ -70,7 +70,7 @@ class _AcaraScreenState extends State<AcaraScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // Menghapus tombol back
-        title: Text(
+        title: const Text(
           'ACARA',
           style: TextStyle(
             fontSize: 24,
@@ -82,7 +82,7 @@ class _AcaraScreenState extends State<AcaraScreen> {
         centerTitle: true, // Menengahkan judul
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/img/new_bg.png'),
             fit: BoxFit.cover,
@@ -92,15 +92,15 @@ class _AcaraScreenState extends State<AcaraScreen> {
           children: [
             TableCalendar(
               calendarStyle: CalendarStyle(
-                todayDecoration: BoxDecoration(
+                todayDecoration: const BoxDecoration(
                   color: Colors.black,
                   shape: BoxShape.circle,
                 ),
-                selectedDecoration: BoxDecoration(
+                selectedDecoration: const BoxDecoration(
                   color: Color(0xFFA4C751),
                   shape: BoxShape.circle,
                 ),
-                outsideDecoration: BoxDecoration(
+                outsideDecoration: const BoxDecoration(
                   color: Color(0xFFE0E0E0), // Warna abu-abu muda untuk hari di luar bulan
                   shape: BoxShape.circle,
                 ),
@@ -109,11 +109,11 @@ class _AcaraScreenState extends State<AcaraScreen> {
                   shape: BoxShape.circle,
                 ),
                 defaultDecoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFFD6D6D6)), // Garis tepi untuk semua hari
+                  border: Border.all(color: const Color(0xFFD6D6D6)), // Garis tepi untuk semua hari
                   shape: BoxShape.circle,
                 ),
-                defaultTextStyle: TextStyle(color: Colors.black),
-                weekendTextStyle: TextStyle(color: Colors.red), // Warna merah untuk hari Jumat
+                defaultTextStyle: const TextStyle(color: Colors.black),
+                weekendTextStyle: const TextStyle(color: Colors.red), // Warna merah untuk hari Jumat
               ),
               eventLoader: (day) {
                 var events = _events?.where((event) => isSameDay(event.tanggalAcara, day)).toList() ?? [];
@@ -121,7 +121,7 @@ class _AcaraScreenState extends State<AcaraScreen> {
                   // Menggunakan warna acak untuk setiap hari dengan acara
                   return [
                     Container(
-                      margin: EdgeInsets.all(1.5),
+                      margin: const EdgeInsets.all(1.5),
                       decoration: BoxDecoration(
                         color: events.length > 1 ? Colors.purple : Colors.blue, // Contoh: warna ungu jika lebih dari satu acara, biru jika satu
                         shape: BoxShape.circle,
@@ -145,13 +145,13 @@ class _AcaraScreenState extends State<AcaraScreen> {
                 });
               },
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             if (_events != null &&
                 _events!.isNotEmpty) // Tampilkan daftar acara jika tidak kosong
               _buildEventList()
             else // Tampilkan pesan jika tidak ada acara pada tanggal yang dipilih
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   'Tidak ada acara pada tanggal ini',
                   style: TextStyle(fontSize: 18),
@@ -170,10 +170,10 @@ class _AcaraScreenState extends State<AcaraScreen> {
         itemBuilder: (context, index) {
           final acara = _events![index];
           return Container(
-            margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-            padding: EdgeInsets.all(8),
+            margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-               color: Color(0xFFA4C751),
+               color: const Color(0xFFA4C751),
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(8),
             ),
@@ -184,11 +184,11 @@ class _AcaraScreenState extends State<AcaraScreen> {
                 children: [
                   Text(
                     acara.deskripsi,
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                    style: const TextStyle(fontStyle: FontStyle.italic),
                   ),
                   Text(
-                    '${DateFormat('yyyy/MM/dd').format(acara.tanggalAcara)}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    DateFormat('yyyy/MM/dd').format(acara.tanggalAcara),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -200,7 +200,7 @@ class _AcaraScreenState extends State<AcaraScreen> {
   }
 
   void main() {
-    runApp(MaterialApp(
+    runApp(const MaterialApp(
       home: AcaraScreen(),
     ));
   }

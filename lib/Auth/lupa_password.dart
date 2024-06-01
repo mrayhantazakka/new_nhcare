@@ -98,14 +98,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Password Berhasil dirubah"),
-        content: Text("Silahkan Login Menggunakan Password Baru Anda."),
+        title: const Text("Password Berhasil dirubah"),
+        content: const Text("Silahkan Login Menggunakan Password Baru Anda."),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),
@@ -118,7 +118,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -129,7 +129,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       body: SingleChildScrollView(
         child: Container(
           width: screenWidth,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/img/bg.png'),
               fit: BoxFit.cover,
@@ -141,7 +141,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset('assets/img/logo.jpg', height: 78, width: 65),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 Container(
                   width: screenWidth * 0.9,
                   decoration: BoxDecoration(
@@ -152,7 +152,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 2,
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
@@ -161,8 +161,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(height: 20),
-                        Center(
+                        const SizedBox(height: 20),
+                        const Center(
                           child: Text(
                             "RESET PASSWORD",
                             style: TextStyle(
@@ -172,49 +172,49 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             ),
                           ),
                         ),
-                        Divider(color: Colors.grey, thickness: 2),
-                        SizedBox(height: 20),
+                        const Divider(color: Colors.grey, thickness: 2),
+                        const SizedBox(height: 20),
                         TextFormField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
-                          style: TextStyle(fontSize: 14.0),
+                          style: const TextStyle(fontSize: 14.0),
                           decoration: InputDecoration(
                             hintText: 'Email',
-                            prefixIcon: Icon(Icons.email),
+                            prefixIcon: const Icon(Icons.email),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
                             filled: true,
-                            fillColor: Color(0xFFEAEAEA),
+                            fillColor: const Color(0xFFEAEAEA),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
                           controller: _answerController,
-                          style: TextStyle(fontSize: 14.0),
+                          style: const TextStyle(fontSize: 14.0),
                           decoration: InputDecoration(
                             hintText: 'Jawaban Keamanan',
-                            prefixIcon: Icon(Icons.security),
+                            prefixIcon: const Icon(Icons.security),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
                             filled: true,
-                            fillColor: Color(0xFFEAEAEA),
+                            fillColor: const Color(0xFFEAEAEA),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
                           controller: _passwordController,
                           obscureText:
                               !_isPasswordVisible, // Visibilitas password
-                          style: TextStyle(fontSize: 14.0),
+                          style: const TextStyle(fontSize: 14.0),
                           decoration: InputDecoration(
                             hintText: 'Password Baru Anda',
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10)),
                             filled: true,
-                            fillColor: Color(0xFFEAEAEA),
+                            fillColor: const Color(0xFFEAEAEA),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _isPasswordVisible
@@ -230,27 +230,27 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
                             _validateData(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFA4C751),
-                            minimumSize: Size(double.infinity, 50),
+                            backgroundColor: const Color(0xFFA4C751),
+                            minimumSize: const Size(double.infinity, 50),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          child: Text('Reset Password',
+                          child: const Text('Reset Password',
                               style: TextStyle(color: Colors.white)),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
               ],
             ),
           ),

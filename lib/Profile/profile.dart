@@ -67,7 +67,7 @@ class _profileState extends State<profile> {
   void _gotoDataDiriPage(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => dataDiri()),
+      MaterialPageRoute(builder: (context) => const dataDiri()),
     );
     _loadUserData();
   }
@@ -77,7 +77,7 @@ class _profileState extends State<profile> {
     await prefs.remove('token');
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage()),
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     );
   }
 
@@ -86,11 +86,11 @@ class _profileState extends State<profile> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Logout'),
-          content: Text('Apakah Anda yakin ingin logout?'),
+          title: const Text('Logout'),
+          content: const Text('Apakah Anda yakin ingin logout?'),
           actions: <Widget>[
             TextButton(
-              child: Text(
+              child: const Text(
                 'Batal',
                 style: TextStyle(color: Colors.grey),
               ),
@@ -99,7 +99,7 @@ class _profileState extends State<profile> {
               },
             ),
             TextButton(
-              child: Text(
+              child: const Text(
                 'OK',
                 style: TextStyle(color: Colors.red),
               ),
@@ -130,13 +130,13 @@ class _profileState extends State<profile> {
           child: Center(
             child: Column(
               children: [
-                Padding(padding: EdgeInsets.only(top: 50)),
+                const Padding(padding: EdgeInsets.only(top: 50)),
                 const Text('PROFILE',
                     style: TextStyle(
                         fontSize: 24,
                         color: Color(0xFFA4C751),
                         fontWeight: FontWeight.bold)),
-                Padding(padding: EdgeInsets.only(top: 20)),
+                const Padding(padding: EdgeInsets.only(top: 20)),
                 Container(
                   width: 360,
                   height: 250,
@@ -148,16 +148,16 @@ class _profileState extends State<profile> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 2,
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
                   child: Column(
                     children: [
-                      Padding(padding: EdgeInsets.only(top: 20.0)),
+                      const Padding(padding: EdgeInsets.only(top: 20.0)),
                       CircleAvatar(
                         radius: 75,
-                        backgroundColor: Color(0xFFA4C751),
+                        backgroundColor: const Color(0xFFA4C751),
                         backgroundImage: _profileImage != null ? FileImage(_profileImage!) : null,
                         child: _profileImage == null
                             ? Text(
@@ -166,26 +166,26 @@ class _profileState extends State<profile> {
                                     .where((name) => name.isNotEmpty)
                                     .map((name) => name.substring(0, 1).toUpperCase())
                                     .join(""),
-                                style: TextStyle(fontSize: 36, color: Colors.white),
+                                style: const TextStyle(fontSize: 36, color: Colors.white),
                               )
                             : null,
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Text(
-                        '$_username',
-                        style: TextStyle(
+                        _username,
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '$_email',
-                        style: TextStyle(
+                        _email,
+                        style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
                     ],
                   ),
                 ),
-                Padding(padding: const EdgeInsets.only(top: 30)),
+                const Padding(padding: EdgeInsets.only(top: 30)),
                 Column(
                   children: [
                     GestureDetector(
@@ -203,7 +203,7 @@ class _profileState extends State<profile> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 7,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -221,13 +221,13 @@ class _profileState extends State<profile> {
                         ),
                       ),
                     ),
-                    Padding(padding: const EdgeInsets.only(top: 20)),
+                    const Padding(padding: EdgeInsets.only(top: 20)),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => riwayatDonasi()),
+                              builder: (context) => const riwayatDonasi()),
                         );
                       },
                       child: Container(
@@ -241,7 +241,7 @@ class _profileState extends State<profile> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 7,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -259,13 +259,13 @@ class _profileState extends State<profile> {
                         ),
                       ),
                     ),
-                    Padding(padding: const EdgeInsets.only(top: 20)),
+                    const Padding(padding: EdgeInsets.only(top: 20)),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ubahKataSandi()),
+                              builder: (context) => const ubahKataSandi()),
                         );
                       },
                       child: Container(
@@ -279,7 +279,7 @@ class _profileState extends State<profile> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 7,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -297,13 +297,13 @@ class _profileState extends State<profile> {
                         ),
                       ),
                     ),
-                    Padding(padding: const EdgeInsets.only(top: 20)),
+                    const Padding(padding: EdgeInsets.only(top: 20)),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => pusatBantuan()),
+                              builder: (context) => const pusatBantuan()),
                         );
                       },
                       child: Container(
@@ -317,7 +317,7 @@ class _profileState extends State<profile> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 7,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -340,11 +340,11 @@ class _profileState extends State<profile> {
                 Container(
                   width: 360,
                   height: 80,
-                  padding: EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 20),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey,
-                      maximumSize: Size(360, 60),
+                      maximumSize: const Size(360, 60),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18),
                       ),

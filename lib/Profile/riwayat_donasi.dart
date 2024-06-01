@@ -12,7 +12,7 @@ class _riwayatDonasiState extends State<riwayatDonasi> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Riwayat Donasi',
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.bold),

@@ -3,6 +3,8 @@ import 'WelcomePage.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LoadingPage extends StatefulWidget {
+  const LoadingPage({super.key});
+
   @override
   _LoadingPageState createState() => _LoadingPageState();
 }
@@ -17,7 +19,7 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   _simulateLoading() async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
     setState(() {
       _isLoading = false;
     });
@@ -33,7 +35,7 @@ class _LoadingPageState extends State<LoadingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/img/loading_page.png"), // Pastikan path ke asset sudah benar
             fit: BoxFit.cover, 
@@ -52,8 +54,8 @@ class _LoadingPageState extends State<LoadingPage> {
                 color: Colors.white,
                 size: 50,
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Memuat Aplikasi NHCARE',
                 style: TextStyle(
                   fontSize: 20,

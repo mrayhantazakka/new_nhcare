@@ -5,7 +5,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class VideoPlayerPage extends StatelessWidget {
   final YoutubeVideo video;
 
-  VideoPlayerPage({required this.video});
+  const VideoPlayerPage({super.key, required this.video});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class VideoPlayerPage extends StatelessWidget {
           YoutubePlayer(
             controller: YoutubePlayerController(
               initialVideoId: video.id,
-              flags: YoutubePlayerFlags(autoPlay: true),
+              flags: const YoutubePlayerFlags(autoPlay: true),
             ),
           ),
           Padding(
@@ -26,19 +26,19 @@ class VideoPlayerPage extends StatelessWidget {
               children: [
                 Text(
                   video.title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   video.description,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Text(
                         'Published at: ${video.publishedAt}',
-                        style: TextStyle(color: Colors.grey),
+                        style: const TextStyle(color: Colors.grey),
                       ),
               ],
             ),

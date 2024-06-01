@@ -5,6 +5,8 @@ import 'package:nhcoree/Database/IpConfig.dart';
 import 'package:nhcoree/Models/AnakData.dart';
 
 class AnakAsuh extends StatefulWidget {
+  const AnakAsuh({super.key});
+
   @override
   _AnakAsuhState createState() => _AnakAsuhState();
 }
@@ -67,10 +69,10 @@ class _AnakAsuhState extends State<AnakAsuh> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Anak Asuh'),
+        title: const Text('Anak Asuh'),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/img/new_bg.png'),
             fit: BoxFit.cover,
@@ -96,7 +98,7 @@ class _AnakAsuhState extends State<AnakAsuh> {
                         color: Colors.grey.withOpacity(0.2),
                         spreadRadius: 1,
                         blurRadius: 3,
-                        offset: Offset(0, 2),
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
@@ -104,12 +106,12 @@ class _AnakAsuhState extends State<AnakAsuh> {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Row(
                       children: [
-                        Icon(Icons.search),
-                        SizedBox(width: 8),
+                        const Icon(Icons.search),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: TextField(
                             controller: _searchController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Cari Anak Asuh',
                               border: InputBorder.none,
                             ),
@@ -124,7 +126,7 @@ class _AnakAsuhState extends State<AnakAsuh> {
             ),
             Expanded(
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 16.0,
                   mainAxisSpacing: 16.0,
@@ -137,7 +139,7 @@ class _AnakAsuhState extends State<AnakAsuh> {
                       _onProgramTap(anakAsuh);
                     },
                     child: Container(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
                         color: Colors.white,
@@ -146,7 +148,7 @@ class _AnakAsuhState extends State<AnakAsuh> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 1,
                             blurRadius: 3,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
@@ -160,20 +162,20 @@ class _AnakAsuhState extends State<AnakAsuh> {
                             width: 100,
                             height: 100,
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             anakAsuh.nama,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0,
                             ),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Text(
                             anakAsuh.deskripsi,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14.0,
                             ),
                           ),
@@ -194,7 +196,7 @@ class _AnakAsuhState extends State<AnakAsuh> {
 class DetailAnakAsuh extends StatelessWidget {
   final AnakData anakAsuh;
 
-  const DetailAnakAsuh({required this.anakAsuh});
+  const DetailAnakAsuh({super.key, required this.anakAsuh});
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +205,7 @@ class DetailAnakAsuh extends StatelessWidget {
         title: Text(anakAsuh.nama),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/img/new_bg.png'),
             fit: BoxFit.cover,
@@ -220,25 +222,25 @@ class DetailAnakAsuh extends StatelessWidget {
                 height: 200,
                 fit: BoxFit.cover,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 'Nama: ${anakAsuh.nama}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'Sekolah: ${anakAsuh.nama_sekolah}',
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'Kelas: ${anakAsuh.kelas}',
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'Deskripsi: ${anakAsuh.deskripsi}',
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             ],
           ),

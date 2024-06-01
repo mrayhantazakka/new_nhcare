@@ -20,7 +20,7 @@ class _SplashscreenState extends State<Splashscreen> with SingleTickerProviderSt
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     );
 
     _scaleAnimation = Tween<double>(
@@ -29,7 +29,7 @@ class _SplashscreenState extends State<Splashscreen> with SingleTickerProviderSt
     ).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(0.5, 1.0, curve: Curves.easeInOut),
+        curve: const Interval(0.5, 1.0, curve: Curves.easeInOut),
       ),
     );
 
@@ -39,7 +39,7 @@ class _SplashscreenState extends State<Splashscreen> with SingleTickerProviderSt
         if (_controller.status == AnimationStatus.completed) {
           _isAnimationComplete = true;
           _isWhiteLogo = false;
-          Future.delayed(Duration(seconds: 1), () {
+          Future.delayed(const Duration(seconds: 1), () {
             setState(() {
               _isWhiteLogo = false;
             });
@@ -94,7 +94,7 @@ class _SplashscreenState extends State<Splashscreen> with SingleTickerProviderSt
                     );
                   },
                 ),
-                if (!_isAnimationComplete) SizedBox(height: 16),
+                if (!_isAnimationComplete) const SizedBox(height: 16),
               ],
             ),
           ),

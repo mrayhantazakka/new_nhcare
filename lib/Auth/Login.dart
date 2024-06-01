@@ -14,16 +14,16 @@ import 'dart:ui'; // Import untuk ImageFilter
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
-
+  
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
+  final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
 
   bool _isLoading = false; // State untuk kontrol animasi loading
 
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     if (token != null) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => homePage()),
+        MaterialPageRoute(builder: (context) => const homePage()),
       );
     }
   }
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
             backgroundColor: Colors.transparent,
             content: AwesomeSnackbarContent(
               title: 'Sukses!',
-              message: 'Selamat Datang, ${email}',
+              message: 'Selamat Datang, $email',
               contentType: ContentType.success,
             ),
           );
@@ -97,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
 
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => homePage()),
+            MaterialPageRoute(builder: (context) => const homePage()),
           );
         } else {
           final snackBar = SnackBar(
@@ -186,20 +186,20 @@ class _LoginPageState extends State<LoginPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Color(0xFFA4C751), // Warna hijau untuk status bar
     ));
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFA4C751), // Warna hijau untuk AppBar
+        backgroundColor: const Color(0xFFA4C751), // Warna hijau untuk AppBar
         elevation: 0, // Hilangkan bayangan di bawah AppBar
         toolbarHeight: 0, // Tinggi AppBar diatur menjadi 0 untuk menyembunyikannya
       ),
       body: SingleChildScrollView(
         child: Container(
           height: screenHeight,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/img/bg.png'),
               fit: BoxFit.cover,
@@ -212,11 +212,11 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   SizedBox(height: MediaQuery.of(context).padding.top),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(top: 50),
                   ),
                   Image.asset('assets/img/logo.jpg', height: 78, width: 65),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   Container(
                     width: screenWidth * 0.9, // Responsive width
                     height: 380,
@@ -228,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 2,
                           blurRadius: 7,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
@@ -237,8 +237,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Padding(padding: EdgeInsets.all(10)),
-                          Center(
+                          const Padding(padding: EdgeInsets.all(10)),
+                          const Center(
                             child: Text(
                               "MASUK",
                               style: TextStyle(
@@ -256,7 +256,7 @@ class _LoginPageState extends State<LoginPage> {
                               width: 105,
                             ),
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(
                                 top: 10, left: 10, right: 10, bottom: 20),
                           ),
@@ -267,16 +267,16 @@ class _LoginPageState extends State<LoginPage> {
                             controller: _emailController,
                             decoration: InputDecoration(
                               hintText: 'Email',
-                              hintStyle: TextStyle(fontSize: 14.0),
-                              prefixIcon: Icon(Icons.account_circle),
+                              hintStyle: const TextStyle(fontSize: 14.0),
+                              prefixIcon: const Icon(Icons.account_circle),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(10)),
                               filled: true, // Set filled to true
-                              fillColor: Color(0xFFEAEAEA),
+                              fillColor: const Color(0xFFEAEAEA),
                             ),
                           ),
-                          Padding(padding: EdgeInsets.only(top: 20)),
+                          const Padding(padding: EdgeInsets.only(top: 20)),
                           TextFormField(
                             validator: (val) {
                               return val!.isEmpty
@@ -293,12 +293,12 @@ class _LoginPageState extends State<LoginPage> {
                                     : Icons.visibility_off),
                                 onPressed: visible,
                               ),
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: const Icon(Icons.lock),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(10)),
                               filled: true, // Set filled to true
-                              fillColor: Color(0xFFEAEAEA),
+                              fillColor: const Color(0xFFEAEAEA),
                             ),
                           ),
                           Padding(
@@ -311,7 +311,7 @@ class _LoginPageState extends State<LoginPage> {
                                   Navigator.pushNamed(
                                       context, '/forgotPassword');
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Lupa Password?',
                                   style: TextStyle(
                                     color: Colors.grey,
@@ -325,52 +325,52 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFA4C751),
+                          backgroundColor: const Color(0xFFA4C751),
                           minimumSize: Size(screenWidth * 0.4, 60), // Responsive size
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text('MASUK', style: TextStyle(color: Colors.white)),
+                        child: const Text('MASUK', style: TextStyle(color: Colors.white)),
                         onPressed: () {
                           if (_keyForm.currentState!.validate()) {
                             _login();
                           }
                         }),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       OutlinedButton(
                         style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Color(0xFFA4C751)),
+                          side: const BorderSide(color: Color(0xFFA4C751)),
                           minimumSize: Size(screenWidth * 0.4, 60), // Responsive size
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text('KEMBALI', style: TextStyle(color: Color(0xFFA4C751))),
+                        child: const Text('KEMBALI', style: TextStyle(color: Color(0xFFA4C751))),
                         onPressed: () {
                           Navigator.pushNamed(context, '/loadingPage');
                         },
                       ),
                     ],
                   ),
-                  Padding(padding: EdgeInsets.only(top: 20.0)),
+                  const Padding(padding: EdgeInsets.only(top: 20.0)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Belum punya akun? '),
+                      const Text('Belum punya akun? '),
                       MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(context, '/register');
                           },
-                          child: Text(
+                          child: const Text(
                             'Daftar sekarang',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,

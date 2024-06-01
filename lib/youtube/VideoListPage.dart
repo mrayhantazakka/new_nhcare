@@ -4,17 +4,19 @@ import 'package:nhcoree/youtube/VideoPlayerPage.dart';
 import 'YoutubeApiService.dart';
 
 class VideoListPage extends StatelessWidget {
+  const VideoListPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Video',
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFFA4C751),
+        backgroundColor: const Color(0xFFA4C751),
       ),
       body: Stack(
         children: [
@@ -22,7 +24,7 @@ class VideoListPage extends StatelessWidget {
             future: YoutubeApiService.fetchVideos(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else {
@@ -48,16 +50,16 @@ class VideoListPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             video.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Text(
                             'Published on: ${video.publishedAt}',
-                            style: TextStyle(fontSize: 14, color: Colors.grey),
+                            style: const TextStyle(fontSize: 14, color: Colors.grey),
                           ),
                         ],
                       ),

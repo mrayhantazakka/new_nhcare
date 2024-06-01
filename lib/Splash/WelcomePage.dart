@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
+  const WelcomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color(0xFFA4C751),
           image: DecorationImage(
             image: AssetImage('assets/img/loading_page.png'),
@@ -15,7 +17,7 @@ class WelcomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             Center(
               child: Center(
                 child: Image.asset(
@@ -25,10 +27,10 @@ class WelcomePage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
@@ -37,7 +39,7 @@ class WelcomePage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'SELAMAT DATANG',
                     style: TextStyle(
                       fontSize: 24,
@@ -45,7 +47,7 @@ class WelcomePage extends StatelessWidget {
                       color: Color(0xFFA4C751),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     'NHCARE merupakan aplikasi yang dibuat untuk memudahkan donatur dalam melakukan donasi untuk panti asuhan.',
                     textAlign: TextAlign.center,
@@ -54,7 +56,7 @@ class WelcomePage extends StatelessWidget {
                       color: Colors.grey[700],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -63,13 +65,13 @@ class WelcomePage extends StatelessWidget {
                           Navigator.pushNamed(context, '/login');
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFA4C751),
-                          minimumSize: Size(140, 50),
+                          backgroundColor: const Color(0xFFA4C751),
+                          minimumSize: const Size(140, 50),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Masuk',
                           style: TextStyle(
                             fontSize: 18,
@@ -77,19 +79,19 @@ class WelcomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       OutlinedButton(
                         onPressed: () {
                           Navigator.pushNamed(context, '/register');
                         },
                         style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Color(0xFFA4C751)),
-                          minimumSize: Size(140, 50),
+                          side: const BorderSide(color: Color(0xFFA4C751)),
+                          minimumSize: const Size(140, 50),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Daftar',
                           style: TextStyle(
                             fontSize: 18,

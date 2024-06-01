@@ -14,6 +14,8 @@ void main() {
 }
 
 class LoginApp extends StatelessWidget {
+  const LoginApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,14 +23,14 @@ class LoginApp extends StatelessWidget {
       title: 'NURUL HUSNA',
       initialRoute: '/',
       routes: {
-        '/': (context) => Splashscreen(),
-        '/register': (context) => daftar(),
-        '/login': (context) => LoginPage(),
-        '/home': (context) => homePage(),
+        '/': (context) => const Splashscreen(),
+        '/register': (context) => const daftar(),
+        '/login': (context) => const LoginPage(),
+        '/home': (context) => const homePage(),
         '/loadingPage': (context) => LoadingPage(),
-        '/forgotPassword': (context) => ForgotPasswordPage(),
+        '/forgotPassword': (context) => const ForgotPasswordPage(),
         '/progamPage': (context) => Programm(),
-        '/profile' : (context) => profile(),
+        '/profile' : (context) => const profile(),
       }, /*  */
     );
   }
