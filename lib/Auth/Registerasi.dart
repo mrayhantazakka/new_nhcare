@@ -5,9 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:nhcoree/Auth/Login.dart';
 import 'package:nhcoree/Database/IpConfig.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-
-// import 'package:nhcoree/Screen/UserData.dart';
 
 class daftar extends StatefulWidget {
   const daftar({super.key});
@@ -18,13 +15,16 @@ class daftar extends StatefulWidget {
 
 class _daftarState extends State<daftar> {
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _fullnameController = TextEditingController();
+  final TextEditingController _namaDonaturController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _nomorHandphoneController =
+      TextEditingController();
   final TextEditingController _kofirmPwController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _alamatController = TextEditingController();
+  final TextEditingController _jawabanController = TextEditingController();
+  String? _jenisKelamin;
   String? _selectedQuestion;
-  final List<String> _questions = [
+  List<String> _questions = [
     'Surah Favorit',
     'Nama Sahabat Nabi',
     'Mukjizat Nabi',
@@ -32,10 +32,10 @@ class _daftarState extends State<daftar> {
     'Tempat Favorit',
     'Apa Saja Untuk Diingat!'
   ];
-  final TextEditingController _answerController = TextEditingController();
 
-  final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
+  GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
 
+  //visible password
   bool hiden = true;
   void visible() {
     setState(() {
@@ -43,7 +43,7 @@ class _daftarState extends State<daftar> {
     });
   }
 
-  // Tambahkan state untuk loading
+  //state untuk loading
   bool _isLoading = false;
 
   void _toggleLoading(bool isLoading) {
@@ -53,16 +53,17 @@ class _daftarState extends State<daftar> {
   }
 
   Future<void> _register() async {
-    _toggleLoading(true); // Aktifkan loading saat registrasi dimulai
+    _toggleLoading(true); // loading aktif saat registrasi dimulai
 
-    String fullname = _fullnameController.text;
-    String username = _usernameController.text;
+    String nama_donatur = _namaDonaturController.text;
+    String alamat = _alamatController.text;
     String password = _passwordController.text;
     String confirmpassword = _kofirmPwController.text;
     String email = _emailController.text;
-    String phone = _phoneController.text;
-    String? question = _selectedQuestion;
-    String answer = _answerController.text;
+    String nomor_handphone = _nomorHandphoneController.text;
+    String? pertanyaan = _selectedQuestion;
+    String jawaban = _jawabanController.text;
+    String? jenis_kelamin = _jenisKelamin;
 
     String url = "${IpConfig.baseUrl}/api/daftar";
 
@@ -70,14 +71,15 @@ class _daftarState extends State<daftar> {
       final response = await http.post(
         Uri.parse(url),
         body: {
-          'fullname': fullname,
-          'username': username,
+          'nama_donatur': nama_donatur,
+          'alamat': alamat,
           'password': password,
           'confirmpassword': confirmpassword,
           'email': email,
-          'phone': phone,
-          'question': question,
-          'answer': answer,
+          'nomor_handphone': nomor_handphone,
+          'pertanyaan': pertanyaan,
+          'jawaban': jawaban,
+          'jenis_kelamin': jenis_kelamin,
         },
       );
 
@@ -99,7 +101,7 @@ class _daftarState extends State<daftar> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const LoginPage()),
+          MaterialPageRoute(builder: (context) => LoginPage()),
         );
       } else {
         final snackBar = SnackBar(
@@ -139,13 +141,11 @@ class _daftarState extends State<daftar> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth =
-        MediaQuery.of(context).size.width; // Mendapatkan lebar layar
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor:
-            const Color(0xFFA4C751), // Ganti dengan warna yang Anda inginkan
+        statusBarColor: Color(0xFFA4C751),
       ),
       child: Stack(
         children: [
@@ -167,10 +167,9 @@ class _daftarState extends State<daftar> {
                         padding: EdgeInsets.only(top: 50),
                       ),
                       Image.asset('assets/img/logo.jpg', height: 78, width: 65),
-                      const SizedBox(height: 50),
+                      SizedBox(height: 50),
                       Container(
-                        width: screenWidth *
-                            0.9, // Menggunakan screenWidth yang telah didefinisikan
+                        width: screenWidth * 0.9,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
                           color: Colors.white,
@@ -179,7 +178,7 @@ class _daftarState extends State<daftar> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 7,
-                              offset: const Offset(0, 3),
+                              offset: Offset(0, 3),
                             ),
                           ],
                         ),
@@ -212,33 +211,15 @@ class _daftarState extends State<daftar> {
                                     top: 10, left: 10, right: 10, bottom: 20),
                               ),
                               TextFormField(
-                                controller: _fullnameController,
+                                controller: _namaDonaturController,
                                 validator: (val) {
                                   return val!.isEmpty
-                                      ? "fullname harus diisi"
+                                      ? "nama harus diisi"
                                       : null;
                                 },
                                 decoration: InputDecoration(
-                                  hintText: 'fullname',
+                                  hintText: 'Nama',
                                   prefixIcon: const Icon(Icons.person),
-                                  border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  filled: true,
-                                  fillColor: const Color(0xFFEAEAEA),
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              TextFormField(
-                                validator: (val) {
-                                  return val!.isEmpty
-                                      ? "username harus diisi"
-                                      : null;
-                                },
-                                controller: _usernameController,
-                                decoration: InputDecoration(
-                                  hintText: 'username',
-                                  prefixIcon: const Icon(Icons.assignment_ind),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(10)),
@@ -261,7 +242,7 @@ class _daftarState extends State<daftar> {
                                 controller: _emailController,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
-                                  hintText: 'email',
+                                  hintText: 'Email',
                                   prefixIcon: const Icon(Icons.email),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -275,14 +256,15 @@ class _daftarState extends State<daftar> {
                                 validator: (val) {
                                   if (val!.isEmpty) {
                                     return "nomor hp harus diisi";
-                                  } else if (val.length > 13 || val.length < 10) {
+                                  } else if (val.length > 13 ||
+                                      val.length < 10) {
                                     return "nomor hp tidak valid";
                                   }
                                   return null;
                                 },
-                                controller: _phoneController,
+                                controller: _nomorHandphoneController,
                                 decoration: InputDecoration(
-                                  hintText: 'phone',
+                                  hintText: 'Phone',
                                   prefixIcon: const Icon(Icons.phone),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -298,6 +280,121 @@ class _daftarState extends State<daftar> {
                               const SizedBox(height: 20),
                               TextFormField(
                                 validator: (val) {
+                                  return val!.isEmpty
+                                      ? "alamat harus diisi"
+                                      : null;
+                                },
+                                controller: _alamatController,
+                                decoration: InputDecoration(
+                                  hintText: 'Alamat',
+                                  prefixIcon: const Icon(Icons.assignment_ind),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  filled: true,
+                                  fillColor: const Color(0xFFEAEAEA),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment
+                                    .start, // memastikan teks "Jenis Kelamin" ada di kiri
+                                children: [
+                                  const Text(
+                                    'Jenis Kelamin',
+                                    style: TextStyle(
+                                        fontSize:
+                                            16), // Anda dapat menyesuaikan ukuran font sesuai kebutuhan
+                                  ),
+                                  const SizedBox(height: 15),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Radio<String>(
+                                            value: 'Laki-Laki',
+                                            groupValue: _jenisKelamin,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _jenisKelamin = value;
+                                              });
+                                            },
+                                          ),
+                                          const Text('Laki-Laki'),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        width: 60,
+                                      ), // Jarak antara dua radio button
+                                      Row(
+                                        children: [
+                                          Radio<String>(
+                                            value: 'Perempuan',
+                                            groupValue: _jenisKelamin,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _jenisKelamin = value;
+                                              });
+                                            },
+                                          ),
+                                          const Text('Perempuan'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              DropdownButtonFormField<String>(
+                                value: _selectedQuestion,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _selectedQuestion = newValue;
+                                  });
+                                },
+                                items: _questions.map((question) {
+                                  return DropdownMenuItem(
+                                    child: Text(question),
+                                    value: question,
+                                  );
+                                }).toList(),
+                                decoration: InputDecoration(
+                                  hintText: 'Pilih Pertanyaan',
+                                  prefixIcon: const Icon(Icons.question_answer),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  filled: true,
+                                  fillColor: const Color(0xFFEAEAEA),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text(
+                                ' Pertanyaan ini digunakan sebagai antisipasi jika Anda lupa password. Harap selalu ingat Jawaban Anda! ',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              TextFormField(
+                                controller: _jawabanController,
+                                decoration: InputDecoration(
+                                  hintText: 'Jawaban',
+                                  prefixIcon: const Icon(Icons.edit),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  filled: true,
+                                  fillColor: const Color(0xFFEAEAEA),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              TextFormField(
+                                validator: (val) {
                                   if (val!.isEmpty) {
                                     return "password harus diisi";
                                   } else if (val.length < 6) {
@@ -309,7 +406,7 @@ class _daftarState extends State<daftar> {
                                 keyboardType: TextInputType.visiblePassword,
                                 obscureText: hiden,
                                 decoration: InputDecoration(
-                                  hintText: 'password',
+                                  hintText: 'Password',
                                   suffixIcon: IconButton(
                                     icon: Icon(hiden
                                         ? Icons.visibility
@@ -338,7 +435,7 @@ class _daftarState extends State<daftar> {
                                 obscureText: true,
                                 keyboardType: TextInputType.visiblePassword,
                                 decoration: InputDecoration(
-                                  hintText: 'konfirmasi password',
+                                  hintText: 'Konfirmasi Password',
                                   prefixIcon: const Icon(Icons.lock),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -348,54 +445,8 @@ class _daftarState extends State<daftar> {
                                 ),
                               ),
                               const SizedBox(height: 20),
-                              DropdownButtonFormField<String>(
-                                value: _selectedQuestion,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _selectedQuestion = newValue;
-                                  });
-                                },
-                                items: _questions.map((question) {
-                                  return DropdownMenuItem(
-                                    value: question,
-                                    child: Text(question),
-                                  );
-                                }).toList(),
-                                decoration: InputDecoration(
-                                  hintText: 'Pilih Pertanyaan',
-                                  prefixIcon: const Icon(Icons.question_answer),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  filled: true,
-                                  fillColor: const Color(0xFFEAEAEA),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              const Text(
-                                ' Pertanyaan ini digunakan sebagai antisipasi jika Anda lupa password. Harap selalu ingat Jawaban Anda! ',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              TextFormField(
-                                controller: _answerController,
-                                decoration: InputDecoration(
-                                  hintText: 'Jawaban',
-                                  prefixIcon: const Icon(Icons.edit),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  filled: true,
-                                  fillColor: const Color(0xFFEAEAEA),
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              const Padding(padding: EdgeInsets.only(bottom: 20))
+                              const Padding(
+                                  padding: EdgeInsets.only(bottom: 20))
                             ],
                           ),
                         ),
@@ -406,14 +457,15 @@ class _daftarState extends State<daftar> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFA4C751),
-                              minimumSize:
-                                  Size(MediaQuery.of(context).size.width * 0.4, 60),
+                              primary: const Color(0xFFA4C751),
+                              minimumSize: Size(
+                                  MediaQuery.of(context).size.width * 0.4, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               elevation: 5, // Menambahkan shadow
-
+                              onPrimary: Colors.white.withOpacity(
+                                  0.8), // Warna saat di-hover atau di-press
                             ),
                             child: const Text('DAFTAR',
                                 style: TextStyle(color: Colors.white)),
@@ -427,7 +479,8 @@ class _daftarState extends State<daftar> {
                                   backgroundColor: Colors.transparent,
                                   content: AwesomeSnackbarContent(
                                     title: 'Data Tidak Lengkap!',
-                                    message: 'Mohon lengkapi semua data yang diperlukan untuk mendaftar.',
+                                    message:
+                                        'Mohon lengkapi semua data yang diperlukan untuk mendaftar.',
                                     contentType: ContentType.failure,
                                   ),
                                 );
@@ -442,8 +495,8 @@ class _daftarState extends State<daftar> {
                           OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               side: const BorderSide(color: Color(0xFFA4C751)),
-                              minimumSize:
-                                  Size(MediaQuery.of(context).size.width * 0.4, 60),
+                              minimumSize: Size(
+                                  MediaQuery.of(context).size.width * 0.4, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -490,7 +543,8 @@ class _daftarState extends State<daftar> {
             Container(
               color: Colors.black.withOpacity(0.5),
               child: const Center(
-                child: CircularProgressIndicator(), // Menggunakan CircularProgressIndicator standar
+                child:
+                    CircularProgressIndicator(), // Menggunakan CircularProgressIndicator standar
               ),
             ),
         ],
@@ -498,4 +552,3 @@ class _daftarState extends State<daftar> {
     );
   }
 }
-

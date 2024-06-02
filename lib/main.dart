@@ -7,11 +7,17 @@ import 'package:nhcoree/Splash/Splashscreen.dart';
 import 'package:nhcoree/Auth/Registerasi.dart';
 import 'package:nhcoree/Auth/lupa_password.dart';
 import 'package:nhcoree/Screen/programm.dart';
+import 'package:nhcoree/Database/DatabaseHelper.dart';
 
 
 void main() {
   runApp(LoginApp());
 }
+// void main() async{
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await DatabaseHelper.deleteDatabase(); // Hapus database sebelum inisialisasi
+//   runApp(LoginApp());
+// }
 
 class LoginApp extends StatelessWidget {
   const LoginApp({super.key});

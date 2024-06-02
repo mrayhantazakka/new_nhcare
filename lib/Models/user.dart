@@ -5,26 +5,28 @@ part 'user.g.dart';
 @JsonSerializable()
 class User {
   late int id;
-  late String? fullname;
-  late String? username;
+  late String? nama_donatur;
+  late String? nomor_handphone;
+  late String? alamat;
+  late String? email;
   late String? password;
   late String? confirmpassword;
-  late String? email;
-  late String? phone;
-  late String? question;
-  late String? answer;
+  late String? pertanyaan;
+  late String? jawaban;
+  late String? jenis_kelamin;
   late String? token;
 
   User({
     this.id = 0, // Make id optional with a default value
-    required this.fullname,
-    required this.username,
+    required this.nama_donatur,
+    required this.alamat,
     required this.password,
     required this.confirmpassword,
     required this.email,
-    required this.phone,
-    required this.question,
-    required this.answer,
+    required this.nomor_handphone,
+    required this.pertanyaan,
+    required this.jawaban,
+    required this.jenis_kelamin,
     required this.token,
   });
 

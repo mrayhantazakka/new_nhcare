@@ -4,26 +4,26 @@ import 'package:http/http.dart' as http;
 import 'package:nhcoree/Database/DatabaseHelper.dart';
 import 'package:nhcoree/Database/IpConfig.dart';
 import 'package:nhcoree/Home.dart';
-import 'package:nhcoree/Models/login_response.dart';
+// import 'package:nhcoree/Models/login_response.dart';
 import 'package:nhcoree/Models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+// import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'dart:ui'; // Import untuk ImageFilter
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
-  
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
-  final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
+  GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
 
   bool _isLoading = false; // State untuk kontrol animasi loading
 
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     if (token != null) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const homePage()),
+        MaterialPageRoute(builder: (context) => homePage()),
       );
     }
   }
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
             backgroundColor: Colors.transparent,
             content: AwesomeSnackbarContent(
               title: 'Sukses!',
-              message: 'Selamat Datang, $email',
+              message: 'Selamat Datang, ${email}',
               contentType: ContentType.success,
             ),
           );
@@ -97,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
 
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const homePage()),
+            MaterialPageRoute(builder: (context) => homePage()),
           );
         } else {
           final snackBar = SnackBar(
@@ -194,7 +194,8 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFA4C751), // Warna hijau untuk AppBar
         elevation: 0, // Hilangkan bayangan di bawah AppBar
-        toolbarHeight: 0, // Tinggi AppBar diatur menjadi 0 untuk menyembunyikannya
+        toolbarHeight:
+            0, // Tinggi AppBar diatur menjadi 0 untuk menyembunyikannya
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -221,7 +222,8 @@ class _LoginPageState extends State<LoginPage> {
                     width: screenWidth * 0.9, // Responsive width
                     height: 380,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40), // Border lebih lebar
+                      borderRadius:
+                          BorderRadius.circular(40), // Border lebih lebar
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
@@ -265,6 +267,7 @@ class _LoginPageState extends State<LoginPage> {
                               return val!.isEmpty ? "Email harus diisi" : null;
                             },
                             controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               hintText: 'Email',
                               hintStyle: const TextStyle(fontSize: 14.0),
@@ -330,29 +333,33 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFA4C751),
-                          minimumSize: Size(screenWidth * 0.4, 60), // Responsive size
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFA4C751),
+                            minimumSize:
+                                Size(screenWidth * 0.4, 60), // Responsive size
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                        ),
-                        child: const Text('MASUK', style: TextStyle(color: Colors.white)),
-                        onPressed: () {
-                          if (_keyForm.currentState!.validate()) {
-                            _login();
-                          }
-                        }),
+                          child: const Text('MASUK',
+                              style: TextStyle(color: Colors.white)),
+                          onPressed: () {
+                            if (_keyForm.currentState!.validate()) {
+                              _login();
+                            }
+                          }),
                       const SizedBox(width: 20),
                       OutlinedButton(
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: Color(0xFFA4C751)),
-                          minimumSize: Size(screenWidth * 0.4, 60), // Responsive size
+                          minimumSize:
+                              Size(screenWidth * 0.4, 60), // Responsive size
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: const Text('KEMBALI', style: TextStyle(color: Color(0xFFA4C751))),
+                        child: const Text('KEMBALI',
+                            style: TextStyle(color: Color(0xFFA4C751))),
                         onPressed: () {
                           Navigator.pushNamed(context, '/loadingPage');
                         },
@@ -390,4 +397,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-

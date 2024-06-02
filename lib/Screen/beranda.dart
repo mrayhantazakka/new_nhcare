@@ -1,12 +1,19 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:nhcoree/Database/IpConfig.dart';
 import 'package:nhcoree/Donasi/Donasi.dart';
+import 'package:nhcoree/Models/ArtikelData.dart';
 import 'package:nhcoree/Screen/alokasi.dart';
 import 'package:nhcoree/Screen/anak.dart';
+import 'package:nhcoree/Screen/artikel.dart';
+import 'package:nhcoree/Screen/detailArtikel.dart';
 import 'package:nhcoree/youtube/VideoListPage.dart';
 import 'package:nhcoree/youtube/VideoPlayerPage.dart';
 import 'package:nhcoree/youtube/YoutubeApiService.dart';
 import 'programm.dart';
+import 'package:http/http.dart' as http;
 
 class Beranda extends StatefulWidget {
   const Beranda({Key? key}) : super(key: key);
@@ -16,6 +23,45 @@ class Beranda extends StatefulWidget {
 }
 
 class _BerandaState extends State<Beranda> {
+  List<ArtikelData> _artikels = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchArtikelsFromServer();
+  }
+
+  Future<void> _fetchArtikelsFromServer() async {
+    final url = Uri.parse('${IpConfig.baseUrl}/api/latestArtikels');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = jsonDecode(response.body);
+        setState(() {
+          _artikels =
+              responseData.map((json) => ArtikelData.fromJson(json)).toList();
+        });
+      } else {
+        print('Failed to load artikels: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching artikels: $e');
+    }
+  }
+
+  String getFullImageUrl(String relativeUrl) {
+    return '${IpConfig.baseUrl}/storage/artikels/$relativeUrl';
+  }
+
+  void _onProgramTap(ArtikelData artikel) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ArtikelDetail(artikel: artikel),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +93,8 @@ class _BerandaState extends State<Beranda> {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color:
-                            const Color.fromARGB(255, 209, 209, 209).withOpacity(0.5),
+                        color: const Color.fromARGB(255, 209, 209, 209)
+                            .withOpacity(0.5),
                         spreadRadius: 0,
                         blurRadius: 8,
                         offset: const Offset(0, 10),
@@ -74,7 +120,8 @@ class _BerandaState extends State<Beranda> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const Donasi()),
+                              MaterialPageRoute(
+                                  builder: (context) => const Donasi()),
                             );
                           },
                           child: Container(
@@ -223,33 +270,96 @@ class _BerandaState extends State<Beranda> {
                 ),
                 const SizedBox(height: 20),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: const Row(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Artikel",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
+                      Padding(padding: EdgeInsets.only(right: 40)),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Artikel(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Lihat Selengkapnya',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 159, 159, 159),
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 SizedBox(
-                  height: 200,
+                  height: 320,
                   child: ListView.builder(
-                    itemCount: 10,
+                    itemCount: _artikels.length,
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => Container(
-                      height: 350,
-                      width: 200,
-                      margin: const EdgeInsets.only(right: 35),
-                      color: const Color.fromARGB(255, 225, 225, 225),
-                      child: Center(
-                        child: Text("card $index"),
-                      ),
-                    ),
+                    itemBuilder: (context, index) {
+                      ArtikelData artikel = _artikels[index];
+                      return Container(
+                        width: 200,
+                        margin: const EdgeInsets.only(right: 35, bottom: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 179, 179, 179)
+                                  .withOpacity(0.5),
+                              spreadRadius: 0,
+                              blurRadius: 8,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            _onProgramTap(artikel);
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.network(
+                                  getFullImageUrl(artikel.gambar_artikel),
+                                  width: 200,
+                                  height: 260,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  artikel.judul_artikel,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -320,11 +430,13 @@ class _BerandaState extends State<Beranda> {
                                 width: 355,
                                 margin: const EdgeInsets.only(bottom: 20),
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 238, 238, 238),
+                                  color:
+                                      const Color.fromARGB(255, 238, 238, 238),
                                   borderRadius: BorderRadius.circular(5),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: const Color.fromARGB(255, 209, 209, 209)
+                                      color: const Color.fromARGB(
+                                              255, 209, 209, 209)
                                           .withOpacity(0.5),
                                       spreadRadius: 0,
                                       blurRadius: 8,
@@ -362,8 +474,8 @@ class _BerandaState extends State<Beranda> {
                                         child: Text(
                                           video.title,
                                           style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 0, 0, 0)),
+                                              color:
+                                                  Color.fromARGB(255, 0, 0, 0)),
                                           maxLines: 3,
                                           overflow: TextOverflow.ellipsis,
                                         ),

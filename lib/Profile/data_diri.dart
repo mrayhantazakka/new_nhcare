@@ -15,20 +15,23 @@ class dataDiri extends StatefulWidget {
 
 class _dataDiriState extends State<dataDiri> {
   late User? _user;
-  late TextEditingController _answerController;
-  late TextEditingController _usernameController;
-  late TextEditingController _fullnameController;
-  late TextEditingController _phoneController;
+  late TextEditingController _jawabanController;
+  late TextEditingController _namaDonaturController;
+  late TextEditingController _alamatController;
+  late TextEditingController _nomorHandphoneController;
+  late TextEditingController _jenisKelaminController;
+
   File? _image;
 
   @override
   void initState() {
     super.initState();
     _getUserData();
-    _answerController = TextEditingController();
-    _usernameController = TextEditingController();
-    _fullnameController = TextEditingController();
-    _phoneController = TextEditingController();
+    _jawabanController = TextEditingController();
+    _namaDonaturController = TextEditingController();
+    _alamatController = TextEditingController();
+    _nomorHandphoneController = TextEditingController();
+    _jenisKelaminController = TextEditingController();
   }
 
   void _getUserData() async {
@@ -42,28 +45,31 @@ class _dataDiriState extends State<dataDiri> {
     if (user != null) {
       setState(() {
         _user = user;
-        _answerController.text = _user?.answer ?? '';
-        _usernameController.text = _user?.username ?? '';
-        _fullnameController.text = _user?.fullname ?? '';
-        _phoneController.text = _user?.phone ?? '';
+        _jawabanController.text = _user?.jawaban ?? '';
+        _alamatController.text = _user?.alamat ?? '';
+        _namaDonaturController.text = _user?.nama_donatur ?? '';
+        _nomorHandphoneController.text = _user?.nomor_handphone ?? '';
+        _jenisKelaminController.text = _user?.jenis_kelamin ?? '';
       });
     }
   }
 
   @override
   void dispose() {
-    _answerController.dispose();
-    _usernameController.dispose();
-    _fullnameController.dispose();
-    _phoneController.dispose();
+    _jawabanController.dispose();
+    _alamatController.dispose();
+    _namaDonaturController.dispose();
+    _nomorHandphoneController.dispose();
+    _jenisKelaminController.dispose();
     super.dispose();
   }
 
   void _updateUserData() async {
-    if (_answerController.text.isNotEmpty ||
-        _usernameController.text.isNotEmpty ||
-        _fullnameController.text.isNotEmpty ||
-        _phoneController.text.isNotEmpty) {
+    if (_jawabanController.text.isNotEmpty ||
+        _alamatController.text.isNotEmpty ||
+        _namaDonaturController.text.isNotEmpty ||
+        _nomorHandphoneController.text.isNotEmpty ||
+        _jenisKelaminController.text.isNotEmpty) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('token');
 
@@ -71,10 +77,11 @@ class _dataDiriState extends State<dataDiri> {
         // Simpan data ke SQLite
         await DatabaseHelper.updateUserLocal(
             token,
-            _answerController.text,
-            _usernameController.text,
-            _fullnameController.text,
-            _phoneController.text);
+            _jawabanController.text,
+            _alamatController.text,
+            _namaDonaturController.text,
+            _nomorHandphoneController.text,
+            _jenisKelaminController.text);
 
         // Kirim data ke MySQL
         String url = "${IpConfig.baseUrl}/api/update-profile";
@@ -84,10 +91,11 @@ class _dataDiriState extends State<dataDiri> {
             'Authorization': 'Bearer $token',
           },
           body: {
-            'answer': _answerController.text,
-            'username': _usernameController.text,
-            'fullname': _fullnameController.text,
-            'phone': _phoneController.text,
+            'jawaban': _jawabanController.text,
+            'alamat': _alamatController.text,
+            'nama_donatur': _namaDonaturController.text,
+            'nomor_handphone': _nomorHandphoneController.text,
+            'jenis_kelamin': _jenisKelaminController.text,
           },
         );
 
@@ -109,11 +117,11 @@ class _dataDiriState extends State<dataDiri> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Pesan'),
+          title: Text('Pesan'),
           content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: const Text('OK'),
+              child: Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -228,15 +236,39 @@ class _dataDiriState extends State<dataDiri> {
                         child: CircleAvatar(
                           radius: 75,
                           backgroundColor: const Color(0xFFA4C751),
-                          backgroundImage: _image != null ? FileImage(_image!) : null,
+                          backgroundImage:
+                              _image != null ? FileImage(_image!) : null,
                           child: _image == null
-                              ? const Icon(Icons.camera_alt, color: Colors.white, size: 40)
+                              ? Icon(Icons.camera_alt,
+                                  color: Colors.white, size: 40)
                               : null,
                         ),
                       ),
 
                       const SizedBox(
                         height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          top: 15,
+                        ),
+                        child: TextFormField(
+                          controller: _namaDonaturController,
+                          decoration: InputDecoration(
+                            hintText: 'Nama',
+                            hintStyle: const TextStyle(fontSize: 14.0),
+                            prefixIcon: const Icon(Icons.person),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10)),
+                            filled: true,
+                            fillColor: const Color(0xFFEAEAEA),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 20),
+                          ),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
@@ -250,8 +282,8 @@ class _dataDiriState extends State<dataDiri> {
                           readOnly: true,
                           decoration: InputDecoration(
                             hintText: 'Email',
-                            hintStyle:
-                                const TextStyle(fontSize: 14.0, color: Colors.grey),
+                            hintStyle: const TextStyle(
+                                fontSize: 14.0, color: Colors.grey),
                             prefixIcon: const Icon(Icons.email),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -270,98 +302,7 @@ class _dataDiriState extends State<dataDiri> {
                           top: 15,
                         ),
                         child: TextFormField(
-                          controller: _usernameController,
-                          decoration: InputDecoration(
-                            hintText: 'Username',
-                            hintStyle: const TextStyle(fontSize: 14.0),
-                            prefixIcon: const Icon(Icons.assignment_ind),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(10)),
-                            filled: true,
-                            fillColor: const Color(0xFFEAEAEA),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 20),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                          top: 15,
-                        ),
-                        child: TextFormField(
-                          controller: _fullnameController,
-                          decoration: InputDecoration(
-                            hintText: 'Fullname',
-                            hintStyle: const TextStyle(fontSize: 14.0),
-                            prefixIcon: const Icon(Icons.person),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(10)),
-                            filled: true,
-                            fillColor: const Color(0xFFEAEAEA),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 20),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                          top: 15,
-                        ),
-                        child: TextFormField(
-                          controller: TextEditingController(
-                              text: _user?.question ?? ''),
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            hintText: 'Pertanyaan',
-                            hintStyle:
-                                const TextStyle(fontSize: 14.0, color: Colors.grey),
-                            prefixIcon: const Icon(Icons.question_answer),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(10)),
-                            filled: true,
-                            fillColor: const Color(0xFFEAEAEA),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 20),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                          top: 15,
-                        ),
-                        child: TextFormField(
-                          controller: _answerController,
-                          decoration: InputDecoration(
-                            hintText: 'Jawaban Keamanan',
-                            hintStyle: const TextStyle(fontSize: 14.0),
-                            prefixIcon: const Icon(Icons.edit),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(10)),
-                            filled: true,
-                            fillColor: const Color(0xFFEAEAEA),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 20),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                          top: 15,
-                        ),
-                        child: TextFormField(
-                          controller: _phoneController,
+                          controller: _nomorHandphoneController,
                           decoration: InputDecoration(
                             hintText: 'Phone',
                             hintStyle: const TextStyle(fontSize: 14.0),
@@ -382,17 +323,87 @@ class _dataDiriState extends State<dataDiri> {
                           right: 20,
                           top: 15,
                         ),
+                        child: TextFormField(
+                          controller: _alamatController,
+                          decoration: InputDecoration(
+                            hintText: 'alamat',
+                            hintStyle: const TextStyle(fontSize: 14.0),
+                            prefixIcon: const Icon(Icons.assignment_ind),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10)),
+                            filled: true,
+                            fillColor: const Color(0xFFEAEAEA),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 20),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          top: 15,
+                        ),
+                        child: TextFormField(
+                          controller: TextEditingController(
+                              text: _user?.pertanyaan ?? ''),
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            hintText: 'Pertanyaan',
+                            hintStyle: const TextStyle(
+                                fontSize: 14.0, color: Colors.grey),
+                            prefixIcon: Icon(Icons.question_answer),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10)),
+                            filled: true,
+                            fillColor: const Color(0xFFEAEAEA),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 20),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          top: 15,
+                        ),
+                        child: TextFormField(
+                          controller: _jawabanController,
+                          decoration: InputDecoration(
+                            hintText: 'Jawaban Keamanan',
+                            hintStyle: const TextStyle(fontSize: 14.0),
+                            prefixIcon: const Icon(Icons.edit),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10)),
+                            filled: true,
+                            fillColor: const Color(0xFFEAEAEA),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 20),
+                          ),
+                        ),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          top: 15,
+                        ),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFA4C751),
-                              minimumSize: const Size(345, 60),
+                              primary: Color(0xFFA4C751),
+                              minimumSize: Size(345, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            onPressed: _updateUserData,
-                            child: const Text('Edit',
-                                style: TextStyle(color: Colors.white))),
+                            child: Text('Edit',
+                                style: TextStyle(color: Colors.white)),
+                            onPressed: _updateUserData),
                       )
                       // OutlinedButton(
                       //   style: OutlinedButton.styleFrom(

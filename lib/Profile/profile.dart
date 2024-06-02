@@ -19,7 +19,7 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
-  late String _username = '';
+  late String _namaDonatur = '';
   late String _email = '';
   File? _profileImage;
 
@@ -45,7 +45,7 @@ class _profileState extends State<profile> {
     } else {
       // Jika tidak ada gambar yang disimpan, tampilkan huruf pertama dari username sebagai gambar default
       setState(() {
-        _profileImage = null; // Tidak menggunakan gambar, biarkan null
+        _profileImage = null;
       });
     }
   }
@@ -57,7 +57,7 @@ class _profileState extends State<profile> {
       User? user = await DatabaseHelper.getUserFromLocal(token);
       if (user != null) {
         setState(() {
-          _username = user.username!;
+          _namaDonatur = user.nama_donatur!;
           _email = user.email!;
         });
       }
@@ -67,7 +67,7 @@ class _profileState extends State<profile> {
   void _gotoDataDiriPage(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const dataDiri()),
+      MaterialPageRoute(builder: (context) => dataDiri()),
     );
     _loadUserData();
   }
@@ -77,7 +77,7 @@ class _profileState extends State<profile> {
     await prefs.remove('token');
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const LoginPage()),
+      MaterialPageRoute(builder: (context) => LoginPage()),
     );
   }
 
@@ -86,11 +86,11 @@ class _profileState extends State<profile> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Logout'),
-          content: const Text('Apakah Anda yakin ingin logout?'),
+          title: Text('Logout'),
+          content: Text('Apakah Anda yakin ingin logout?'),
           actions: <Widget>[
             TextButton(
-              child: const Text(
+              child: Text(
                 'Batal',
                 style: TextStyle(color: Colors.grey),
               ),
@@ -99,7 +99,7 @@ class _profileState extends State<profile> {
               },
             ),
             TextButton(
-              child: const Text(
+              child: Text(
                 'OK',
                 style: TextStyle(color: Colors.red),
               ),
@@ -158,26 +158,30 @@ class _profileState extends State<profile> {
                       CircleAvatar(
                         radius: 75,
                         backgroundColor: const Color(0xFFA4C751),
-                        backgroundImage: _profileImage != null ? FileImage(_profileImage!) : null,
+                        backgroundImage: _profileImage != null
+                            ? FileImage(_profileImage!)
+                            : null,
                         child: _profileImage == null
                             ? Text(
-                                _username
+                                _namaDonatur
                                     .split(" ")
                                     .where((name) => name.isNotEmpty)
-                                    .map((name) => name.substring(0, 1).toUpperCase())
+                                    .map((name) =>
+                                        name.substring(0, 1).toUpperCase())
                                     .join(""),
-                                style: const TextStyle(fontSize: 36, color: Colors.white),
+                                style: const TextStyle(
+                                    fontSize: 36, color: Colors.white),
                               )
                             : null,
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        _username,
+                        '$_namaDonatur',
                         style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        _email,
+                        '$_email',
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -185,7 +189,7 @@ class _profileState extends State<profile> {
                     ],
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: 30)),
+                const Padding(padding: const EdgeInsets.only(top: 30)),
                 Column(
                   children: [
                     GestureDetector(
@@ -343,7 +347,7 @@ class _profileState extends State<profile> {
                   padding: const EdgeInsets.only(top: 20),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
+                      primary: Colors.grey,
                       maximumSize: const Size(360, 60),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18),

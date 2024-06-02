@@ -5,8 +5,6 @@ import 'package:nhcoree/Database/IpConfig.dart';
 import 'package:nhcoree/Models/ProgramData.dart';
 
 class Programm extends StatefulWidget {
-  const Programm({super.key});
-
   @override
   _ProgrammState createState() => _ProgrammState();
 }
@@ -20,78 +18,63 @@ class _ProgrammState extends State<Programm> {
   @override
   void initState() {
     super.initState();
-    // Panggil fungsi untuk mengambil data dari server saat inisialisasi widget.
     _fetchProgramsFromServer();
   }
 
   Future<void> _fetchProgramsFromServer() async {
-    // Ganti URL ini dengan URL endpoint API kamu.
     final url = Uri.parse('${IpConfig.baseUrl}/api/programs');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        // Jika respons sukses, parse data JSON ke dalam List<ProgramData>.
         final List<dynamic> responseData = jsonDecode(response.body);
         setState(() {
           _programs =
               responseData.map((json) => ProgramData.fromJson(json)).toList();
-          _filteredPrograms =
-              _programs; // Mengisi _filteredPrograms dengan data awal
+          _filteredPrograms = _programs;
         });
       } else {
-        // Jika respons gagal, tampilkan pesan kesalahan.
         print('Failed to load programs: ${response.statusCode}');
       }
     } catch (e) {
-      // Tangani kesalahan jika ada.
       print('Error fetching programs: $e');
     }
+  }
+
+  String getFullImageUrl(String relativeUrl) {
+    return '${IpConfig.baseUrl}/storage/programs/$relativeUrl';
   }
 
   void _onProgramTap(ProgramData program) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        double screenWidth = MediaQuery.of(context).size.width;
+        double imageWidth = screenWidth *
+            0.8; 
+
         return AlertDialog(
-          title: Text(
-            program.judul,
-            textAlign: TextAlign.center, // Menengahkan judul
-            style: const TextStyle(
-              fontWeight: FontWeight.bold, // Membuat teks judul menjadi tebal
-              fontSize: 20, // Meningkatkan ukuran font judul
-            ),
+          title: Center(
+            child: Text(program.namaProgram, textAlign: TextAlign.center),
           ),
-          content: SingleChildScrollView( // Menggunakan SingleChildScrollView untuk menghindari overflow
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.network(
-                  program
-                      .img_program, // Menggunakan Image.network untuk URL gambar
-                  width: 200, // Atur lebar gambar sesuai kebutuhan
-                  height: 200, // Atur tinggi gambar sesuai kebutuhan
-                  fit: BoxFit.cover, // Menyesuaikan gambar agar terlihat lebih baik
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  program.deskripsi,
-                  textAlign: TextAlign.justify, // Menjajarkan teks deskripsi agar rapi
-                  style: const TextStyle(
-                    fontSize: 16, // Menyesuaikan ukuran font deskripsi
-                  ),
-                ),
-              ],
-            ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.network(
+                getFullImageUrl(program.gambarProgram),
+                width: imageWidth,
+                height: 200,
+                fit: BoxFit.contain,
+              ),
+              SizedBox(height: 16),
+              Text(program.deskripsiProgram),
+            ],
           ),
           actions: [
             TextButton(
+              child: Text('Close'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.red, // Mengubah warna teks tombol menjadi merah
-              ),
-              child: Text('Tutup'),
             ),
           ],
         );
@@ -103,7 +86,7 @@ class _ProgrammState extends State<Programm> {
     setState(() {
       _filteredPrograms = _programs
           .where((program) =>
-              program.judul.toLowerCase().contains(value.toLowerCase()))
+              program.namaProgram.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -112,112 +95,100 @@ class _ProgrammState extends State<Programm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Program'),
+        title: Text('Program'),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/img/new_bg.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 1,
-                      blurRadius: 3,
-                      offset: const Offset(0, 2),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 1,
+                    blurRadius: 3,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.search),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          hintText: 'Cari Program',
+                          border: InputBorder.none,
+                        ),
+                        onChanged: _onSearchChanged,
+                      ),
                     ),
                   ],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.search),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: const InputDecoration(
-                            hintText: 'Cari Program',
-                            border: InputBorder.none,
-                          ),
-                          onChanged: _onSearchChanged,
+              ),
+            ),
+          ),
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16.0,
+                mainAxisSpacing: 16.0,
+              ),
+              itemCount: _filteredPrograms.length,
+              itemBuilder: (context, index) {
+                ProgramData program = _filteredPrograms[index];
+                return GestureDetector(
+                  onTap: () {
+                    _onProgramTap(program);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: Offset(0, 2),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 16.0,
-                ),
-                itemCount: _filteredPrograms.length,
-                itemBuilder: (context, index) {
-                  ProgramData program = _filteredPrograms[index];
-                  return GestureDetector(
-                    onTap: () {
-                      _onProgramTap(program);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 3,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.network(
-                            program.img_program,
-                            width: 100,
-                            height: 100,
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            program.judul,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-
-                        ],
-                      ),
+                      ],
                     ),
-                  );
-                },
-              ),
+                    child: Column(
+                      children: [
+                        Image.network(
+                          getFullImageUrl(program.gambarProgram),
+                          width: 200,
+                          height: 140,
+                          fit: BoxFit.contain,
+                        ),
+                        SizedBox(height: 1),
+                        Text(
+                          program.namaProgram,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
-

@@ -24,7 +24,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-  String question = '';
+  String pertanyaan = '';
   String email = '';
   String message = '';
   bool showEmailButton = true;
@@ -40,7 +40,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
       setState(() {
-        question = responseData['question'];
+        pertanyaan = responseData['pertanyaan'];
         showEmailButton = false;
         showAnswerButton = true;
         message = '';
@@ -58,7 +58,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
       Uri.parse("${IpConfig.baseUrl}/api/verify-answer"),
       body: {
         'email': email,
-        'answer': answerController.text,
+        'jawaban': answerController.text,
       },
     );
 
@@ -90,10 +90,10 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
       setState(() {
         _showMessageDialog(context, 'Password Berhasil Diubah');
       });
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 2));
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const profile()),
+        MaterialPageRoute(builder: (context) => profile()),
       );
     } else {
       setState(() {
@@ -107,11 +107,11 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Pesan'),
+          title: Text('Pesan'),
           content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: const Text('OK'),
+              child: Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -159,7 +159,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 7,
-                      offset: const Offset(0, 3),
+                      offset: Offset(0, 3),
                     ),
                   ],
                 ),
@@ -188,16 +188,16 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                               vertical: 15, horizontal: 20),
                         ),
                       ),
-                    if (question.isNotEmpty && showAnswerButton)
+                    if (pertanyaan.isNotEmpty && showAnswerButton)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextFormField(
-                            initialValue: question,
+                            initialValue: pertanyaan,
                             readOnly: true,
                             decoration: InputDecoration(
                               hintText: 'Question',
-                              prefixIcon: const Icon(Icons.question_answer),
+                              prefixIcon: Icon(Icons.question_answer),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(10),
@@ -228,7 +228,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                           if (showAnswerButton)
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFA4C751),
+                                primary: const Color(0xFFA4C751),
                                 minimumSize: const Size(345, 60),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -264,7 +264,7 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(10)),
                               filled: true,
-                              fillColor: const Color(0xFFEAEAEA),
+                              fillColor: Color(0xFFEAEAEA),
                             ),
                           ),
                           const Padding(padding: EdgeInsets.only(top: 15)),
@@ -284,8 +284,8 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                           const Padding(padding: EdgeInsets.only(top: 10)),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFA4C751),
-                              minimumSize: const Size(345, 60),
+                              primary: Color(0xFFA4C751),
+                              minimumSize: Size(345, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -304,8 +304,8 @@ class _ubahKataSandiState extends State<ubahKataSandi> {
                     if (showEmailButton)
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFA4C751),
-                          minimumSize: const Size(345, 50),
+                          primary: Color(0xFFA4C751),
+                          minimumSize: Size(345, 50),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),

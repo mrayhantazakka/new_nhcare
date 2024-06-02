@@ -13,28 +13,28 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   late TextEditingController _emailController;
-  late TextEditingController _answerController;
+  late TextEditingController _jawabanController;
   late TextEditingController _passwordController;
-  bool _isPasswordVisible = false; // Untuk mengontrol visibilitas password
+  bool _isPasswordVisible = false;
 
   @override
   void initState() {
     super.initState();
     _emailController = TextEditingController();
-    _answerController = TextEditingController();
+    _jawabanController = TextEditingController();
     _passwordController = TextEditingController();
   }
 
   Future<void> _validateData(BuildContext context) async {
     String email = _emailController.text;
-    String answer = _answerController.text;
+    String jawaban = _jawabanController.text;
     String newPassword = _passwordController.text;
 
     final response = await http.post(
       Uri.parse("${IpConfig.baseUrl}/api/resetpassword"),
       body: {
         'email': email,
-        'answer': answer,
+        'jawaban': jawaban,
         'password': newPassword,
       },
     );
@@ -85,7 +85,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           message: 'Gagal mereset password. Silakan coba lagi.',
           contentType: ContentType.failure,
         ),
-
       );
 
       ScaffoldMessenger.of(context)
@@ -190,7 +189,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
-                          controller: _answerController,
+                          controller: _jawabanController,
                           style: const TextStyle(fontSize: 14.0),
                           decoration: InputDecoration(
                             hintText: 'Jawaban Keamanan',
@@ -236,7 +235,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             _validateData(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFA4C751),
+                            primary: const Color(0xFFA4C751),
                             minimumSize: const Size(double.infinity, 50),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -262,7 +261,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   void dispose() {
     _emailController.dispose();
-    _answerController.dispose();
+    _jawabanController.dispose();
     _passwordController.dispose();
     super.dispose();
   }

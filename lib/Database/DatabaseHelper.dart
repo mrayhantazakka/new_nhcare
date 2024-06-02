@@ -30,13 +30,14 @@ class DatabaseHelper {
           await db.execute('''
           CREATE TABLE user (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            fullname TEXT NOT NULL,
-            username TEXT NOT NULL,
+            nama_donatur TEXT NOT NULL,
+            alamat TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
-            phone TEXT,
-            question TEXT,
-            answer TEXT,
+            nomor_handphone TEXT,
+            pertanyaan TEXT,
+            jawaban TEXT,
+            jenis_kelamin TEXT,
             token TEXT
           )
         ''');
@@ -53,35 +54,47 @@ class DatabaseHelper {
     }
   }
 
+  // static Future<void> deleteDatabase() async {
+  //   try {
+  //     String pathDB = await getDatabasesPath();
+  //     String fullPath = path.join(pathDB, 'nhcoree.db');
+  //     await databaseFactory.deleteDatabase(fullPath);
+  //     print("Database deleted successfully");
+  //   } catch (e) {
+  //     print("Error deleting the database: $e");
+  //   }
+  // }
+
   static Future<void> saveUser(User user, String token) async {
     final db = await database;
     await db.insert(
       'user',
       {
-        'fullname': user.fullname,
-        'username': user.username,
+        'nama_donatur': user.nama_donatur,
+        'alamat': user.alamat,
         'email': user.email,
         'password': user.password,
-        'phone': user.phone,
-        'question': user.question,
-        'answer': user.answer,
+        'nomor_handphone': user.nomor_handphone,
+        'pertanyaan': user.pertanyaan,
+        'jawaban': user.jawaban,
+        'jenis_kelamin': user.jenis_kelamin,
         'token': token,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  static Future<void> updateUserLocal(String token, String answer,
-      String username, String fullname, String phone) async {
+  static Future<void> updateUserLocal(String token, String jawaban,
+      String alamat, String nama_donatur, String nomor_handphone, String jenis_kelamin) async {
     final db = await database;
     await db.update(
       'user',
       {
-        'answer': answer,
-        'username': username,
-        'fullname': fullname,
-        'phone': phone,
-      
+        'jawaban': jawaban,
+        'alamat': alamat,
+        'nama_donatur': nama_donatur,
+        'nomor_handphone': nomor_handphone,
+        'jenis_kelamin' : jenis_kelamin,
       },
       where: 'token = ?',
       whereArgs: [token],
