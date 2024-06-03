@@ -20,7 +20,7 @@ class DatabaseHelper {
   static Future<Database> initDatabase() async {
     try {
       String pathDB = await getDatabasesPath();
-      String fullPath = path.join(pathDB, 'nhcoree.db');
+      String fullPath = path.join(pathDB, 'nurul_care');
 
       return await openDatabase(
         fullPath,
@@ -31,13 +31,13 @@ class DatabaseHelper {
           CREATE TABLE user (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nama_donatur TEXT NOT NULL,
+            nomor_handphone TEXT,
             alamat TEXT NOT NULL,
+            jenis_kelamin TEXT,
             email TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
-            nomor_handphone TEXT,
             pertanyaan TEXT,
             jawaban TEXT,
-            jenis_kelamin TEXT,
             token TEXT
           )
         ''');

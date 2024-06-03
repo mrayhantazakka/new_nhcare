@@ -235,7 +235,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             _validateData(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: const Color(0xFFA4C751),
+                            backgroundColor: const Color(0xFFA4C751),
                             minimumSize: const Size(double.infinity, 50),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),

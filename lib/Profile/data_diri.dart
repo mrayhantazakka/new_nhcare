@@ -14,7 +14,7 @@ class dataDiri extends StatefulWidget {
 }
 
 class _dataDiriState extends State<dataDiri> {
-  late User? _user;
+  User? _user;
   late TextEditingController _jawabanController;
   late TextEditingController _namaDonaturController;
   late TextEditingController _alamatController;
@@ -26,12 +26,12 @@ class _dataDiriState extends State<dataDiri> {
   @override
   void initState() {
     super.initState();
-    _getUserData();
     _jawabanController = TextEditingController();
     _namaDonaturController = TextEditingController();
     _alamatController = TextEditingController();
     _nomorHandphoneController = TextEditingController();
     _jenisKelaminController = TextEditingController();
+    _getUserData();
   }
 
   void _getUserData() async {
@@ -39,7 +39,9 @@ class _dataDiriState extends State<dataDiri> {
     String token = prefs.getString('token') ?? '';
     String? imagePath = prefs.getString('profileImagePath');
     if (imagePath != null) {
-      _image = File(imagePath);
+      setState(() {
+        _image = File(imagePath);
+      });
     }
     User? user = await DatabaseHelper.getUserFromLocal(token);
     if (user != null) {
@@ -65,52 +67,65 @@ class _dataDiriState extends State<dataDiri> {
   }
 
   void _updateUserData() async {
-    if (_jawabanController.text.isNotEmpty ||
-        _alamatController.text.isNotEmpty ||
-        _namaDonaturController.text.isNotEmpty ||
-        _nomorHandphoneController.text.isNotEmpty ||
-        _jenisKelaminController.text.isNotEmpty) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+  if (_jawabanController.text.isNotEmpty ||
+      _alamatController.text.isNotEmpty ||
+      _namaDonaturController.text.isNotEmpty ||
+      _nomorHandphoneController.text.isNotEmpty ||
+      _jenisKelaminController.text.isNotEmpty) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
 
-      if (token != null) {
-        // Simpan data ke SQLite
-        await DatabaseHelper.updateUserLocal(
-            token,
-            _jawabanController.text,
-            _alamatController.text,
-            _namaDonaturController.text,
-            _nomorHandphoneController.text,
-            _jenisKelaminController.text);
+    if (token != null) {
+      // Simpan data ke SQLite
+      await DatabaseHelper.updateUserLocal(
+          token,
+          _jawabanController.text,
+          _alamatController.text,
+          _namaDonaturController.text,
+          _nomorHandphoneController.text,
+          _jenisKelaminController.text);
 
-        // Kirim data ke MySQL
-        String url = "${IpConfig.baseUrl}/api/update-profile";
-        final response = await http.post(
-          Uri.parse(url),
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
-          body: {
-            'jawaban': _jawabanController.text,
-            'alamat': _alamatController.text,
-            'nama_donatur': _namaDonaturController.text,
-            'nomor_handphone': _nomorHandphoneController.text,
-            'jenis_kelamin': _jenisKelaminController.text,
-          },
-        );
+      // Kirim data ke MySQL
+      String url = "${IpConfig.baseUrl}/api/updateDntr";
+      print('URL: $url');
+      print('Token: $token');
+      print('Data: ${{
+        'jawaban': _jawabanController.text,
+        'alamat': _alamatController.text,
+        'nama_donatur': _namaDonaturController.text,
+        'nomor_handphone': _nomorHandphoneController.text,
+        'jenis_kelamin': _jenisKelaminController.text,
+      }}');
 
-        if (response.statusCode == 200) {
-          _showMessageDialog(context, 'Data berhasil diperbarui');
-        } else {
-          _showMessageDialog(context, 'Gagal memperbarui data');
-        }
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+        body: {
+          'jawaban': _jawabanController.text,
+          'alamat': _alamatController.text,
+          'nama_donatur': _namaDonaturController.text,
+          'nomor_handphone': _nomorHandphoneController.text,
+          'jenis_kelamin': _jenisKelaminController.text,
+        },
+      );
+
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        _showMessageDialog(context, 'Data berhasil diperbarui');
       } else {
-        _showMessageDialog(context, 'Pengguna belum login');
+        _showMessageDialog(context, 'Gagal memperbarui data');
       }
     } else {
-      _showMessageDialog(context, 'Semua field harus diisi');
+      _showMessageDialog(context, 'Pengguna belum login');
     }
+  } else {
+    _showMessageDialog(context, 'Semua field harus diisi');
   }
+}
 
   void _showMessageDialog(BuildContext context, String message) {
     showDialog(
@@ -395,7 +410,7 @@ class _dataDiriState extends State<dataDiri> {
                         ),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Color(0xFFA4C751),
+                              backgroundColor: Color(0xFFA4C751),
                               minimumSize: Size(345, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -405,20 +420,6 @@ class _dataDiriState extends State<dataDiri> {
                                 style: TextStyle(color: Colors.white)),
                             onPressed: _updateUserData),
                       )
-                      // OutlinedButton(
-                      //   style: OutlinedButton.styleFrom(
-                      //     side: BorderSide(color: Color(0xFFA4C751)),
-                      //     minimumSize: Size(160, 60),
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(10),
-                      //     ),
-                      //   ),
-                      //   child: Text('Kembali',
-                      //       style: TextStyle(color: Color(0xFFA4C751))),
-                      //   onPressed: () {
-                      //     Navigator.pushNamed(context, '/profile');
-                      //   },
-                      // ),
                     ],
                   ),
                 )

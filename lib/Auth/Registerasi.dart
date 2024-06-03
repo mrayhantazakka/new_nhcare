@@ -457,15 +457,14 @@ class _daftarState extends State<daftar> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: const Color(0xFFA4C751),
+                              foregroundColor: Colors.white.withOpacity(
+                                  0.8), backgroundColor: const Color(0xFFA4C751),
                               minimumSize: Size(
                                   MediaQuery.of(context).size.width * 0.4, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              elevation: 5, // Menambahkan shadow
-                              onPrimary: Colors.white.withOpacity(
-                                  0.8), // Warna saat di-hover atau di-press
+                              elevation: 5, // Warna saat di-hover atau di-press
                             ),
                             child: const Text('DAFTAR',
                                 style: TextStyle(color: Colors.white)),

@@ -347,7 +347,7 @@ class _profileState extends State<profile> {
                   padding: const EdgeInsets.only(top: 20),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.grey,
+                      backgroundColor: Colors.grey,
                       maximumSize: const Size(360, 60),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18),
