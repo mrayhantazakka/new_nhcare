@@ -21,34 +21,34 @@ class profile extends StatefulWidget {
 class _profileState extends State<profile> {
   late String _namaDonatur = '';
   late String _email = '';
-  File? _profileImage;
+  late String _profileImage = '';
 
   @override
   void initState() {
     super.initState();
-    loadProfileImage();
+    //loadProfileImage();
     _loadUserData();
   }
 
-  Future<void> loadProfileImage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? imagePath = prefs.getString('profileImagePath');
-    print("Image path from prefs: $imagePath"); // Debug print
-    if (imagePath != null) {
-      File profileImage = File(imagePath);
-      print("File exists: ${await profileImage.exists()}"); // Debug print
-      if (await profileImage.exists()) {
-        setState(() {
-          _profileImage = profileImage;
-        });
-      }
-    } else {
-      // Jika tidak ada gambar yang disimpan, tampilkan huruf pertama dari username sebagai gambar default
-      setState(() {
-        _profileImage = null;
-      });
-    }
-  }
+  // Future<void> loadProfileImage() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? imagePath = prefs.getString('profileImagePath');
+  //   print("Image path from prefs: $imagePath"); // Debug print
+  //   if (imagePath != null) {
+  //     File profileImage = File(imagePath);
+  //     print("File exists: ${await profileImage.exists()}"); // Debug print
+  //     if (await profileImage.exists()) {
+  //       setState(() {
+  //         _profileImage = profileImage;
+  //       });
+  //     }
+  //   } else {
+  //     // Jika tidak ada gambar yang disimpan, tampilkan huruf pertama dari username sebagai gambar default
+  //     setState(() {
+  //       _profileImage = null;
+  //     });
+  //   }
+  // }
 
   void _loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -59,6 +59,7 @@ class _profileState extends State<profile> {
         setState(() {
           _namaDonatur = user.nama_donatur!;
           _email = user.email!;
+          _profileImage = user.foto_donatur!;
         });
       }
     }
@@ -158,9 +159,8 @@ class _profileState extends State<profile> {
                       CircleAvatar(
                         radius: 75,
                         backgroundColor: const Color(0xFFA4C751),
-                        backgroundImage: _profileImage != null
-                            ? FileImage(_profileImage!)
-                            : null,
+                        // backgroundImage: _profileImage != null
+                        //     ? FileImage(_profileImage!: null,
                         child: _profileImage == null
                             ? Text(
                                 _namaDonatur

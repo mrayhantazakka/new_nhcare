@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:mime/mime.dart';
+import 'package:http_parser/http_parser.dart';
 
 class dataDiri extends StatefulWidget {
   const dataDiri({Key? key}) : super(key: key);
@@ -66,66 +68,84 @@ class _dataDiriState extends State<dataDiri> {
     super.dispose();
   }
 
-  void _updateUserData() async {
-  if (_jawabanController.text.isNotEmpty ||
-      _alamatController.text.isNotEmpty ||
-      _namaDonaturController.text.isNotEmpty ||
-      _nomorHandphoneController.text.isNotEmpty ||
-      _jenisKelaminController.text.isNotEmpty) {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+  Future<void> _updateUserData() async {
+    if (_jawabanController.text.isNotEmpty ||
+        _alamatController.text.isNotEmpty ||
+        _namaDonaturController.text.isNotEmpty ||
+        _nomorHandphoneController.text.isNotEmpty ||
+        _jenisKelaminController.text.isNotEmpty) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
 
-    if (token != null) {
-      // Simpan data ke SQLite
-      await DatabaseHelper.updateUserLocal(
+      if (token != null) {
+        // Simpan data ke SQLite
+        await DatabaseHelper.updateUserLocal(
           token,
           _jawabanController.text,
           _alamatController.text,
           _namaDonaturController.text,
           _nomorHandphoneController.text,
-          _jenisKelaminController.text);
+          _jenisKelaminController.text,
+        );
 
-      // Kirim data ke MySQL
-      String url = "${IpConfig.baseUrl}/api/updateDntr";
-      print('URL: $url');
-      print('Token: $token');
-      print('Data: ${{
-        'jawaban': _jawabanController.text,
-        'alamat': _alamatController.text,
-        'nama_donatur': _namaDonaturController.text,
-        'nomor_handphone': _nomorHandphoneController.text,
-        'jenis_kelamin': _jenisKelaminController.text,
-      }}');
+        // Kirim data ke MySQL
+        String url = "${IpConfig.baseUrl}/api/updateDntr";
 
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-        body: {
-          'jawaban': _jawabanController.text,
-          'alamat': _alamatController.text,
-          'nama_donatur': _namaDonaturController.text,
-          'nomor_handphone': _nomorHandphoneController.text,
-          'jenis_kelamin': _jenisKelaminController.text,
-        },
-      );
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+        request.headers['Authorization'] = 'Bearer $token';
 
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
+        request.fields['jawaban'] = _jawabanController.text;
+        request.fields['alamat'] = _alamatController.text;
+        request.fields['nama_donatur'] = _namaDonaturController.text;
+        request.fields['nomor_handphone'] = _nomorHandphoneController.text;
+        request.fields['jenis_kelamin'] = _jenisKelaminController.text;
 
-      if (response.statusCode == 200) {
-        _showMessageDialog(context, 'Data berhasil diperbarui');
+        if (_image != null) {
+          var mimeTypeData = lookupMimeType(_image!.path)!.split('/');
+          var fileStream = http.ByteStream(_image!.openRead());
+          var length = await _image!.length();
+
+          var fileName = _image!.path.split('/').last;
+
+          var multipartFile = http.MultipartFile(
+            'foto_donatur',
+            fileStream,
+            length,
+            filename: fileName,
+            contentType: MediaType(mimeTypeData[0], mimeTypeData[1]),
+          );
+
+          request.files.add(multipartFile);
+        }
+
+        try {
+          var response = await request.send();
+
+          if (response.statusCode == 200) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Data berhasil diperbarui'),
+                backgroundColor: Colors.green,
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Gagal memperbarui data')),
+            );
+          }
+        } catch (e) {
+          print('Error: $e');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Terjadi kesalahan saat memperbarui data')),
+          );
+        }
       } else {
-        _showMessageDialog(context, 'Gagal memperbarui data');
+        _showMessageDialog(context, 'Pengguna belum login');
       }
     } else {
-      _showMessageDialog(context, 'Pengguna belum login');
+      _showMessageDialog(context, 'Semua field harus diisi');
     }
-  } else {
-    _showMessageDialog(context, 'Semua field harus diisi');
   }
-}
 
   void _showMessageDialog(BuildContext context, String message) {
     showDialog(
@@ -148,13 +168,20 @@ class _dataDiriState extends State<dataDiri> {
   }
 
   Future getImage(ImageSource source) async {
-    final pickedFile = await ImagePicker().pickImage(source: source);
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source);
+
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
       });
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('profileImagePath', pickedFile.path);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Tidak ada gambar yang dipilih")),
+      );
     }
   }
 
@@ -259,7 +286,6 @@ class _dataDiriState extends State<dataDiri> {
                               : null,
                         ),
                       ),
-
                       const SizedBox(
                         height: 10,
                       ),
@@ -341,7 +367,7 @@ class _dataDiriState extends State<dataDiri> {
                         child: TextFormField(
                           controller: _alamatController,
                           decoration: InputDecoration(
-                            hintText: 'alamat',
+                            hintText: 'Alamat',
                             hintStyle: const TextStyle(fontSize: 14.0),
                             prefixIcon: const Icon(Icons.assignment_ind),
                             border: OutlineInputBorder(
@@ -401,7 +427,6 @@ class _dataDiriState extends State<dataDiri> {
                           ),
                         ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.only(
                           left: 20,

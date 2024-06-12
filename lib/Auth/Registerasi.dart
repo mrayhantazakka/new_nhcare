@@ -301,7 +301,7 @@ class _daftarState extends State<daftar> {
                                     .start, // memastikan teks "Jenis Kelamin" ada di kiri
                                 children: [
                                   const Text(
-                                    'Jenis Kelamin',
+                                    'JENIS KELAMIN',
                                     style: TextStyle(
                                         fontSize:
                                             16), // Anda dapat menyesuaikan ukuran font sesuai kebutuhan
@@ -344,53 +344,6 @@ class _daftarState extends State<daftar> {
                                     ],
                                   ),
                                 ],
-                              ),
-                              const SizedBox(height: 20),
-                              DropdownButtonFormField<String>(
-                                value: _selectedQuestion,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _selectedQuestion = newValue;
-                                  });
-                                },
-                                items: _questions.map((question) {
-                                  return DropdownMenuItem(
-                                    child: Text(question),
-                                    value: question,
-                                  );
-                                }).toList(),
-                                decoration: InputDecoration(
-                                  hintText: 'Pilih Pertanyaan',
-                                  prefixIcon: const Icon(Icons.question_answer),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  filled: true,
-                                  fillColor: const Color(0xFFEAEAEA),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              const Text(
-                                ' Pertanyaan ini digunakan sebagai antisipasi jika Anda lupa password. Harap selalu ingat Jawaban Anda! ',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              TextFormField(
-                                controller: _jawabanController,
-                                decoration: InputDecoration(
-                                  hintText: 'Jawaban',
-                                  prefixIcon: const Icon(Icons.edit),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  filled: true,
-                                  fillColor: const Color(0xFFEAEAEA),
-                                ),
                               ),
                               const SizedBox(height: 20),
                               TextFormField(
@@ -444,6 +397,62 @@ class _daftarState extends State<daftar> {
                                   fillColor: const Color(0xFFEAEAEA),
                                 ),
                               ),
+                              const SizedBox(height: 30),
+                              const Text(
+                                'KEAMANAN',
+                                style: TextStyle(
+                                  fontSize: 16, // Ukuran teks
+                                   // Menebalkan teks
+                                  color: Colors.black, // Warna teks hitam
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              DropdownButtonFormField<String>(
+                                value: _selectedQuestion,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _selectedQuestion = newValue;
+                                  });
+                                },
+                                items: _questions.map((question) {
+                                  return DropdownMenuItem(
+                                    child: Text(question),
+                                    value: question,
+                                  );
+                                }).toList(),
+                                decoration: InputDecoration(
+                                  hintText: 'Pilih Pertanyaan',
+                                  prefixIcon: const Icon(Icons.question_answer),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  filled: true,
+                                  fillColor: const Color(0xFFEAEAEA),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text(
+                                ' Pertanyaan ini digunakan sebagai antisipasi jika Anda lupa password. Harap selalu ingat Jawaban Anda! ',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              TextFormField(
+                                controller: _jawabanController,
+                                decoration: InputDecoration(
+                                  hintText: 'Jawaban',
+                                  prefixIcon: const Icon(Icons.edit),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  filled: true,
+                                  fillColor: const Color(0xFFEAEAEA),
+                                ),
+                              ),
                               const SizedBox(height: 20),
                               const Padding(
                                   padding: EdgeInsets.only(bottom: 20))
@@ -457,8 +466,8 @@ class _daftarState extends State<daftar> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white.withOpacity(
-                                  0.8), backgroundColor: const Color(0xFFA4C751),
+                              foregroundColor: Colors.white.withOpacity(0.8),
+                              backgroundColor: const Color(0xFFA4C751),
                               minimumSize: Size(
                                   MediaQuery.of(context).size.width * 0.4, 60),
                               shape: RoundedRectangleBorder(

@@ -94,8 +94,13 @@ class DatabaseHelper {
     );
   }
 
-  static Future<void> updateUserLocal(String token, String jawaban,
-      String alamat, String nama_donatur, String nomor_handphone, String jenis_kelamin) async {
+  static Future<void> updateUserLocal(
+      String token,
+      String jawaban,
+      String alamat,
+      String nama_donatur,
+      String nomor_handphone,
+      String jenis_kelamin) async {
     final db = await database;
     await db.update(
       'user',
@@ -104,7 +109,7 @@ class DatabaseHelper {
         'alamat': alamat,
         'nama_donatur': nama_donatur,
         'nomor_handphone': nomor_handphone,
-        'jenis_kelamin' : jenis_kelamin,
+        'jenis_kelamin': jenis_kelamin,
       },
       where: 'token = ?',
       whereArgs: [token],
