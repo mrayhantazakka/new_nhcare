@@ -18,6 +18,7 @@
         android:label="NH Care"
         android:name="${applicationName}"
         android:icon="@drawable/logo_warna"
+        android:usesCleartextTraffic="true"
         tools:replace="android:label">
 
         <activity

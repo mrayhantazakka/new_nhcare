@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nhcoree/Database/IpConfig.dart';
-import 'package:nhcoree/Donasi/Donasi.dart';
+import 'package:nhcoree/Donasi/input_url_screen.dart';
 import 'package:nhcoree/Models/ArtikelData.dart';
 import 'package:nhcoree/Screen/alokasi.dart';
 import 'package:nhcoree/Screen/anak.dart';
@@ -24,11 +25,51 @@ class Beranda extends StatefulWidget {
 
 class _BerandaState extends State<Beranda> {
   List<ArtikelData> _artikels = [];
+  double totalDonasi = 0.0;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _fetchArtikelsFromServer();
+    fetchTotalDonations();
+  }
+
+  Future<void> fetchTotalDonations() async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://192.168.1.31:8000/api/total-donations'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ).timeout(const Duration(seconds: 10)); // Timeout after 10 seconds
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print("Data received: $data"); // Logging to see received data
+        setState(() {
+          totalDonasi = double.parse(data['totalDonasi']);
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load total donations');
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error fetching data: $e');
+      // You can show an error message to the user here
+    }
+  }
+
+  String formatRupiah(double amount) {
+    final formatter = NumberFormat.currency(
+      locale: 'id_ID', 
+      symbol: 'Rp. ', 
+      decimalDigits: 2, // Set decimal digits to 2 to include the decimal part
+    );
+    return formatter.format(amount);
   }
 
   Future<void> _fetchArtikelsFromServer() async {
@@ -110,6 +151,7 @@ class _BerandaState extends State<Beranda> {
                         color: Colors.white),
                   ),
                 ),
+                
                 const Padding(padding: EdgeInsets.only(top: 15)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -121,7 +163,7 @@ class _BerandaState extends State<Beranda> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Donasi()),
+                                  builder: (context) => const InputUrlScreen()),
                             );
                           },
                           child: Container(
