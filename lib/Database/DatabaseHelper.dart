@@ -24,12 +24,12 @@ class DatabaseHelper {
 
       return await openDatabase(
         fullPath,
-        version: 1,
+        version: 2, // Increment the version number
         onCreate: (db, version) async {
           // Define table schema if the database is newly created
           await db.execute('''
           CREATE TABLE user (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_donatur TEXT PRIMARY KEY,
             nama_donatur TEXT NOT NULL,
             nomor_handphone TEXT,
             alamat TEXT NOT NULL,
@@ -44,7 +44,27 @@ class DatabaseHelper {
         },
         onUpgrade: (db, oldVersion, newVersion) async {
           if (oldVersion < 2) {
-            await db.execute('ALTER TABLE user ADD COLUMN token TEXT');
+            // Perform migration if old version is less than 2
+            await db.execute('''
+              CREATE TABLE user_new (
+                id_donatur TEXT PRIMARY KEY,
+                nama_donatur TEXT NOT NULL,
+                nomor_handphone TEXT,
+                alamat TEXT NOT NULL,
+                jenis_kelamin TEXT,
+                email TEXT NOT NULL UNIQUE,
+                password TEXT NOT NULL,
+                pertanyaan TEXT,
+                jawaban TEXT,
+                token TEXT
+              )
+            ''');
+            await db.execute('''
+              INSERT INTO user_new (id_donatur, nama_donatur, nomor_handphone, alamat, jenis_kelamin, email, password, pertanyaan, jawaban, token)
+              SELECT CAST(id AS TEXT), nama_donatur, nomor_handphone, alamat, jenis_kelamin, email, password, pertanyaan, jawaban, token FROM user
+            ''');
+            await db.execute('DROP TABLE user');
+            await db.execute('ALTER TABLE user_new RENAME TO user');
           }
         },
       );
@@ -54,22 +74,12 @@ class DatabaseHelper {
     }
   }
 
-  // static Future<void> deleteDatabase() async {
-  //   try {
-  //     String pathDB = await getDatabasesPath();
-  //     String fullPath = path.join(pathDB, 'nhcoree.db');
-  //     await databaseFactory.deleteDatabase(fullPath);
-  //     print("Database deleted successfully");
-  //   } catch (e) {
-  //     print("Error deleting the database: $e");
-  //   }
-  // }
-
   static Future<void> saveUser(User user, String token) async {
     final db = await database;
     await db.insert(
       'user',
       {
+        'id_donatur': user.id_donatur,
         'nama_donatur': user.nama_donatur,
         'alamat': user.alamat,
         'email': user.email,
