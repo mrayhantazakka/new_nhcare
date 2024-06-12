@@ -452,61 +452,40 @@ class _daftarState extends State<daftar> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white.withOpacity(
-                                  0.8), backgroundColor: const Color(0xFFA4C751),
-                              minimumSize: Size(
-                                  MediaQuery.of(context).size.width * 0.4, 60),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white.withOpacity(0.8),
+                          backgroundColor: const Color(0xFFA4C751),
+                          minimumSize:
+                              Size(MediaQuery.of(context).size.width * 0.9, 60),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          elevation: 5,
+                        ),
+                        child: const Text('DAFTAR',
+                            style: TextStyle(color: Colors.white)),
+                        onPressed: () {
+                          if (_keyForm.currentState!.validate()) {
+                            _register();
+                          } else {
+                            final snackBar = SnackBar(
+                              elevation: 10,
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Colors.transparent,
+                              content: AwesomeSnackbarContent(
+                                title: 'Data Tidak Lengkap!',
+                                message:
+                                    'Mohon lengkapi semua data yang diperlukan untuk mendaftar.',
+                                contentType: ContentType.failure,
                               ),
-                              elevation: 5, // Warna saat di-hover atau di-press
-                            ),
-                            child: const Text('DAFTAR',
-                                style: TextStyle(color: Colors.white)),
-                            onPressed: () {
-                              if (_keyForm.currentState!.validate()) {
-                                _register();
-                              } else {
-                                final snackBar = SnackBar(
-                                  elevation: 10,
-                                  behavior: SnackBarBehavior.floating,
-                                  backgroundColor: Colors.transparent,
-                                  content: AwesomeSnackbarContent(
-                                    title: 'Data Tidak Lengkap!',
-                                    message:
-                                        'Mohon lengkapi semua data yang diperlukan untuk mendaftar.',
-                                    contentType: ContentType.failure,
-                                  ),
-                                );
+                            );
 
-                                ScaffoldMessenger.of(context)
-                                  ..hideCurrentSnackBar()
-                                  ..showSnackBar(snackBar);
-                              }
-                            },
-                          ),
-                          const SizedBox(width: 30),
-                          OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              side: const BorderSide(color: Color(0xFFA4C751)),
-                              minimumSize: Size(
-                                  MediaQuery.of(context).size.width * 0.4, 60),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            child: const Text('KEMBALI',
-                                style: TextStyle(color: Color(0xFFA4C751))),
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/loadingPage');
-                            },
-                          ),
-                        ],
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(snackBar);
+                          }
+                        },
                       ),
                       const Padding(padding: EdgeInsets.only(top: 20.0)),
                       Row(
@@ -537,13 +516,12 @@ class _daftarState extends State<daftar> {
               ),
             ),
           ),
-          // Tambahkan overlay loading jika _isLoading true
+          // overlay loading jika _isLoading true
           if (_isLoading)
             Container(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withOpacity(0.2),
               child: const Center(
-                child:
-                    CircularProgressIndicator(), // Menggunakan CircularProgressIndicator standar
+                child: CircularProgressIndicator(),
               ),
             ),
         ],

@@ -8,7 +8,14 @@ class Alokasi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Alokasi Dana'),
+        title: const Text(
+          'ALOKASI DANA',
+          textAlign: TextAlign.center,
+          style:
+              TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFA4C751)),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),

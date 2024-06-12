@@ -13,9 +13,11 @@ class homePage extends StatefulWidget {
 
 class _homePageState extends State<homePage> {
   int _selectedTabIndex = 1;
+  int _previousTabIndex = 1; // Menyimpan indeks halaman sebelumnya
 
   void _onNavBarTapped(int index) {
     setState(() {
+      _previousTabIndex = _selectedTabIndex; // Simpan indeks sebelumnya
       _selectedTabIndex = index;
     });
   }
@@ -30,7 +32,8 @@ class _homePageState extends State<homePage> {
     ];
 
     final bottomNavBarItems = <BottomNavigationBarItem>[
-      const BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Acara'),
+      const BottomNavigationBarItem(
+          icon: Icon(Icons.dashboard), label: 'Acara'),
       const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Beranda'),
       const BottomNavigationBarItem(
           icon: Icon(Icons.notifications), label: 'Notifikasi'),
@@ -47,11 +50,22 @@ class _homePageState extends State<homePage> {
       onTap: _onNavBarTapped,
     );
 
-    return Scaffold(
-      body: Center(
-        child: listPage[_selectedTabIndex],
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selectedTabIndex != 1) {
+          setState(() {
+            _selectedTabIndex = 1; // Kembali ke indeks Beranda
+          });
+          return false; // Mengembalikan false agar tidak keluar dari aplikasi
+        }
+        return true; // Keluar dari aplikasi jika berada di Beranda
+      },
+      child: Scaffold(
+        body: Center(
+          child: listPage[_selectedTabIndex],
+        ),
+        bottomNavigationBar: bottomNavBar,
       ),
-      bottomNavigationBar: bottomNavBar,
     );
   }
 }

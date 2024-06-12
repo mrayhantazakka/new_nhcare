@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'WelcomePage.dart'; 
+import 'package:nhcoree/Auth/Login.dart';
+import 'package:nhcoree/Home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'WelcomePage.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LoadingPage extends StatefulWidget {
@@ -18,15 +21,52 @@ class _LoadingPageState extends State<LoadingPage> {
     _simulateLoading();
   }
 
-  _simulateLoading() async {
-    await Future.delayed(const Duration(seconds: 5));
-    setState(() {
-      _isLoading = false;
-    });
+  Future<void> _simulateLoading() async {
+    await Future.delayed(const Duration(seconds: 2));
+    final prefs = await SharedPreferences.getInstance();
+    final bool? isFirstLaunch = prefs.getBool('isFirstLaunch');
+
+    if (isFirstLaunch == null || isFirstLaunch) {
+      await prefs.setBool('isFirstLaunch', false);
+      _navigateToWelcomePage();
+    } else {
+      checkLoginStatus();
+    }
+  }
+
+  Future<void> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token != null) {
+      _navigateToHomePage(); 
+    } else {
+      _navigateToLoginPage(); 
+    }
+  }
+
+  void _navigateToWelcomePage() {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => WelcomePage(),
+      ),
+    );
+  }
+
+  void _navigateToHomePage() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => homePage(),
+      ),
+    );
+  }
+
+  void _navigateToLoginPage() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage(),
       ),
     );
   }
@@ -37,8 +77,9 @@ class _LoadingPageState extends State<LoadingPage> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/img/loading_page.png"), // Pastikan path ke asset sudah benar
-            fit: BoxFit.cover, 
+            image: AssetImage(
+                "assets/img/loading_page.png"), // Pastikan path ke asset sudah benar
+            fit: BoxFit.cover,
           ),
           gradient: LinearGradient(
             colors: [Color(0xFFA4C751), Color(0xFF7AA23B)],
@@ -70,4 +111,3 @@ class _LoadingPageState extends State<LoadingPage> {
     );
   }
 }
-

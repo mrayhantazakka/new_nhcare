@@ -28,31 +28,26 @@ class ArtikelDetail extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.center,
-                child: Image.network(
-                  getFullImageUrl(artikel.gambar_artikel),
-                  width: 300,
-                  height: 300,
-                  fit: BoxFit.contain,
-                ),
+              Image.network(
+                getFullImageUrl(artikel.gambarArtikel),
+                width: 360,
+                fit: BoxFit.contain,
               ),
               SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 10), 
+                padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  artikel.judul_artikel,
+                  artikel.judulArtikel,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
+              Padding(padding: EdgeInsets.only(left: 10)),
               Html(
-                data: artikel.deskripsi_artikel,
+                data: artikel.deskripsiArtikel,
                 style: {
                   "body": Style(fontSize: FontSize(16.0)),
                 },

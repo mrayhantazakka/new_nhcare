@@ -22,7 +22,7 @@ class _DonasiState extends State<Donasi> {
     super.initState();
     MidtransSDK.init(
       config: MidtransConfig(
-        clientKey: 'SB-Mid-client-Cus_lO_5JXzHSIcU', 
+        clientKey: 'SB-Mid-client-Cus_lO_5JXzHSIcU',
         merchantBaseUrl: "${IpConfig.baseUrl}/api/create-transaction",
       ),
     );
@@ -38,6 +38,16 @@ class _DonasiState extends State<Donasi> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'DONASI',
+          textAlign: TextAlign.center,
+          style:
+              TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFA4C751)),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      ),
       body: SingleChildScrollView(
         child: Container(
           height: screenHeight,
@@ -49,15 +59,8 @@ class _DonasiState extends State<Donasi> {
           ),
           child: Center(
             child: Column(children: [
-              const Padding(padding: EdgeInsets.only(top: 50)),
-              const Text('DONASI',
-                  style: TextStyle(
-                      fontSize: 24,
-                      color: Color(0xFFA4C751),
-                      fontWeight: FontWeight.bold)),
-              const Padding(padding: EdgeInsets.only(top: 20)),
               const Padding(
-                padding: EdgeInsets.only(left: 20.0),
+                padding: EdgeInsets.only(left: 20.0, top: 20),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -82,8 +85,8 @@ class _DonasiState extends State<Donasi> {
                         borderRadius: BorderRadius.circular(10)),
                     filled: true, // Set filled to true
                     fillColor: const Color(0xFFEAEAEA),
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 20),
                   ),
                 ),
               ),
@@ -99,8 +102,8 @@ class _DonasiState extends State<Donasi> {
                         borderRadius: BorderRadius.circular(10)),
                     filled: true, // Set filled to true
                     fillColor: const Color(0xFFEAEAEA),
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 20),
                   ),
                 ),
               ),
@@ -131,8 +134,8 @@ class _DonasiState extends State<Donasi> {
                         borderRadius: BorderRadius.circular(10)),
                     filled: true, // Set filled to true
                     fillColor: const Color(0xFFEAEAEA),
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 20),
                   ),
                 ),
               ),
@@ -166,8 +169,8 @@ class _DonasiState extends State<Donasi> {
                           borderRadius: BorderRadius.circular(10)),
                       filled: true, // Set filled to true
                       fillColor: const Color(0xFFEAEAEA),
-                      contentPadding:
-                          const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 20),
                     ),
                   ),
                 ),
@@ -219,8 +222,8 @@ class _DonasiState extends State<Donasi> {
                         borderRadius: BorderRadius.circular(10)),
                     filled: true,
                     fillColor: const Color(0xFFEAEAEA),
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 20),
                   ),
                 ),
               ),
@@ -333,8 +336,7 @@ class _DonasiState extends State<Donasi> {
                       // Show error message or alert dialog if the user hasn't filled in all the required fields
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content:
-                              Text('Silahkan Isi Coloum yang Kosong!'),
+                          content: Text('Silahkan Isi Coloum yang Kosong!'),
                         ),
                       );
                     }

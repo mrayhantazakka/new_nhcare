@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -73,12 +74,12 @@ class _AcaraScreenState extends State<AcaraScreen> {
         title: const Text(
           'ACARA',
           style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFFA4C751)
-            ), 
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFA4C751)),
           textAlign: TextAlign.center,
         ),
+        backgroundColor: Colors.white,
         centerTitle: true, // Menengahkan judul
       ),
       body: Container(
@@ -101,7 +102,8 @@ class _AcaraScreenState extends State<AcaraScreen> {
                   shape: BoxShape.circle,
                 ),
                 outsideDecoration: const BoxDecoration(
-                  color: Color(0xFFE0E0E0), // Warna abu-abu muda untuk hari di luar bulan
+                  color: Color(
+                      0xFFE0E0E0), // Warna abu-abu muda untuk hari di luar bulan
                   shape: BoxShape.circle,
                 ),
                 markerDecoration: BoxDecoration(
@@ -109,21 +111,30 @@ class _AcaraScreenState extends State<AcaraScreen> {
                   shape: BoxShape.circle,
                 ),
                 defaultDecoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xFFD6D6D6)), // Garis tepi untuk semua hari
+                  border: Border.all(
+                      color: const Color(
+                          0xFFD6D6D6)), // Garis tepi untuk semua hari
                   shape: BoxShape.circle,
                 ),
                 defaultTextStyle: const TextStyle(color: Colors.black),
-                weekendTextStyle: const TextStyle(color: Colors.red), // Warna merah untuk hari Jumat
+                weekendTextStyle: const TextStyle(
+                    color: Colors.red), // Warna merah untuk hari Jumat
               ),
               eventLoader: (day) {
-                var events = _events?.where((event) => isSameDay(event.tanggalAcara, day)).toList() ?? [];
+                var events = _events
+                        ?.where((event) => isSameDay(event.tanggalAcara, day))
+                        .toList() ??
+                    [];
                 if (events.isNotEmpty) {
                   // Menggunakan warna acak untuk setiap hari dengan acara
                   return [
                     Container(
                       margin: const EdgeInsets.all(1.5),
                       decoration: BoxDecoration(
-                        color: events.length > 1 ? Colors.purple : Colors.blue, // Contoh: warna ungu jika lebih dari satu acara, biru jika satu
+                        color: events.length > 1
+                            ? Colors.purple
+                            : Colors
+                                .blue, // Contoh: warna ungu jika lebih dari satu acara, biru jika satu
                         shape: BoxShape.circle,
                       ),
                     )
@@ -173,18 +184,22 @@ class _AcaraScreenState extends State<AcaraScreen> {
             margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-               color: const Color(0xFFA4C751),
+              color: const Color(0xFFA4C751),
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(8),
             ),
             child: ListTile(
-              title: Text(acara.judul),
+              title: Text(acara.namaAcara),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    acara.deskripsi,
-                    style: const TextStyle(fontStyle: FontStyle.italic),
+                  Html(
+                    data: acara.deskripsiAcara,
+                    style: {
+                      "body": Style(
+                          fontSize: FontSize(16.0),
+                          fontStyle: FontStyle.italic),
+                    },
                   ),
                   Text(
                     DateFormat('yyyy/MM/dd').format(acara.tanggalAcara),

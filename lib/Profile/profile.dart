@@ -43,7 +43,6 @@ class _profileState extends State<profile> {
         });
       }
     } else {
-      // Jika tidak ada gambar yang disimpan, tampilkan huruf pertama dari username sebagai gambar default
       setState(() {
         _profileImage = null;
       });
@@ -118,7 +117,20 @@ class _profileState extends State<profile> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SingleChildScrollView(
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // Menghapus tombol back
+        title: const Text(
+          'PROFILE',
+          style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFA4C751)),
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: Colors.white,
+        centerTitle: true, // Menengahkan judul
+      ),
+      body: Container(
         child: Container(
           height: screenHeight,
           decoration: const BoxDecoration(
@@ -130,12 +142,12 @@ class _profileState extends State<profile> {
           child: Center(
             child: Column(
               children: [
-                const Padding(padding: EdgeInsets.only(top: 50)),
-                const Text('PROFILE',
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Color(0xFFA4C751),
-                        fontWeight: FontWeight.bold)),
+                // const Padding(padding: EdgeInsets.only(top: 50)),
+                // const Text('PROFILE',
+                //     style: TextStyle(
+                //         fontSize: 24,
+                //         color: Color(0xFFA4C751),
+                //         fontWeight: FontWeight.bold)),
                 const Padding(padding: EdgeInsets.only(top: 20)),
                 Container(
                   width: 360,

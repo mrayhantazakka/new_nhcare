@@ -114,7 +114,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -128,6 +130,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       body: SingleChildScrollView(
         child: Container(
           width: screenWidth,
+          height: screenHeight,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/img/bg.png'),
@@ -135,10 +138,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(5.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(height: 110),
                 Image.asset('assets/img/logo.jpg', height: 78, width: 65),
                 const SizedBox(height: 50),
                 Container(

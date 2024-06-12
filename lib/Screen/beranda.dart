@@ -70,7 +70,7 @@ class _BerandaState extends State<Beranda> {
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/img/new_bg.png'),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             ),
           ),
           child: Center(
@@ -128,7 +128,8 @@ class _BerandaState extends State<Beranda> {
                             transform:
                                 Matrix4.translationValues(0.1, -5.0, 0.0),
                             child: Card(
-                              elevation: 9,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              elevation: 5,
                               child: Column(
                                 children: [
                                   Image.asset(
@@ -166,7 +167,8 @@ class _BerandaState extends State<Beranda> {
                             transform:
                                 Matrix4.translationValues(0.0, -5.0, 0.0),
                             child: Card(
-                              elevation: 9,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              elevation: 5,
                               child: Column(
                                 children: [
                                   Image.asset(
@@ -204,7 +206,8 @@ class _BerandaState extends State<Beranda> {
                             transform:
                                 Matrix4.translationValues(0.0, -5.0, 0.0),
                             child: Card(
-                              elevation: 9,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              elevation: 5,
                               child: Column(
                                 children: [
                                   Image.asset(
@@ -242,7 +245,8 @@ class _BerandaState extends State<Beranda> {
                             transform:
                                 Matrix4.translationValues(0.0, -5.0, 0.0),
                             child: Card(
-                              elevation: 9,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              elevation: 5,
                               child: Column(
                                 children: [
                                   Image.asset(
@@ -274,7 +278,7 @@ class _BerandaState extends State<Beranda> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Artikel",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
@@ -336,18 +340,18 @@ class _BerandaState extends State<Beranda> {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: Image.network(
-                                  getFullImageUrl(artikel.gambar_artikel),
+                                  getFullImageUrl(artikel.gambarArtikel),
                                   width: 200,
                                   height: 260,
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 5),
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: Text(
-                                  artikel.judul_artikel,
+                                  artikel.judulArtikel,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(

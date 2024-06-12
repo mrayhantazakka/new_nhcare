@@ -20,30 +20,24 @@ class _AnakAsuhState extends State<AnakAsuh> {
   @override
   void initState() {
     super.initState();
-    // Panggil fungsi untuk mengambil data dari server saat inisialisasi widget.
     _fetchAnakAsuhsFromServer();
   }
 
   Future<void> _fetchAnakAsuhsFromServer() async {
-    // Ganti URL ini dengan URL endpoint API kamu.
     final url = Uri.parse('${IpConfig.baseUrl}/api/anakasuh');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        // Jika respons sukses, parse data JSON ke dalam List<AnakAsuh>.
         final List<dynamic> responseData = jsonDecode(response.body);
         setState(() {
           _anakAsuhs =
               responseData.map((json) => AnakData.fromJson(json)).toList();
-          _filteredAnakAsuhs =
-              _anakAsuhs; // Mengisi _filteredAnakAsuhs dengan data awal
+          _filteredAnakAsuhs = _anakAsuhs;
         });
       } else {
-        // Jika respons gagal, tampilkan pesan kesalahan.
         print('Failed to load anak asuhs: ${response.statusCode}');
       }
     } catch (e) {
-      // Tangani kesalahan jika ada.
       print('Error fetching anak asuhs: $e');
     }
   }
@@ -65,11 +59,22 @@ class _AnakAsuhState extends State<AnakAsuh> {
     });
   }
 
+  String getFullImageUrl(String relativeUrl) {
+    return '${IpConfig.baseUrl}/storage/anakasuhs/Foto/$relativeUrl';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Anak Asuh'),
+        title: const Text(
+          'ANAK ASUH',
+          textAlign: TextAlign.center,
+          style:
+              TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFA4C751)),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -80,46 +85,38 @@ class _AnakAsuhState extends State<AnakAsuh> {
         ),
         child: Column(
           children: [
-            Container(
-             decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/img/new_bg.png'),
-                fit: BoxFit.fill,
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 3,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 3,
-                        offset: const Offset(0, 2),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.search),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: const InputDecoration(
+                            hintText: 'Cari Anak Asuh',
+                            border: InputBorder.none,
+                          ),
+                          onChanged: _onSearchChanged,
+                        ),
                       ),
                     ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.search),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: TextField(
-                            controller: _searchController,
-                            decoration: const InputDecoration(
-                              hintText: 'Cari Anak Asuh',
-                              border: InputBorder.none,
-                            ),
-                            onChanged: _onSearchChanged,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ),
@@ -157,10 +154,8 @@ class _AnakAsuhState extends State<AnakAsuh> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.network(
-                            anakAsuh
-                                .img_anak, // Menggunakan Image.network untuk URL gambar
-                            width: 100,
-                            height: 100,
+                            getFullImageUrl(anakAsuh.img_anak),
+                            fit: BoxFit.cover,
                           ),
                           const SizedBox(height: 8),
                           Text(
@@ -172,13 +167,6 @@ class _AnakAsuhState extends State<AnakAsuh> {
                             ),
                           ),
                           const SizedBox(height: 4),
-                          Text(
-                            anakAsuh.deskripsi,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 14.0,
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -197,12 +185,23 @@ class DetailAnakAsuh extends StatelessWidget {
   final AnakData anakAsuh;
 
   const DetailAnakAsuh({super.key, required this.anakAsuh});
+  String getFullImageUrl(String relativeUrl) {
+    return '${IpConfig.baseUrl}/storage/anakasuhs/Foto/$relativeUrl';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(anakAsuh.nama),
+        title: const Text(
+          'DETAIL ANAK ASUH',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Color(0xFFA4C751),
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -217,19 +216,18 @@ class DetailAnakAsuh extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.network(
-                anakAsuh.img_anak,
-                width: MediaQuery.of(context).size.width,
-                height: 200,
+                getFullImageUrl(anakAsuh.img_anak),
                 fit: BoxFit.cover,
               ),
               const SizedBox(height: 16),
               Text(
                 'Nama: ${anakAsuh.nama}',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Text(
-                'Sekolah: ${anakAsuh.nama_sekolah}',
+                'Cabang: ${anakAsuh.cabang}',
                 style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 8),
@@ -239,8 +237,17 @@ class DetailAnakAsuh extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Deskripsi: ${anakAsuh.deskripsi}',
+                'Tingkat: ${anakAsuh.tingkat}',
                 style: const TextStyle(fontSize: 16),
+              ),
+              Text(
+                anakAsuh.prestasi?.isNotEmpty == true
+                    ? anakAsuh.prestasi![0].nama_prestasi
+                    : '',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 14.0,
+                ),
               ),
             ],
           ),
@@ -249,4 +256,3 @@ class DetailAnakAsuh extends StatelessWidget {
     );
   }
 }
-
