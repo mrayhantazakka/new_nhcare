@@ -23,7 +23,8 @@ class _WebViewAppState extends State<SnapWebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final routeArgs = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final routeArgs =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
     final url = routeArgs['url'];
     final nominal = routeArgs['nominal'];
     final tujuan = routeArgs['tujuan'];
@@ -57,7 +58,8 @@ class _WebViewAppState extends State<SnapWebViewScreen> {
                 // Deteksi status transaksi dari URL
                 if (url.contains('transaction_status=')) {
                   final uri = Uri.parse(url);
-                  final transactionStatus = uri.queryParameters['transaction_status'];
+                  final transactionStatus =
+                      uri.queryParameters['transaction_status'];
                   final orderId = uri.queryParameters['order_id'];
 
                   // Tampilkan status transaksi dan order_id di console
@@ -65,16 +67,16 @@ class _WebViewAppState extends State<SnapWebViewScreen> {
                   print('Order ID: $orderId');
 
                   if (transactionStatus == 'settlement' && orderId != null) {
-
                     // Kembali ke beranda
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       '/home', // Ganti dengan route ke beranda Anda
                       (Route<dynamic> route) => false,
                     );
-                    
+
                     // Ambil token dari SharedPreferences
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
                     String? token = prefs.getString('token');
                     // Ambil id_donatur dari DatabaseHelper
                     String? id_donatur;
@@ -101,7 +103,6 @@ class _WebViewAppState extends State<SnapWebViewScreen> {
                         'transaction_time': DateTime.now().toString(),
                       });
                     }
-                    
                   }
                 }
               },
@@ -157,7 +158,8 @@ class _WebViewAppState extends State<SnapWebViewScreen> {
     if (response.statusCode == 200) {
       print('Transaction data sent successfully');
     } else {
-      print('Failed to send transaction data. Response status: ${response.statusCode}, body: ${response.body}');
+      print(
+          'Failed to send transaction data. Response status: ${response.statusCode}, body: ${response.body}');
     }
   }
 }

@@ -11,12 +11,13 @@ class VideoListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Video',
+          'VIDEO',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style:
+              TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFA4C751)),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xFFA4C751),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Stack(
         children: [
@@ -59,7 +60,8 @@ class VideoListPage extends StatelessWidget {
                           const SizedBox(height: 4),
                           Text(
                             'Published on: ${video.publishedAt}',
-                            style: const TextStyle(fontSize: 14, color: Colors.grey),
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.grey),
                           ),
                         ],
                       ),

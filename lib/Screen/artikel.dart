@@ -61,7 +61,7 @@ class _ArtikelState extends State<Artikel> {
     setState(() {
       _filteredArtikels = _artikels
           .where((artikel) =>
-              artikel.judul_artikel.toLowerCase().contains(value.toLowerCase()))
+              artikel.judulArtikel.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -71,7 +71,7 @@ class _ArtikelState extends State<Artikel> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Artikel',
+          'ARTIKEL',
           textAlign: TextAlign.center,
           style:
               TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFA4C751)),
@@ -125,62 +125,64 @@ class _ArtikelState extends State<Artikel> {
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    crossAxisSpacing: 16.0,
-                    mainAxisSpacing: 16.0,
-                  ),
-                  itemCount: _filteredArtikels.length,
-                  itemBuilder: (context, index) {
-                    ArtikelData artikel = _filteredArtikels[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          _onProgramTap(artikel);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.network(
-                                getFullImageUrl(artikel.gambar_artikel),
-                                width: 300,
-                                height: 300,
-                                fit: BoxFit.contain,
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                artikel.judul_artikel,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 20.0,
+              child: RefreshIndicator(
+                onRefresh: _fetchArtikelsFromServer,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0,
+                    ),
+                    itemCount: _filteredArtikels.length,
+                    itemBuilder: (context, index) {
+                      ArtikelData artikel = _filteredArtikels[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            _onProgramTap(artikel);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(5.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 3,
+                                  offset: const Offset(0, 5),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                            ],
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.network(
+                                  getFullImageUrl(artikel.gambarArtikel),
+                                  fit: BoxFit.cover,
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  artikel.judulArtikel,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

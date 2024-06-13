@@ -6,14 +6,14 @@ part 'ArtikelData.g.dart';
 
 @JsonSerializable()
 class ArtikelData {
-  final String judul_artikel;
-  final String deskripsi_artikel;
-  final String gambar_artikel;
+  final String judulArtikel;
+  final String deskripsiArtikel;
+  final String gambarArtikel;
 
   ArtikelData({
-    required this.judul_artikel,
-    required this.deskripsi_artikel,
-    required this.gambar_artikel,
+    required this.judulArtikel,
+    required this.deskripsiArtikel,
+    required this.gambarArtikel,
   });
   factory ArtikelData.fromJson(Map<String, dynamic> json) =>
       _$ArtikelDataFromJson(json);

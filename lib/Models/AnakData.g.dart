@@ -8,16 +8,20 @@ part of 'AnakData.dart';
 
 AnakData _$AnakDataFromJson(Map<String, dynamic> json) => AnakData(
       nama: json['nama'] as String,
-      nama_sekolah: json['nama_sekolah'] as String,
       kelas: json['kelas'] as String,
-      deskripsi: json['deskripsi'] as String,
+      tingkat: json['tingkat'] as String,
+      cabang: json['cabang'] as String,
       img_anak: json['img_anak'] as String,
+      prestasi: (json['prestasi'] as List<dynamic>?)
+          ?.map((e) => PrestasiAnakAsuh.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$AnakDataToJson(AnakData instance) => <String, dynamic>{
       'nama': instance.nama,
-      'nama_sekolah': instance.nama_sekolah,
       'kelas': instance.kelas,
-      'deskripsi': instance.deskripsi,
+      'tingkat': instance.tingkat,
+      'cabang': instance.cabang,
       'img_anak': instance.img_anak,
+      'prestasi': instance.prestasi,
     };

@@ -63,15 +63,16 @@ class _AlokasiState extends State<Alokasi> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'ALOKASI DANA',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+
+          textAlign: TextAlign.center,
+          style:
+              TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFA4C751)),
         ),
-        backgroundColor: const Color(0xFFA4C751),
-        iconTheme: IconThemeData(color: Colors.white),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())

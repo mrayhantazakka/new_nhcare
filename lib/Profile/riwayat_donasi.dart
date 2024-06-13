@@ -13,12 +13,15 @@ class _riwayatDonasiState extends State<riwayatDonasi> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Riwayat Donasi',
+          'RIWAYAT DONASI',
+          style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFA4C751)),
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        centerTitle: true,
-        // backgroundColor: Color(0xFFA4C751),
+        backgroundColor: Colors.white,
+        centerTitle: true, // Menengahkan judul
       ),
     );
   }

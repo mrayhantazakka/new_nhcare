@@ -8,6 +8,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class dataDiri extends StatefulWidget {
   const dataDiri({Key? key}) : super(key: key);
@@ -124,19 +125,43 @@ class _dataDiriState extends State<dataDiri> {
           if (response.statusCode == 200) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Data berhasil diperbarui'),
-                backgroundColor: Colors.green,
+                content: AwesomeSnackbarContent(
+                  title: 'Sukses',
+                  message: 'Data berhasil diperbarui',
+                  contentType: ContentType.success,
+                ),
+                backgroundColor: Colors.transparent,
+                behavior: SnackBarBehavior.floating,
+                elevation: 0,
               ),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Gagal memperbarui data')),
+              SnackBar(
+                content: AwesomeSnackbarContent(
+                  title: 'Gagal',
+                  message: 'Gagal memperbarui data',
+                  contentType: ContentType.failure,
+                ),
+                backgroundColor: Colors.transparent,
+                behavior: SnackBarBehavior.floating,
+                elevation: 0,
+              ),
             );
           }
         } catch (e) {
           print('Error: $e');
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Terjadi kesalahan saat memperbarui data')),
+            SnackBar(
+              content: AwesomeSnackbarContent(
+                title: 'Kesalahan',
+                message: 'Terjadi kesalahan saat memperbarui data',
+                contentType: ContentType.warning,
+              ),
+              backgroundColor: Colors.transparent,
+              behavior: SnackBarBehavior.floating,
+              elevation: 0,
+            ),
           );
         }
       } else {
@@ -180,7 +205,16 @@ class _dataDiriState extends State<dataDiri> {
       await prefs.setString('profileImagePath', pickedFile.path);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Tidak ada gambar yang dipilih")),
+        SnackBar(
+          content: AwesomeSnackbarContent(
+            title: 'Gagal',
+            message: 'Tidak ada gambar yang dipilih',
+            contentType: ContentType.failure,
+          ),
+          backgroundColor: Colors.transparent,
+          behavior: SnackBarBehavior.floating,
+          elevation: 0,
+        ),
       );
     }
   }
@@ -191,6 +225,19 @@ class _dataDiriState extends State<dataDiri> {
     setState(() {
       _image = null;
     });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: AwesomeSnackbarContent(
+          title: 'Sukses',
+          message: 'Foto berhasil dihapus',
+          contentType: ContentType.success,
+        ),
+        backgroundColor: Colors.transparent,
+        behavior: SnackBarBehavior.floating,
+        elevation: 0,
+      ),
+    );
   }
 
   @override
