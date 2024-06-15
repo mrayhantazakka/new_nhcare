@@ -215,7 +215,7 @@ class _ProfileState extends State<profile> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const riwayatDonasi()),
+                            builder: (context) => const RiwayatDonasi()),
                       );
                     },
                     child: Container(
