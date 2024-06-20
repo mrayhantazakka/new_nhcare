@@ -38,7 +38,7 @@ class _BerandaState extends State<Beranda> {
   Future<void> fetchTotalDonations() async {
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.1.31:8000/api/total-donations'),
+        Uri.parse('${IpConfig.baseUrl}/api/total-donations'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -65,8 +65,8 @@ class _BerandaState extends State<Beranda> {
 
   String formatRupiah(double amount) {
     final formatter = NumberFormat.currency(
-      locale: 'id_ID', 
-      symbol: 'Rp. ', 
+      locale: 'id_ID',
+      symbol: 'Rp. ',
       decimalDigits: 2, // Set decimal digits to 2 to include the decimal part
     );
     return formatter.format(amount);
@@ -142,16 +142,33 @@ class _BerandaState extends State<Beranda> {
                       ),
                     ],
                   ),
-                  child: const Text(
-                    "TOTAL DANA DONASI :",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "TOTAL DANA DONASI : ",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      isLoading
+                          ? const CircularProgressIndicator()
+                          : Text(
+                              formatRupiah(totalDonasi),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                    ],
                   ),
                 ),
-                
                 const Padding(padding: EdgeInsets.only(top: 15)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

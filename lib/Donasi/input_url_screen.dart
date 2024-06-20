@@ -122,9 +122,9 @@ class InputUrlState extends State<InputUrlScreen> {
                 buildInputField(nominalController, 'Masukkan Nominal Donasi',
                     keyboardType: TextInputType.number),
                 buildNominalButtons(screenWidth),
-                SizedBox(height: 15),
+                SizedBox(height: 5),
                 buildDropdownTujuan(),
-                SizedBox(height: 30),
+                const Padding(padding: EdgeInsets.only(top: 10.0)),
                 ElevatedButton(
                   onPressed: () async {
                     try {
@@ -169,7 +169,8 @@ class InputUrlState extends State<InputUrlScreen> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFA4C751),
-                    minimumSize: Size(screenWidth * 0.4, 60), // Responsive size
+                    minimumSize:
+                              Size(screenWidth * 0.9, 60), // Responsive size
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -177,7 +178,7 @@ class InputUrlState extends State<InputUrlScreen> {
                   child: const Text('Donasi',
                       style: TextStyle(color: Colors.white)),
                 ),
-                SizedBox(width: 30),
+                SizedBox(width: 10),
               ],
             ),
           ),

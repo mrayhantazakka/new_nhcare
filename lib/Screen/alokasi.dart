@@ -72,53 +72,77 @@ class _AlokasiState extends State<Alokasi> {
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  buildExpansionTile('Pembangunan', totalPembangunan),
-                  SizedBox(height: 8),
-                  buildExpansionTile('Santunan', totalSantunan),
-                ],
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/img/new_bg.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    buildExpansionTile('Pembangunan', totalPembangunan),
+                    SizedBox(height: 8),
+                    buildExpansionTile('Santunan', totalSantunan),
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 
   Widget buildExpansionTile(String title, double amount) {
-    return ExpansionTile(
-      leading: Icon(
-        Icons.circle,
-        color: Colors.orange,
-        size: 10,
-      ),
-      title: Text(
-        title,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Dana Terkumpul: ${formatRupiah(amount)}',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8),
-              LinearProgressIndicator(
-                value: amount /
-                    1000000, // Assuming 1,000,000 as the goal for simplicity
-                color: Colors.green,
-                backgroundColor: Colors.grey[300],
-              ),
-            ],
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 3),
           ),
+        ],
+      ),
+      margin: EdgeInsets.symmetric(vertical: 4),
+      child: ExpansionTile(
+        leading: Icon(
+          Icons.circle,
+          color: Colors.orange,
+          size: 10,
         ),
-      ],
+        title: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Dana Terkumpul: ${formatRupiah(amount)}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                LinearProgressIndicator(
+                  value: amount /
+                      1000000, // Assuming 1,000,000 as the goal for simplicity
+                  color: Colors.green,
+                  backgroundColor: Colors.grey[300],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
