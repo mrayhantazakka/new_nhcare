@@ -170,7 +170,8 @@ class InputUrlState extends State<InputUrlScreen> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFA4C751),
-                    minimumSize: Size(screenWidth * 0.4, 60), // Responsive size
+                    minimumSize:
+                              Size(screenWidth * 0.9, 60), // Responsive size
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

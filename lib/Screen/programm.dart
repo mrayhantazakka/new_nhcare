@@ -136,7 +136,7 @@ class _ProgrammState extends State<Programm> {
                       Expanded(
                         child: TextField(
                           controller: _searchController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Cari Program',
                             border: InputBorder.none,
                           ),
@@ -153,9 +153,9 @@ class _ProgrammState extends State<Programm> {
                 onRefresh: _fetchProgramsFromServer,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 17.0), // Ubah padding sesuai kebutuhan
+                      horizontal: 17.0), 
                   child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 15.0,
                       mainAxisSpacing: 10.0,
@@ -190,13 +190,13 @@ class _ProgrammState extends State<Programm> {
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                              Padding(
+                              const Padding(
                                   padding: EdgeInsets.only(
                                       left: 5, right: 5, bottom: 10)),
                               Text(
                                 program.namaProgram,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12.0,
                                 ),

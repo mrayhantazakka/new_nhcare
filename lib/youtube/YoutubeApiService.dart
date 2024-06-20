@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class YoutubeApiService {
-  static const String apiKey = 'AIzaSyB1YMDRoNLVfXutxYBJQGSauwv7p0YPmb0';
+  static const String apiKey = 'AIzaSyCDw0tB0NG1aFsSouNgklEZIV_QpozhNz8';
   static const String channelId = 'UCtUjNSRBwiBtdLPw5yfeOwg';
 
   static Future<List<YoutubeVideo>> fetchVideos() async {

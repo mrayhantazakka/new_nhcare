@@ -74,66 +74,76 @@ class _AlokasiState extends State<Alokasi> {
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
 
       ),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  buildCard('Pembangunan', totalPembangunan),
-                  SizedBox(height: 16),
-                  buildCard('Santunan', totalSantunan),
-                ],
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/img/new_bg.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    buildExpansionTile('Pembangunan', totalPembangunan),
+                    SizedBox(height: 8),
+                    buildExpansionTile('Santunan', totalSantunan),
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 
-  Widget buildCard(String title, double amount) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
+  Widget buildExpansionTile(String title, double amount) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      margin: EdgeInsets.symmetric(vertical: 4),
+      child: ExpansionTile(
+        leading: Icon(
+          Icons.circle,
+          color: Colors.orange,
+          size: 10,
+        ),
+        title: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  Icons.circle,
-                  color: Colors.orange,
-                  size: 10,
-                ),
-                SizedBox(width: 8),
                 Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  'Dana Terkumpul: ${formatRupiah(amount)}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                LinearProgressIndicator(
+                  value: amount /
+                      1000000, // Assuming 1,000,000 as the goal for simplicity
+                  color: Colors.green,
+                  backgroundColor: Colors.grey[300],
                 ),
               ],
             ),
-            SizedBox(height: 16),
-            Text(
-              'Dana Terkumpul: ${formatRupiah(amount)}',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: LinearProgressIndicator(
-                value: amount / 1000000, // Assuming 1,000,000 as the goal for simplicity
-                color: Colors.green,
-                backgroundColor: Colors.grey[300],
-                minHeight: 10,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
