@@ -6,6 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nhcoree/Database/DatabaseHelper.dart';
 import 'package:nhcoree/Models/user.dart';
+import 'package:nhcoree/Database/IpConfig.dart';
 
 class RiwayatDonasi extends StatefulWidget {
   const RiwayatDonasi({super.key});
@@ -57,7 +58,7 @@ class _RiwayatDonasiState extends State<RiwayatDonasi> {
       return;
     }
 
-    final String apiUrl = 'http://192.168.18.201:8000/api/donations/$idDonatur';
+    final String apiUrl = '${IpConfig.baseUrl}/api/donations/$idDonatur';
     try {
       final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {

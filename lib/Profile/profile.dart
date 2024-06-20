@@ -37,6 +37,8 @@ class _ProfileState extends State<profile> {
           _namaDonatur = user.nama_donatur ?? '';
           _email = user.email ?? '';
           _profileImage = user.foto_donatur ?? '';
+          // Debugging
+          print("Profile Image Path: $_profileImage");
         });
       }
     }
@@ -142,10 +144,11 @@ class _ProfileState extends State<profile> {
                     CircleAvatar(
                       radius: 75,
                       backgroundColor: const Color(0xFFA4C751),
-                      backgroundImage: _profileImage != null
-                          ? FileImage(File(_profileImage!))
-                          : null,
-                      child: _profileImage == null
+                      backgroundImage:
+                          (_profileImage != null && _profileImage!.isNotEmpty)
+                              ? FileImage(File(_profileImage!))
+                              : null,
+                      child: (_profileImage == null || _profileImage!.isEmpty)
                           ? Text(
                               _namaDonatur
                                   .split(" ")

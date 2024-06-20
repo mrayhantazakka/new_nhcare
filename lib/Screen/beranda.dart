@@ -38,7 +38,7 @@ class _BerandaState extends State<Beranda> {
   Future<void> fetchTotalDonations() async {
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.1.31:8000/api/total-donations'),
+        Uri.parse('${IpConfig.baseUrl}/api/total-donations'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -48,10 +48,11 @@ class _BerandaState extends State<Beranda> {
         final data = json.decode(response.body);
         print("Data received: $data"); // Logging to see received data
         setState(() {
-          totalDonasi = double.parse(data['totalDonasi']);
+          totalDonasi = data['totalDonasi'].toDouble(); // Converting to double
           isLoading = false;
         });
       } else {
+        print('Failed to load total donations: ${response.statusCode}');
         throw Exception('Failed to load total donations');
       }
     } catch (e) {
@@ -65,8 +66,8 @@ class _BerandaState extends State<Beranda> {
 
   String formatRupiah(double amount) {
     final formatter = NumberFormat.currency(
-      locale: 'id_ID', 
-      symbol: 'Rp. ', 
+      locale: 'id_ID',
+      symbol: 'Rp. ',
       decimalDigits: 2, // Set decimal digits to 2 to include the decimal part
     );
     return formatter.format(amount);
@@ -142,16 +143,33 @@ class _BerandaState extends State<Beranda> {
                       ),
                     ],
                   ),
-                  child: const Text(
-                    "TOTAL DANA DONASI :",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "TOTAL DANA DONASI : ",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      isLoading
+                          ? const CircularProgressIndicator()
+                          : Text(
+                              formatRupiah(totalDonasi),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                    ],
                   ),
                 ),
-                
                 const Padding(padding: EdgeInsets.only(top: 15)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -170,7 +188,7 @@ class _BerandaState extends State<Beranda> {
                             transform:
                                 Matrix4.translationValues(0.1, -5.0, 0.0),
                             child: Card(
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               elevation: 5,
                               child: Column(
                                 children: [
@@ -209,7 +227,7 @@ class _BerandaState extends State<Beranda> {
                             transform:
                                 Matrix4.translationValues(0.0, -5.0, 0.0),
                             child: Card(
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               elevation: 5,
                               child: Column(
                                 children: [
@@ -248,7 +266,7 @@ class _BerandaState extends State<Beranda> {
                             transform:
                                 Matrix4.translationValues(0.0, -5.0, 0.0),
                             child: Card(
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               elevation: 5,
                               child: Column(
                                 children: [
@@ -287,7 +305,7 @@ class _BerandaState extends State<Beranda> {
                             transform:
                                 Matrix4.translationValues(0.0, -5.0, 0.0),
                             child: Card(
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               elevation: 5,
                               child: Column(
                                 children: [
@@ -316,7 +334,7 @@ class _BerandaState extends State<Beranda> {
                 ),
                 const SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -325,7 +343,7 @@ class _BerandaState extends State<Beranda> {
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      Padding(padding: EdgeInsets.only(right: 40)),
+                      const Padding(padding: EdgeInsets.only(right: 40)),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
@@ -364,7 +382,7 @@ class _BerandaState extends State<Beranda> {
                           borderRadius: BorderRadius.circular(5),
                           boxShadow: [
                             BoxShadow(
-                              color: Color.fromARGB(255, 179, 179, 179)
+                              color: const Color.fromARGB(255, 179, 179, 179)
                                   .withOpacity(0.5),
                               spreadRadius: 0,
                               blurRadius: 8,
