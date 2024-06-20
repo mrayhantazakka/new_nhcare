@@ -118,13 +118,14 @@ class InputUrlState extends State<InputUrlScreen> {
                     'Cantumkan Doa Terbaik Untuk Diri dan Keluarga',
                     maxLines: 5),
                 SizedBox(height: 15),
+                buildInputLabel('Tujuan Donasi'),
+                buildDropdownTujuan(),
+                SizedBox(height: 15),
                 buildInputLabel('Nominal Donasi'),
                 buildInputField(nominalController, 'Masukkan Nominal Donasi',
                     keyboardType: TextInputType.number),
                 buildNominalButtons(screenWidth),
-                SizedBox(height: 5),
-                buildDropdownTujuan(),
-                const Padding(padding: EdgeInsets.only(top: 10.0)),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
                     try {
@@ -175,12 +176,58 @@ class InputUrlState extends State<InputUrlScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text('Donasi',
+                  child: const Text('BAYAR DONASI',
                       style: TextStyle(color: Colors.white)),
                 ),
-                SizedBox(width: 10),
+                SizedBox(height: 30),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildDropdownTujuan() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: const Color(0xFFEAEAEA),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: DropdownButton<String>(
+            isExpanded: true,
+            value: selectedTujuan.isNotEmpty ? selectedTujuan : null,
+            hint: const Text('Pilih tujuan donasi'),
+            icon: const Icon(Icons.arrow_drop_down),
+            iconSize: 24,
+            elevation: 16,
+            style: const TextStyle(color: Colors.black),
+            underline: Container(
+              height: 2,
+              color: Colors.transparent,
+            ),
+            onChanged: (String? newValue) {
+              setState(() {
+                selectedTujuan = newValue ?? 'Pilih tujuan donasi';
+              });
+            },
+            items: <String>['Pilih tujuan donasi', 'Pembangunan', 'Santunan']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: value != 'Pilih tujuan donasi'
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Text(value),
+                      )
+                    : const Text('Pilih tujuan donasi',
+                        style: TextStyle(color: Colors.grey)),
+              );
+            }).toList(),
           ),
         ),
       ),
@@ -256,57 +303,18 @@ class InputUrlState extends State<InputUrlScreen> {
           });
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFFA4C751),
+          backgroundColor:
+              Colors.white60, // Mengubah warna background menjadi putih
           padding: EdgeInsets.symmetric(vertical: 15),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
-        child: Text(nominal,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    );
-  }
-
-  Widget buildDropdownTujuan() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: const Color(0xFFEAEAEA),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: DropdownButton<String>(
-            isExpanded: true,
-            value: selectedTujuan.isNotEmpty ? selectedTujuan : null,
-            hint: const Text('Pilih tujuan donasi'),
-            icon: const Icon(Icons.arrow_drop_down),
-            iconSize: 24,
-            elevation: 16,
-            style: const TextStyle(color: Colors.black),
-            underline: Container(
-              height: 2,
-              color: Colors.transparent,
-            ),
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedTujuan = newValue ?? 'Pilih tujuan donasi';
-              });
-            },
-            items: <String>['Pilih tujuan donasi', 'Pembangunan', 'Santunan']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: value != 'Pilih tujuan donasi'
-                    ? Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: Text(value),
-                      )
-                    : const Text('Pilih tujuan donasi',
-                        style: TextStyle(color: Colors.grey)),
-              );
-            }).toList(),
+        child: Text(
+          nominal,
+          style: TextStyle(
+            fontSize: 20, // Memperbesar ukuran teks
+            color: Colors.black, // Mengubah warna teks menjadi hitam
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

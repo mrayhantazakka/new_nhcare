@@ -14,6 +14,7 @@ class User {
   late String? pertanyaan;
   late String? jawaban;
   late String? jenis_kelamin;
+  late String? foto_donatur;
   late String? token;
 
   User({
@@ -27,6 +28,7 @@ class User {
     required this.pertanyaan,
     required this.jawaban,
     required this.jenis_kelamin,
+    required this.foto_donatur,
     required this.token,
   });
 

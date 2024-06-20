@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:nhcoree/Database/IpConfig.dart';
-import 'package:intl/intl.dart'; // Library untuk format angka
+import 'package:intl/intl.dart';
 
 class Alokasi extends StatefulWidget {
   @override
@@ -65,12 +65,14 @@ class _AlokasiState extends State<Alokasi> {
       appBar: AppBar(
         title: const Text(
           'ALOKASI DANA',
+
           textAlign: TextAlign.center,
           style:
               TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFA4C751)),
         ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+
       ),
       body: Container(
         decoration: const BoxDecoration(
